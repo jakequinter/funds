@@ -1,7 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
+
   return (
     <div>
       <Head>
@@ -10,7 +13,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-red-500">test</h1>
+      {session && (
+        <>
+          Signed in as {session?.user?.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      )}
+      {!session && (
+        <button onClick={() => signIn('google')}>Sign in with google</button>
+      )}
     </div>
   );
 };
