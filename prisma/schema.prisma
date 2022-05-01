@@ -23,13 +23,13 @@ model User {
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
   Account Account[]
-  Section Section[]
+  Section Category[]
   Session Session[]
 
   @@map(name: "users")
 }
 
-model Section {
+model Category {
   id        String   @id @default(cuid())
   name      String
   color     String
@@ -40,7 +40,7 @@ model Section {
   user    User      @relation(fields: [userId], references: [id])
   userId  String    @map(name: "user_id")
 
-  @@map(name: "sections")
+  @@map(name: "categories")
 }
 
 model Expense {
@@ -50,8 +50,8 @@ model Expense {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  section   Section @relation(fields: [sectionId], references: [id])
-  sectionId String  @unique @map(name: "seection_id")
+  section    Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @unique @map(name: "category_id")
 
   @@map(name: "expenses")
 }
