@@ -23,9 +23,37 @@ model User {
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
   Account Account[]
+  Section Section[]
   Session Session[]
 
   @@map(name: "users")
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  name      String
+  color     String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  Expense Expense[]
+  user    User      @relation(fields: [userId], references: [id])
+  userId  String    @map(name: "user_id")
+
+  @@map(name: "sections")
+}
+
+model Expense {
+  id        String   @id @default(cuid())
+  name      String
+  amount    Float
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  section   Section @relation(fields: [sectionId], references: [id])
+  sectionId String  @unique @map(name: "seection_id")
+
+  @@map(name: "expenses")
 }
 
 // Next auth
