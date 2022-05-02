@@ -24,6 +24,18 @@ const options = {
     //   from: process.env.EMAIL_FROM,
     // }),
   ],
+  callbacks: {
+    // @ts-ignore
+    async session({ session, user }) {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+      });
+
+      session.user.id = user.id;
+
+      return Promise.resolve(session);
+    },
+  },
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
 }

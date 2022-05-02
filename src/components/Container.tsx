@@ -34,17 +34,33 @@ export default function Container({ children }: Props) {
             </button>
           )}
 
-          <motion.button
-            whileHover="hover"
-            type="button"
-            className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700  hover:border-slate-400 focus:outline-none focus:ring-0"
-            onClick={() => signOut()}
-          >
-            {session ? 'Dashboard' : 'Sign up'}
-            <motion.span variants={iconVariants}>
-              <ArrowRight className="ml-1" />
-            </motion.span>
-          </motion.button>
+          {!session && (
+            <motion.button
+              whileHover="hover"
+              type="button"
+              className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700  hover:border-slate-400 focus:outline-none focus:ring-0"
+              onClick={() => signOut()}
+            >
+              Sign up
+              <motion.span variants={iconVariants}>
+                <ArrowRight className="ml-1" />
+              </motion.span>
+            </motion.button>
+          )}
+
+          {session && (
+            <Link href="/dashboard" passHref>
+              <motion.a
+                whileHover="hover"
+                className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700  hover:border-slate-400 focus:outline-none focus:ring-0"
+              >
+                Dashboard
+                <motion.span variants={iconVariants}>
+                  <ArrowRight className="ml-1" />
+                </motion.span>
+              </motion.a>
+            </Link>
+          )}
         </div>
       </nav>
 

@@ -1,6 +1,5 @@
 import { Fragment, ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Dialog, Transition } from '@headlessui/react';
 import {
   BookmarkEmpty,
   Calendar,
@@ -9,6 +8,8 @@ import {
   LogOut,
   Menu,
 } from 'iconoir-react';
+import { Dialog, Transition } from '@headlessui/react';
+import { Toaster } from 'react-hot-toast';
 
 function classNames(...classes: String[]) {
   return classes.filter(Boolean).join(' ');
@@ -56,14 +57,7 @@ export default function DashboardShell({ children }: Props) {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full overflow-hidden">
-        ```
-      */}
+      <Toaster position="top-right" />
       <div className="min-h-screen flex">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
