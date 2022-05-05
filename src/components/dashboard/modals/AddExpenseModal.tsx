@@ -3,6 +3,10 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import useSWR from 'swr';
+
+import { Category } from '@/types/category';
+import fetcher from '@/lib/fetcher';
 
 type Props = {
   open: boolean;
@@ -11,10 +15,12 @@ type Props = {
 
 type FormData = {
   name: string;
-  color: string;
+  amount: number;
+  categoryId: string;
 };
 
-export default function AddCategoryModal({ open, setOpen }: Props) {
+export default function AddExpenseModal({ open, setOpen }: Props) {
+  const { data, error } = useSWR<Category[]>('/api/category', fetcher);
   const {
     register,
     handleSubmit,
@@ -23,22 +29,25 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
 
   const onSubmit = async (values: FormData) => {
     try {
-      const res = await fetch('/api/category', {
+      const res = await fetch('/api/expense', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          amount: Number(values.amount),
+        }),
       });
 
       if (res.ok) {
         setOpen(false);
-        toast.success('Category added successfully.');
+        toast.success('Expense added successfully.');
       } else {
-        toast.error('There was an issue adding your category.');
+        toast.error('There was an issue adding your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue adding your category.');
+      toast.error('There was an issue adding your expense.');
     }
   };
 
@@ -80,7 +89,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
           >
             <div className="relative inline-block transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
               <h1 className="mb-8 text-center text-2xl font-semibold text-slate-900">
-                Add Category
+                Add Expense
               </h1>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
@@ -92,25 +101,45 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
                       type="text"
                       id="text"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
-                      placeholder="Groceries"
+                      placeholder="Amazon groceries"
                       {...register('name', { required: true })}
                     />
                   </div>
                 </div>
+                <div className="mb-4">
+                  <label htmlFor="amount" className="block text-sm font-medium">
+                    Amount
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      type="text"
+                      id="text"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      placeholder="24.50"
+                      {...register('amount', { required: true })}
+                    />
+                  </div>
+                </div>
                 <div>
-                  <label htmlFor="color" className="block text-sm font-medium">
+                  <label
+                    htmlFor="categoryId"
+                    className="block text-sm font-medium"
+                  >
                     Color
                   </label>
                   <div className="mt-1">
                     <select
                       id="text"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
-                      placeholder="Groceries"
-                      {...register('color', { required: true })}
+                      placeholder="Please choose a section"
+                      {...register('categoryId', { required: true })}
                     >
-                      <option>blue</option>
-                      <option>purple</option>
-                      <option>pink</option>
+                      <option value="">Please select a category</option>
+                      {data?.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -119,7 +148,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
                     type="submit"
                     className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
                   >
-                    Save
+                    Add
                   </button>
                 </div>
               </form>

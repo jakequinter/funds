@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'iconoir-react';
 import { motion } from 'framer-motion';
@@ -18,13 +17,13 @@ export default function Container({ children }: Props) {
   const { data: session } = useSession();
 
   return (
-    <div className="bg-slate-50 min-h-screen">
-      <nav className="flex items-center justify-between p-4 max-w-screen-lg mx-auto">
+    <div className="min-h-screen bg-slate-50">
+      <nav className="mx-auto flex max-w-screen-lg items-center justify-between p-4">
         <Link href="/" passHref>
           <a className="text-2xl font-bold text-slate-900">tin</a>
         </Link>
 
-        <div className="flex space-x-8 items-center">
+        <div className="flex items-center space-x-8">
           {!session && (
             <button
               className="font-medium text-slate-700"
@@ -38,7 +37,7 @@ export default function Container({ children }: Props) {
             <motion.button
               whileHover="hover"
               type="button"
-              className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700  hover:border-slate-400 focus:outline-none focus:ring-0"
+              className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
               onClick={() => signOut()}
             >
               Sign up
@@ -52,7 +51,7 @@ export default function Container({ children }: Props) {
             <Link href="/dashboard" passHref>
               <motion.a
                 whileHover="hover"
-                className="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700  hover:border-slate-400 focus:outline-none focus:ring-0"
+                className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
               >
                 Dashboard
                 <motion.span variants={iconVariants}>
