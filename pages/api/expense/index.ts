@@ -9,20 +9,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-
-  if (req.method === 'GET') {
-    if (session && session.user) {
-      const result = await prisma.category.findMany({
-        where: {
-          userId: session.user.id,
-        },
-      });
-
-      return res.status(200).json(result);
-    }
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
+  
   // POST /api/category
   // Required fields in body: categoryId, name, amount
   if (req.method === 'POST') {

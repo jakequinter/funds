@@ -16,7 +16,7 @@ const Categories: NextPage = () => {
         open={addCategoryModalOpen}
         setOpen={setAddCategoryModalOpen}
       />
-      <div className="mb-24 flex items-center justify-between">
+      <div className="mb-12 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">Categories</h1>
         <button
           type="button"

@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 
 import AddExpenseModal from '@/components/dashboard/modals/AddExpenseModal';
 import DashboardShell from '@/components/dashboard/DashboardShell';
+import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
   const { data: session } = useSession();
@@ -14,7 +15,7 @@ const Dashboard: NextPage = () => {
   return (
     <DashboardShell>
       <AddExpenseModal open={expenseModalOpen} setOpen={setExpenseModalOpen} />
-      <div className="flex items-center justify-between">
+      <div className="mb-12 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">
           Welcome, {session?.user?.name?.split(' ')[0]}!
         </h1>
@@ -26,6 +27,8 @@ const Dashboard: NextPage = () => {
           <Plus className="mr-2" /> Add expense
         </button>
       </div>
+
+      <Stats />
     </DashboardShell>
   );
 };

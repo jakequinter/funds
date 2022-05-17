@@ -12,6 +12,7 @@ type Props = {
 type FormData = {
   name: string;
   color: string;
+  target: number;
 };
 
 export default function AddCategoryModal({ open, setOpen }: Props) {
@@ -28,7 +29,10 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          target: Number(values.target),
+        }),
       });
 
       if (res.ok) {
@@ -90,20 +94,18 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
                   <div className="mt-1">
                     <input
                       type="text"
-                      id="text"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="Groceries"
                       {...register('name', { required: true })}
                     />
                   </div>
                 </div>
-                <div>
+                <div className="mb-4">
                   <label htmlFor="color" className="block text-sm font-medium">
                     Color
                   </label>
                   <div className="mt-1">
                     <select
-                      id="text"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="Groceries"
                       {...register('color', { required: true })}
@@ -112,6 +114,19 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
                       <option>purple</option>
                       <option>pink</option>
                     </select>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="target" className="block text-sm font-medium">
+                    Target amount
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      type="number"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      placeholder="500"
+                      {...register('target', { required: true })}
+                    />
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-6">

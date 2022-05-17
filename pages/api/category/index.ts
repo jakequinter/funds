@@ -16,6 +16,9 @@ export default async function handle(
         where: {
           userId: session.user.id,
         },
+        include: {
+          Expense: true,
+        }
       });
 
       return res.status(200).json(result);
@@ -24,15 +27,16 @@ export default async function handle(
   }
 
   // POST /api/category
-  // Required fields in body: userId, name, color
+  // Required fields in body: userId, name, color, target
   if (req.method === 'POST') {
-    const { name, color } = req.body;
+    const { name, color, target } = req.body;
 
     if (session && session.user) {
       const result = await prisma.category.create({
         data: {
           name,
           color,
+          target,
           userId: session.user.id,
         },
       });
