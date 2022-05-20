@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import fetcher from '@/lib/fetcher';
-import handleBoxStyles from './handleBoxStyles';
+import handleBoxStyles from '@/utils/handleBoxStyles';
 
 export default function CategoryList() {
   const { data, error } = useSWR<Category[]>('/api/category', fetcher);

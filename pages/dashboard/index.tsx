@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 
 import AddExpenseModal from '@/components/dashboard/modals/AddExpenseModal';
 import DashboardShell from '@/components/dashboard/DashboardShell';
+import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
@@ -29,6 +30,8 @@ const Dashboard: NextPage = () => {
       </div>
 
       <Stats />
+
+      <ExpensesTable />
     </DashboardShell>
   );
 };

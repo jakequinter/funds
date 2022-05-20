@@ -24,6 +24,7 @@ model User {
 
   Account Account[]
   Section Category[]
+  Expense Expense[]
   Session Session[]
 
   @@map(name: "users")
@@ -53,7 +54,9 @@ model Expense {
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   section    Category @relation(fields: [categoryId], references: [id])
-  categoryId String   @unique @map(name: "category_id")
+  categoryId String   @map(name: "category_id")
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @map(name: "user_id")
 
   @@map(name: "expenses")
 }

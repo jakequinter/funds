@@ -6,11 +6,13 @@ import {
   Cancel,
   Home,
   LogOut,
-  Menu,
+  Menu as MenuIcon,
 } from 'iconoir-react';
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, Menu, Transition } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
+
+import classNames from '@/utils/classNames';
 
 type SidebarNavItemProps = {
   href: string;
@@ -42,6 +44,41 @@ const SidebarNavItem = ({ href, icon, text }: SidebarNavItemProps) => {
         <span>{text}</span>
       </a>
     </Link>
+  );
+};
+
+type DropwdownNavItemProps = {
+  href: string;
+  icon: ReactNode;
+  text: string;
+};
+
+const DropwdownNavItem = ({ href, icon, text }: DropwdownNavItemProps) => {
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (!href.includes('/settings')) {
+      if (window.location.pathname === href) setIsActive(true);
+    } else {
+      if (window.location.pathname.includes('/settings')) setIsActive(true);
+    }
+  }, [href]);
+
+  return (
+    <Menu.Item>
+      <Link href={href} passHref>
+        <a
+          href="#"
+          className={classNames(
+            isActive ? 'bg-slate-200 text-slate-900' : '',
+            'my-1 flex items-center rounded-md px-4 py-2.5 text-sm hover:bg-slate-200 hover:text-slate-900'
+          )}
+        >
+          <span className="mr-4">{icon}</span>
+          <span>{text}</span>
+        </a>
+      </Link>
+    </Menu.Item>
   );
 };
 
@@ -175,9 +212,9 @@ export default function DashboardShell({ children }: Props) {
                   </div>
                 </nav>
               </div>
-              <div className="flex flex-shrink-0 border-t border-slate-300 p-4">
+              <div className="flex flex-shrink-0 p-4">
                 <button
-                  className="flex items-center text-sm"
+                  className="flex items-center text-sm hover:text-slate-500"
                   onClick={() => signOut({ callbackUrl: '/' })}
                 >
                   <LogOut className="mr-4 h-5 w-5" /> Sign out
@@ -192,16 +229,41 @@ export default function DashboardShell({ children }: Props) {
               <div>
                 <h1 className="text-2xl font-bold text-slate-900">tin</h1>
               </div>
-              <div>
-                <button
-                  type="button"
-                  className="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-slate-500 hover:text-slate-900"
-                  onClick={() => setSidebarOpen(true)}
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="inline-flex w-full justify-center px-4 py-2 text-gray-700 focus:outline-none focus:ring-0">
+                    <MenuIcon className="h-5 w-5" aria-hidden="true" />
+                  </Menu.Button>
+                </div>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
                 >
-                  <span className="sr-only">Open sidebar</span>
-                  <Menu className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-slate-100 px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <DropwdownNavItem
+                      href="/dashboard"
+                      icon={<Home />}
+                      text="Dashboard"
+                    />
+                    <DropwdownNavItem
+                      href="/dashboard/categories"
+                      icon={<BookmarkEmpty />}
+                      text="Categories"
+                    />
+                    <DropwdownNavItem
+                      href="/dashboard/history"
+                      icon={<Calendar />}
+                      text="History"
+                    />
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </div>
           </div>
           <div className="relative z-0 flex flex-1 overflow-hidden">

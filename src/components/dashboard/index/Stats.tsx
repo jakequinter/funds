@@ -34,12 +34,15 @@ export default function Stats() {
           data.map(category => (
             <div
               key={category.name}
-              className="rounded-lg bg-white px-4 py-5 shadow-lg sm:p-6"
+              className="rounded-lg bg-white p-4 shadow-lg"
             >
               <dt>{category.name}</dt>
               <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
                 <div className="flex items-baseline text-2xl font-semibold text-slate-900">
-                  ${handleCalculateExpensesByCategory(category.name).toFixed(2)}
+                  $
+                  {handleCalculateExpensesByCategory(
+                    category.name
+                  ).toLocaleString()}
                   <span className="ml-2 text-sm font-medium text-slate-500">
                     / ${category.target.toLocaleString()}
                   </span>
