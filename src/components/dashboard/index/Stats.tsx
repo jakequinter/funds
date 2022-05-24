@@ -8,6 +8,7 @@ import fetcher from '@/lib/fetcher';
 export default function Stats() {
   const { data, error } = useSWR<Category[]>('/api/category', fetcher);
 
+  if (!data) return null;
   if (error) return <div>failed to load</div>;
 
   const handleCalculateExpensesByCategory = (categoryName: string) => {

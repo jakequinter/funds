@@ -9,27 +9,11 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-
-  if (req.method === 'GET') {
-    if (session && session.user) {
-      const result = await prisma.category.findMany({
-        where: {
-          userId: session.user.id,
-        },
-        include: {
-          Expense: true,
-        }
-      });
-
-      return res.status(200).json(result);
-    }
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  // POST /api/category
-  // Required fields in body: userId, name, color, target
+  
+  // POST /api/expense
+  // Required fields in body: name, color, target, instanceId
   if (req.method === 'POST') {
-    const { name, color, target } = req.body;
+    const { name, color, target, instanceId } = req.body;
 
     if (session && session.user) {
       const result = await prisma.category.create({
@@ -37,7 +21,7 @@ export default async function handle(
           name,
           color,
           target,
-          userId: session.user.id,
+          instanceId      
         },
       });
 

@@ -1,8 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+
+import { InstanceContext } from '@/hooks/InstanceContext';
 
 type Props = {
   open: boolean;
@@ -16,6 +18,7 @@ type FormData = {
 };
 
 export default function AddCategoryModal({ open, setOpen }: Props) {
+  const { instance } = useContext(InstanceContext);
   const {
     register,
     handleSubmit,
@@ -23,6 +26,8 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
   } = useForm<FormData>();
 
   const onSubmit = async (values: FormData) => {
+    if (!instance) return;
+
     try {
       const res = await fetch('/api/category', {
         method: 'POST',
@@ -32,6 +37,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
         body: JSON.stringify({
           ...values,
           target: Number(values.target),
+          instanceId: instance.id,
         }),
       });
 

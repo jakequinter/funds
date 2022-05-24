@@ -9,6 +9,8 @@ import handleBoxStyles from '@/utils/handleBoxStyles';
 export default function ExpensesTable() {
   const { data, error } = useSWR<Category[]>('/api/category', fetcher);
 
+  if (!data || !data.length) return null;
+
   return (
     <div className="mt-8 flex flex-col">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">

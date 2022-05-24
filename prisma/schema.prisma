@@ -22,12 +22,27 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  Account Account[]
-  Section Category[]
-  Expense Expense[]
-  Session Session[]
+  account   Account[]
+  instances Instance[]
+  session   Session[]
 
   @@map(name: "users")
+}
+
+model Instance {
+  id        String   @id @default(cuid())
+  month     Int
+  year      Int
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map(name: "user_id")
+
+  categories Category[]
+
+  @@unique([month, year], name: "month_year")
+  @@map(name: "instances")
 }
 
 model Category {
@@ -38,11 +53,10 @@ model Category {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  Expense Expense[]
-  user    User      @relation(fields: [userId], references: [id])
-  userId  String    @map(name: "user_id")
+  instances  Instance  @relation(fields: [instanceId], references: [id])
+  instanceId String    @map(name: "instance_id")
+  expenses   Expense[]
 
-  @@unique([userId, name])
   @@map(name: "categories")
 }
 
@@ -53,10 +67,8 @@ model Expense {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  section    Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @map(name: "category_id")
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @map(name: "user_id")
 
   @@map(name: "expenses")
 }

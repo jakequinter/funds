@@ -1,17 +1,25 @@
+import { useContext } from 'react';
 import useSWR from 'swr';
 
-import { Category } from '@/types/category';
+import { Instance } from '@/types/instance';
+import { InstanceContext } from '@/hooks/InstanceContext';
 import fetcher from '@/lib/fetcher';
 import handleBoxStyles from '@/utils/handleBoxStyles';
 
 export default function CategoryList() {
-  const { data, error } = useSWR<Category[]>('/api/category', fetcher);
+  const { instance } = useContext(InstanceContext);
 
+  const { data, error } = useSWR<Instance>(
+    `/api/instance/${instance.id}`,
+    fetcher
+  );
+
+  if (!data) return <p>Loading...</p>;
   if (error) return <div>failed to load</div>;
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-      {data?.map(category => {
+      {data?.categories?.map(category => {
         const { bgColor, textColor, shadowColor } = handleBoxStyles(
           category.color
         );
