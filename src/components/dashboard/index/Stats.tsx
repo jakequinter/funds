@@ -24,7 +24,21 @@ export default function Stats({ categories }: Props) {
   ) => {
     const amountSpent = handleCalculateExpensesByCategory(categoryName);
 
-    return ((amountSpent / categoryTarget) * 100).toFixed(2);
+    if (amountSpent < categoryTarget) {
+      return (
+        <div className="flex items-center">
+          <ArrowUp className="mr-1" fontSize="10" />{' '}
+          {((amountSpent / categoryTarget) * 100).toFixed(2)}%
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex items-center">
+          <ArrowDown className="mr-1" fontSize="10" />{' '}
+          {((amountSpent / categoryTarget) * 100).toFixed(2)}%
+        </div>
+      );
+    }
   };
 
   return (
@@ -60,7 +74,6 @@ export default function Stats({ categories }: Props) {
                   category.name,
                   category.target
                 )}
-                %
               </div>
             </dd>
           </div>
