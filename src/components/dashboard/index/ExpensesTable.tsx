@@ -1,16 +1,13 @@
-import React from 'react';
 import { format } from 'date-fns';
-import useSWR from 'swr';
 
 import { Category } from '@/types/category';
-import fetcher from '@/lib/fetcher';
 import handleBoxStyles from '@/utils/handleBoxStyles';
 
-export default function ExpensesTable() {
-  const { data, error } = useSWR<Category[]>('/api/category', fetcher);
+type Props = {
+  categories: Category[];
+};
 
-  if (!data || !data.length) return null;
-
+export default function ExpensesTable({ categories }: Props) {
   return (
     <div className="mt-8 flex flex-col">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -46,12 +43,12 @@ export default function ExpensesTable() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 bg-white">
-                {data &&
-                  data.map(category => {
+                {categories &&
+                  categories.map(category => {
                     const { bgColor, textColor, shadowColor } = handleBoxStyles(
                       category.color
                     );
-                    return category.Expense.map(expense => (
+                    return category.expenses.map(expense => (
                       <tr key={expense.id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">
                           {expense.name}

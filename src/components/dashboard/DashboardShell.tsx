@@ -36,8 +36,8 @@ const SidebarNavItem = ({ href, icon, text }: SidebarNavItemProps) => {
       <a
         className={`${
           isActive
-            ? 'bg-slate-200 text-slate-900'
-            : 'hover:bg-slate-200 hover:text-slate-900'
+            ? 'bg-emerald-200 text-emerald-900'
+            : 'hover:bg-emerald-200 hover:text-emerald-900'
         }     group flex items-center rounded-md px-2 py-2 text-sm font-medium`}
       >
         <span className="mr-4">{icon}</span>
@@ -70,8 +70,8 @@ const DropwdownNavItem = ({ href, icon, text }: DropwdownNavItemProps) => {
         <a
           href="#"
           className={classNames(
-            isActive ? 'bg-slate-200 text-slate-900' : '',
-            'my-1 flex items-center rounded-md px-4 py-2.5 text-sm hover:bg-slate-200 hover:text-slate-900'
+            isActive ? 'bg-emerald-200 text-emerald-900' : '',
+            'my-1 flex items-center rounded-md px-4 py-2.5 text-sm hover:bg-emerald-200 hover:text-emerald-900'
           )}
         >
           <span className="mr-4">{icon}</span>

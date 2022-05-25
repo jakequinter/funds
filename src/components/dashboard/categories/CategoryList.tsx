@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import useSWR from 'swr';
 
 import { Instance } from '@/types/instance';
@@ -8,9 +8,8 @@ import handleBoxStyles from '@/utils/handleBoxStyles';
 
 export default function CategoryList() {
   const { instance } = useContext(InstanceContext);
-
   const { data, error } = useSWR<Instance>(
-    `/api/instance/${instance.id}`,
+    `/api/instance/${instance?.id}`,
     fetcher
   );
 

@@ -1,12 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
 import { Category } from '@/types/category';
-import fetcher from '@/lib/fetcher';
+import { InstanceContext } from '@/hooks/InstanceContext';
 
 type Props = {
   open: boolean;
@@ -20,7 +18,7 @@ type FormData = {
 };
 
 export default function AddExpenseModal({ open, setOpen }: Props) {
-  const { data, error } = useSWR<Category[]>('/api/category', fetcher);
+  const { instance } = useContext(InstanceContext);
   const {
     register,
     handleSubmit,
@@ -135,7 +133,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
                       {...register('categoryId', { required: true })}
                     >
                       <option value="">Please select a category</option>
-                      {data?.map(category => (
+                      {instance?.categories?.map((category: Category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}
                         </option>

@@ -6,7 +6,7 @@ export type Category = {
   name: string;
   color: string;
   target: number;
-  Expense: Expense[];
+  expenses: Expense[];
   createdAt: Date;
   updatedAt: Date;
 }

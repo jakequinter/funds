@@ -2,18 +2,13 @@ import { useContext, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
-import useSWR from 'swr';
 
-import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import AddCategoryModal from '@/components/dashboard/modals/AddCategoryModal';
 import CategoryList from '@/components/dashboard/categories/CategoryList';
 import DashboardShell from '@/components/dashboard/DashboardShell';
-import fetcher from '@/lib/fetcher';
 
 const Categories: NextPage = () => {
-  const msg = useContext(InstanceContext);
-  const { data, error } = useSWR<Instance[]>('/api/instance', fetcher);
   const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
 
   return (
