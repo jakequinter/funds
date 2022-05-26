@@ -2,6 +2,7 @@
 import { Fragment, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
+import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
 import { InstanceContext } from '@/hooks/InstanceContext';
@@ -19,6 +20,7 @@ type FormData = {
 
 export default function AddCategoryModal({ open, setOpen }: Props) {
   const { instance } = useContext(InstanceContext);
+  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
@@ -43,6 +45,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
 
       if (res.ok) {
         setOpen(false);
+        mutate(`/api/instance/${instance?.id}`);
         toast.success('Category added successfully.');
       } else {
         toast.error('There was an issue adding your category.');

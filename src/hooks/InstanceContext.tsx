@@ -17,7 +17,7 @@ export const InstanceContextProvider = ({ children }: Props) => {
   useEffect(() => {
     const currentInstance = data?.find(
       instance =>
-        instance.month === new Date().getMonth() &&
+        instance.month === new Date().getMonth() + 1 &&
         instance.year === new Date().getFullYear()
     );
 

@@ -10,7 +10,7 @@ export default function EmptyState() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          month: new Date().getMonth(),
+          month: new Date().getMonth() + 1,
           year: new Date().getFullYear(),
         }),
       });

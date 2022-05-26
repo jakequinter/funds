@@ -1,6 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
+import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
 import { Category } from '@/types/category';
@@ -19,6 +20,7 @@ type FormData = {
 
 export default function AddExpenseModal({ open, setOpen }: Props) {
   const { instance } = useContext(InstanceContext);
+  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
@@ -40,6 +42,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
 
       if (res.ok) {
         setOpen(false);
+        mutate(`/api/category/${instance?.id}`);
         toast.success('Expense added successfully.');
       } else {
         toast.error('There was an issue adding your expense.');
@@ -99,7 +102,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
                       type="text"
                       id="text"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
-                      placeholder="Amazon groceries"
+                      placeholder="Amazon"
                       {...register('name', { required: true })}
                     />
                   </div>
@@ -132,7 +135,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
                       placeholder="Please choose a section"
                       {...register('categoryId', { required: true })}
                     >
-                      <option value="">Please select a category</option>
+                      <option value="">Select a category</option>
                       {instance?.categories?.map((category: Category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}

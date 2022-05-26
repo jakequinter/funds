@@ -24,7 +24,7 @@ export default function Stats({ categories }: Props) {
   ) => {
     const amountSpent = handleCalculateExpensesByCategory(categoryName);
 
-    if (amountSpent < categoryTarget) {
+    if (amountSpent <= categoryTarget) {
       return (
         <div className="flex items-center">
           <ArrowUp className="mr-1" fontSize="10" />{' '}
@@ -63,7 +63,7 @@ export default function Stats({ categories }: Props) {
 
               <div
                 className={classNames(
-                  handleCalculateExpensesByCategory(category.name) <
+                  handleCalculateExpensesByCategory(category.name) <=
                     category.target
                     ? 'bg-green-100 text-green-800'
                     : 'bg-red-100 text-red-800',
