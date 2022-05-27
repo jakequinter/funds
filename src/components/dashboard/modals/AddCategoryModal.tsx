@@ -1,11 +1,13 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
 import { InstanceContext } from '@/hooks/InstanceContext';
+import categoriesSelectColors from '@/data/categoriesSelectColors';
+import Color from '../categories/types/color';
+import CategoryColorSelect from '../categories/CategoryColorSelect';
 
 type Props = {
   open: boolean;
@@ -14,7 +16,7 @@ type Props = {
 
 type FormData = {
   name: string;
-  color: string;
+  color: Color;
   target: number;
 };
 
@@ -24,6 +26,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormData>();
 
@@ -38,6 +41,7 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
         },
         body: JSON.stringify({
           ...values,
+          color: values.color.name,
           target: Number(values.target),
           instanceId: instance.id,
         }),
@@ -109,22 +113,19 @@ export default function AddCategoryModal({ open, setOpen }: Props) {
                     />
                   </div>
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="color" className="block text-sm font-medium">
-                    Color
-                  </label>
-                  <div className="mt-1">
-                    <select
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
-                      placeholder="Groceries"
-                      {...register('color', { required: true })}
-                    >
-                      <option>blue</option>
-                      <option>purple</option>
-                      <option>pink</option>
-                    </select>
-                  </div>
-                </div>
+                <Controller
+                  control={control}
+                  name="color"
+                  render={({
+                    field: { onChange, onBlur, value, name, ref },
+                  }) => (
+                    <CategoryColorSelect
+                      value={value}
+                      colors={categoriesSelectColors}
+                      onChange={onChange}
+                    />
+                  )}
+                />
                 <div className="mb-4">
                   <label htmlFor="target" className="block text-sm font-medium">
                     Target amount

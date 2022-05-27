@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 import { Category } from '@/types/category';
-import handleBoxStyles from '@/utils/handleBoxStyles';
+import handleCategoryColors from '@/utils/handleCategoryColors';
 
 type Props = {
   categories: Category[];
@@ -44,9 +44,8 @@ export default function ExpensesTable({ categories }: Props) {
             <tbody className="divide-y divide-slate-200 bg-white">
               {categories &&
                 categories.map(category => {
-                  const { bgColor, textColor, shadowColor } = handleBoxStyles(
-                    category.color
-                  );
+                  const { bgColor, textColor, shadowColor } =
+                    handleCategoryColors(category.color);
                   return category.expenses.map(expense => (
                     <tr key={expense.id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">

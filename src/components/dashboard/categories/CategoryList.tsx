@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import fetcher from '@/lib/fetcher';
-import handleBoxStyles from '@/utils/handleBoxStyles';
+import handleCategoryColors from '@/utils/handleCategoryColors';
 
 export default function CategoryList() {
   const { instance } = useContext(InstanceContext);
@@ -19,7 +19,7 @@ export default function CategoryList() {
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
       {data?.categories?.map(category => {
-        const { bgColor, textColor, shadowColor } = handleBoxStyles(
+        const { bgColor, textColor, shadowColor } = handleCategoryColors(
           category.color
         );
 
