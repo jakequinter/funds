@@ -1,21 +1,29 @@
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
 
-import { InstanceContext } from '@/hooks/InstanceContext';
+import { Category } from '@/types/category';
 import AddCategoryModal from '@/components/dashboard/modals/AddCategoryModal';
 import CategoryList from '@/components/dashboard/categories/CategoryList';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 
 const Categories: NextPage = () => {
   const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
+  const [category, setCategory] = useState<Category | null>(null);
+
+  useEffect(() => {
+    if (!addCategoryModalOpen) {
+      setCategory(null);
+    }
+  }, [addCategoryModalOpen]);
 
   return (
     <DashboardShell>
       <AddCategoryModal
         open={addCategoryModalOpen}
         setOpen={setAddCategoryModalOpen}
+        category={category}
       />
       <div className="mb-12 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">Categories</h1>
@@ -27,7 +35,10 @@ const Categories: NextPage = () => {
           <Plus className="mr-2" /> Add category
         </button>
       </div>
-      <CategoryList />
+      <CategoryList
+        setModalOpen={setAddCategoryModalOpen}
+        setSelectedEditCategory={setCategory}
+      />
     </DashboardShell>
   );
 };

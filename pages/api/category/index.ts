@@ -30,4 +30,20 @@ export default async function handle(
       return res.status(401).send({ message: 'Unauthorized' });
     }
   }
+
+  if (req.method === 'DELETE') {
+    const { id } = req.body;
+
+    if (session && session.user) {
+      const result = await prisma.category.delete({
+        where: {
+          id: id as string,
+        },
+      });
+
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).send({ message: 'Unauthorized' });
+    }
+  }
 }

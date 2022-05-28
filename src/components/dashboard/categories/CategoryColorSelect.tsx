@@ -2,17 +2,24 @@ import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { ArrowSeparateVertical } from 'iconoir-react';
 
+import { Category } from '@/types/category';
 import classNames from '@/utils/classNames';
 import Color from './types/color';
 
 type Props = {
   colors: Color[];
-  value: Color;
-  onChange: (color: Color) => void;
+  category: Category | null;
+  onChange: (color: Color | undefined) => void;
 };
 
-export default function CategoryColorSelect({ colors, onChange }: Props) {
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+export default function CategoryColorSelect({
+  colors,
+  category,
+  onChange,
+}: Props) {
+  const [selectedColor, setSelectedColor] = useState(
+    category ? colors.find(c => c.name === category.color) : colors[0]
+  );
 
   return (
     <Listbox
@@ -31,10 +38,10 @@ export default function CategoryColorSelect({ colors, onChange }: Props) {
             <Listbox.Button className="relative mb-1 w-full cursor-default rounded-md border border-slate-300 bg-white py-2.5 pl-3 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-0">
               <span className="flex items-center">
                 <span
-                  className={`${selectedColor.bgColor} inline-block h-2 w-2 flex-shrink-0 rounded-full`}
+                  className={`${selectedColor?.bgColor} inline-block h-2 w-2 flex-shrink-0 rounded-full`}
                 />
                 <span className="ml-3 block truncate">
-                  {selectedColor.name}
+                  {selectedColor?.name}
                 </span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

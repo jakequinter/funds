@@ -10,22 +10,21 @@ export default async function handle(
 ) {
   const session = await getSession({ req });
 
-if (req.method === 'GET') {
-  if (session && session.user) {
-    const { instanceId } = req.query;
+  if (req.method === 'GET') {
+    if (session && session.user) {
+      const { instanceId } = req.query;
 
-    const result = await prisma.category.findMany({
-      where: {
-        instanceId: instanceId as string,
-        
-      },
-      include: {
-        expenses: true,
-      }
-    });
+      const result = await prisma.category.findMany({
+        where: {
+          instanceId: instanceId as string,
+        },
+        include: {
+          expenses: true,
+        },
+      });
 
-    return res.status(200).json(result);
+      return res.status(200).json(result);
+    }
+    return res.status(401).json({ message: 'Unauthorized' });
   }
-  return res.status(401).json({ message: 'Unauthorized' });
-}
 }
