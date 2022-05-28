@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Plus } from 'iconoir-react';
 
 import { Category } from '@/types/category';
-import AddCategoryModal from '@/components/dashboard/modals/AddCategoryModal';
+import CategoryModal from '@/components/dashboard/modals/CategoryModal';
 import CategoryList from '@/components/dashboard/categories/CategoryList';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 
@@ -20,7 +20,7 @@ const Categories: NextPage = () => {
 
   return (
     <DashboardShell>
-      <AddCategoryModal
+      <CategoryModal
         open={addCategoryModalOpen}
         setOpen={setAddCategoryModalOpen}
         category={category}
