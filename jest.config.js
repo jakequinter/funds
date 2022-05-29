@@ -17,6 +17,7 @@ const customJestConfig = {
     '^@/hooks(.*)$': '<rootDir>/src/hooks/$1',
     '^@/lib(.*)$': '<rootDir>/src/lib/$1',
     '^@/utils(.*)$': '<rootDir>/src/utils/$1',
+    '^@/data(.*)$': '<rootDir>/src/data/$1',
     '^@/test-utils(.*)$': '<rootDir>/src/test-utils/$1',
   },
 
