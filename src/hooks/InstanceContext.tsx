@@ -15,13 +15,15 @@ export const InstanceContextProvider = ({ children }: Props) => {
   const [instance, setInstance] = useState<Instance | null>(null);
 
   useEffect(() => {
-    const currentInstance = data?.find(
-      instance =>
-        instance.month === new Date().getMonth() + 1 &&
-        instance.year === new Date().getFullYear()
-    );
+    if (!data?.hasOwnProperty('message')) {
+      const currentInstance = data?.find(
+        instance =>
+          instance.month === new Date().getMonth() + 1 &&
+          instance.year === new Date().getFullYear()
+      );
 
-    setInstance(currentInstance || null);
+      setInstance(currentInstance || null);
+    }
   }, [data]);
 
   return (
