@@ -8,31 +8,32 @@ import { SessionProvider } from 'next-auth/react';
 import { authenticatedSession } from '@/test-utils/session';
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
-import CategoryCards from './CategoryCards';
+import Dashboard from 'pages/dashboard/';
 
-describe('Categories', () => {
+describe('Dashboard', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
       render(
         <SessionProvider session={authenticatedSession}>
           <MySwrConfig>
             <InstanceContextProvider>
-              <CategoryCards
-                setModalOpen={() => null}
-                setSelectedEditCategory={() => null}
-              />
+              <Dashboard />
             </InstanceContextProvider>
           </MySwrConfig>
         </SessionProvider>
       );
 
-      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(screen.getByText(/loading.../i));
     });
 
-    it('renders the list of categories', () => {
-      expect(screen.getByText(/groceries/i)).toBeInTheDocument();
-      expect(screen.getByText(/miscellaneous/i)).toBeInTheDocument();
-      expect(screen.getByText(/restaurants/i)).toBeInTheDocument();
+    describe('with an instance that has categories', () => {
+      it('renders Dashboard page with user name', () => {
+        expect(screen.getByText(/welcome, jake!/i)).toBeInTheDocument();
+      });
+
+      it('shows add expense button', () => {
+        expect(screen.getByText(/add expense/i)).toBeInTheDocument();
+      });
     });
   });
 });

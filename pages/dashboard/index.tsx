@@ -19,27 +19,16 @@ const Dashboard: NextPage = () => {
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const { data: session } = useSession();
   const { instance } = useContext(InstanceContext);
-  const { data, error } = useSWR<Instance[]>(
-    `/api/instance/${instance?.id}`,
-    fetcher
-  );
 
-  const { data: categoryData, error: categoryError } = useSWR<Category[]>(
+  const { data, error } = useSWR<Category[]>(
     `/api/category/${instance?.id}`,
     fetcher
   );
 
-  if (!data || !categoryData) {
-    return (
-      <DashboardShell>
-        <p>Loading...</p>
-      </DashboardShell>
-    );
-  }
+  if (!data) return <p>Loading...</p>;
+  if (error) return <div>failed to load</div>;
 
-  if (error | categoryError) return <p>Error</p>;
-
-  const hasCategories = instance.categories.length > 0;
+  const hasCategories = data.length > 0;
 
   if (!hasCategories) {
     return (
@@ -67,9 +56,9 @@ const Dashboard: NextPage = () => {
         ) : null}
       </div>
 
-      <Stats categories={categoryData} />
+      <Stats categories={data} />
 
-      <ExpensesTable categories={categoryData} />
+      <ExpensesTable categories={data} />
     </DashboardShell>
   );
 };

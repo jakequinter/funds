@@ -15,8 +15,6 @@ jest.mock('next-auth/react');
 describe('Categories', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
-      (useSession as jest.Mock).mockReturnValueOnce(authenticatedSession);
-
       render(
         <MySwrConfig>
           <InstanceContextProvider>

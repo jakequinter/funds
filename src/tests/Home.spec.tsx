@@ -1,43 +1,58 @@
 import {
-  act,
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { useSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 
-import {
-  authenticatedSession,
-  unauthenticatdSession,
-} from '@/test-utils/session';
+import { authenticatedSession } from '@/test-utils/session';
+import { InstanceContextProvider } from '@/hooks/InstanceContext';
+import { MySwrConfig } from '@/lib/SWRConfig';
 import Home from 'pages/index';
 
-jest.mock('next-auth/react');
-
 describe('Home', () => {
-  it('renders home page', () => {
-    (useSession as jest.Mock).mockReturnValueOnce(unauthenticatdSession);
+  describe('when user is authenticated', () => {
+    beforeEach(async () => {
+      render(
+        <SessionProvider session={authenticatedSession}>
+          <MySwrConfig>
+            <InstanceContextProvider>
+              <Home />
+            </InstanceContextProvider>
+          </MySwrConfig>
+        </SessionProvider>
+      );
+    });
 
-    render(<Home />);
+    it('renders home page', () => {
+      expect(screen.getByText(/tin/i)).toBeInTheDocument();
+    });
 
-    expect(screen.getByText(/tin/i)).toBeInTheDocument();
+    it('shows authorized state', () => {
+      expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+    });
   });
 
-  it('shows unauthorized state', () => {
-    (useSession as jest.Mock).mockReturnValueOnce(unauthenticatdSession);
+  describe('when user is unauthenticated', () => {
+    beforeEach(async () => {
+      render(
+        <SessionProvider session={null}>
+          <MySwrConfig>
+            <InstanceContextProvider>
+              <Home />
+            </InstanceContextProvider>
+          </MySwrConfig>
+        </SessionProvider>
+      );
+    });
 
-    render(<Home />);
+    it('renders home page', () => {
+      expect(screen.getByText(/tin/i)).toBeInTheDocument();
+    });
 
-    expect(screen.getByText(/sign in/i)).toBeInTheDocument();
-    expect(screen.getByText(/sign up/i)).toBeInTheDocument();
-  });
-
-  it('shows authorized state', () => {
-    (useSession as jest.Mock).mockReturnValueOnce(authenticatedSession);
-
-    render(<Home />);
-
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+    it('shows authorized state', () => {
+      expect(screen.getByText(/sign in/i)).toBeInTheDocument();
+      expect(screen.getByText(/sign up/i)).toBeInTheDocument();
+    });
   });
 });
