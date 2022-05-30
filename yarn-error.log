@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add --dev wahtwg-fetch
+  /usr/local/bin/node /usr/local/bin/yarn test-once
 
 PATH: 
-  /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/jakequinter/.cargo/bin:/Users/jakequinter/.fig/bin
+  /Users/jakequinter/Library/pnpm:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/jakequinter/.cargo/bin:/Users/jakequinter/.fig/bin
 
 Yarn version: 
   1.22.17
@@ -14,17 +14,12 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/wahtwg-fetch: Not found
-      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:67029:18)
-      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140883:22)
-      at Request.emit (events.js:400:28)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141855:10)
-      at Request.emit (events.js:400:28)
-      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141777:12)
-      at Object.onceWrapper (events.js:519:28)
-      at IncomingMessage.emit (events.js:412:35)
-      at endReadableNT (internal/streams/readable.js:1334:12)
-      at processTicksAndRejections (internal/process/task_queues.js:82:21)
+  SyntaxError: /Users/jakequinter/Dev/personal/tin/package.json: Unexpected token } in JSON at position 282
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -36,7 +31,8 @@ npm manifest:
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
-      "test": "jest --watch"
+      "test": "jest --watch",
+      "test-once": "jest --collectCoverage --coverageReporters lcov clover",
     },
     "dependencies": {
       "@headlessui/react": "^1.6.0",
@@ -72,7 +68,8 @@ npm manifest:
       "prettier-plugin-tailwindcss": "^0.1.10",
       "prisma": "^3.13.0",
       "tailwindcss": "^3.0.24",
-      "typescript": "4.6.4"
+      "typescript": "4.6.4",
+      "whatwg-fetch": "^3.6.2"
     }
   }
 
@@ -4838,6 +4835,11 @@ Lockfile:
     integrity sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==
     dependencies:
       iconv-lite "0.6.3"
+  
+  whatwg-fetch@^3.6.2:
+    version "3.6.2"
+    resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
+    integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
   
   whatwg-mimetype@^3.0.0:
     version "3.0.0"

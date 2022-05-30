@@ -18,7 +18,6 @@ export default function CategoryList({
   setModalOpen,
   setSelectedEditCategory,
 }: Props) {
-  const { mutate } = useSWRConfig();
   const { instance } = useContext(InstanceContext);
 
   const { data, error } = useSWR<Category[]>(

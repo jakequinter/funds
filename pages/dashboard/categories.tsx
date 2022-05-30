@@ -5,7 +5,7 @@ import { Plus } from 'iconoir-react';
 
 import { Category } from '@/types/category';
 import CategoryModal from '@/components/dashboard/modals/CategoryModal';
-import CategoryList from '@/components/dashboard/categories/CategoryList';
+import CategoryCards from '@/components/dashboard/categories/CategoryCards/CategoryCards';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 
 const Categories: NextPage = () => {
@@ -35,7 +35,7 @@ const Categories: NextPage = () => {
           <Plus className="mr-2" /> Add category
         </button>
       </div>
-      <CategoryList
+      <CategoryCards
         setModalOpen={setAddCategoryModalOpen}
         setSelectedEditCategory={setCategory}
       />

@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react';
 import { authenticatedSession } from '@/test-utils/session';
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
-import Categories from 'pages/dashboard/categories';
+import CategoryCards from './CategoryCards';
 
 jest.mock('next-auth/react');
 
@@ -20,18 +20,21 @@ describe('Categories', () => {
       render(
         <MySwrConfig>
           <InstanceContextProvider>
-            <Categories />
+            <CategoryCards
+              setModalOpen={() => null}
+              setSelectedEditCategory={() => null}
+            />
           </InstanceContextProvider>
         </MySwrConfig>
       );
 
-      await waitForElementToBeRemoved(screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
     });
 
-    it('renders categories page', () => {
-      expect(
-        screen.getByRole('heading', { name: 'Categories' })
-      ).toBeInTheDocument();
+    it('renders the list of categories', () => {
+      expect(screen.getByText(/groceries/i)).toBeInTheDocument();
+      expect(screen.getByText(/miscellaneous/i)).toBeInTheDocument();
+      expect(screen.getByText(/restaurants/i)).toBeInTheDocument();
     });
   });
 });
