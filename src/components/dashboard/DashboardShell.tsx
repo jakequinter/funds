@@ -145,7 +145,7 @@ export default function DashboardShell({ children }: Props) {
                 </Transition.Child>
                 <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                   <div className="flex flex-shrink-0 items-center px-4">
-                    <h1 className="text-2xl font-bold text-slate-900">tin</h1>
+                    <h1 className="text-2xl font-bold text-slate-900">funds</h1>
                   </div>
                   <nav aria-label="Sidebar" className="mt-5">
                     <div className="space-y-1 px-2">
@@ -190,7 +190,7 @@ export default function DashboardShell({ children }: Props) {
             <div className="flex min-h-0 flex-1 flex-col border-r border-slate-300 bg-slate-100">
               <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div className="flex flex-shrink-0 items-center px-4">
-                  <h1 className="text-2xl font-bold text-slate-900">tin</h1>
+                  <h1 className="text-2xl font-bold text-slate-900">funds</h1>
                 </div>
                 <nav className="mt-5 flex-1" aria-label="Sidebar">
                   <div className="space-y-1 px-2">
@@ -227,7 +227,7 @@ export default function DashboardShell({ children }: Props) {
           <div className="lg:hidden">
             <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-1.5">
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">tin</h1>
+                <h1 className="text-2xl font-bold text-slate-900">funds</h1>
               </div>
               <Menu as="div" className="relative inline-block text-left">
                 <div>

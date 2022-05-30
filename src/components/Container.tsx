@@ -20,7 +20,7 @@ export default function Container({ children }: Props) {
     <div className="min-h-screen bg-slate-50">
       <nav className="mx-auto flex max-w-screen-lg items-center justify-between p-4">
         <Link href="/" passHref>
-          <a className="text-2xl font-bold text-slate-900">tin</a>
+          <a className="text-2xl font-bold text-slate-900">funds</a>
         </Link>
 
         <div className="flex items-center space-x-8">
