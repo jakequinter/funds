@@ -6,12 +6,16 @@ import { Instance } from '@/types/instance';
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
 import '../styles/globals.css';
 
+import { MySwrConfig } from '@/lib/SWRConfig';
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <InstanceContextProvider>
-        <Component {...pageProps} />
-      </InstanceContextProvider>
+      <MySwrConfig>
+        <InstanceContextProvider>
+          <Component {...pageProps} />
+        </InstanceContextProvider>
+      </MySwrConfig>
     </SessionProvider>
   );
 }

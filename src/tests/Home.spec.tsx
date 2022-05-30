@@ -1,4 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 
 import {
