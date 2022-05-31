@@ -30,10 +30,13 @@ const Dashboard: NextPage = () => {
 
   const hasCategories = data.length > 0;
 
-  if (!hasCategories) {
+  if (!instance || !hasCategories) {
     return (
       <DashboardShell>
-        <EmptyState />
+        <EmptyState
+          hasInstace={instance != null}
+          hasCategories={hasCategories}
+        />
       </DashboardShell>
     );
   }

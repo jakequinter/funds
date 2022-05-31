@@ -1,7 +1,12 @@
-import React from 'react';
+import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-export default function EmptyState() {
+type Props = {
+  hasInstace: boolean;
+  hasCategories: boolean;
+};
+
+export default function EmptyState({ hasInstace, hasCategories }: Props) {
   const handleAddInstance = async () => {
     try {
       const res = await fetch('/api/instance', {
@@ -16,12 +21,12 @@ export default function EmptyState() {
       });
 
       if (res.ok) {
-        toast.success('Expense added successfully.');
+        toast.success('Your monthly budget has been created.');
       } else {
-        toast.error('There was an issue adding your expense.');
+        toast.error('There was an issue creating your monthly budget.');
       }
     } catch (error) {
-      toast.error('There was an issue adding your expense.');
+      toast.error('There was an issue creating your monthly budget.');
     }
   };
 
@@ -35,13 +40,23 @@ export default function EmptyState() {
         You currently don&apos;t have a budget started for this month.
       </p>
 
-      <button
-        type="button"
-        className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
-        onClick={handleAddInstance}
-      >
-        Start new month
-      </button>
+      {!hasInstace && (
+        <button
+          type="button"
+          className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
+          onClick={handleAddInstance}
+        >
+          Start new month
+        </button>
+      )}
+
+      {hasInstace && !hasCategories && (
+        <Link href="/dashboard/categories" passHref>
+          <a className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0">
+            Start new month
+          </a>
+        </Link>
+      )}
     </div>
   );
 }
