@@ -25,7 +25,7 @@ const Dashboard: NextPage = () => {
     fetcher
   );
 
-  if (!data) return <p>Loading...</p>;
+  if (!data || !instance) return <p>Loading...</p>;
   if (error) return <div>failed to load</div>;
 
   const hasCategories = data.length > 0;
@@ -34,7 +34,7 @@ const Dashboard: NextPage = () => {
     return (
       <DashboardShell>
         <EmptyState
-          hasInstace={instance != null}
+          hasInstance={instance != null}
           hasCategories={hasCategories}
         />
       </DashboardShell>

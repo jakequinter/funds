@@ -23,7 +23,7 @@ describe('Dashboard', () => {
         </SessionProvider>
       );
 
-      await waitForElementToBeRemoved(screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
     });
 
     describe('with an instance that has categories', () => {

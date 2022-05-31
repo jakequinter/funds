@@ -25,7 +25,7 @@ describe('Home', () => {
     });
 
     it('renders home page', () => {
-      expect(screen.getByText(/tin/i)).toBeInTheDocument();
+      expect(screen.getByText(/funds/i)).toBeInTheDocument();
     });
 
     it('shows authorized state', () => {
@@ -47,7 +47,7 @@ describe('Home', () => {
     });
 
     it('renders home page', () => {
-      expect(screen.getByText(/tin/i)).toBeInTheDocument();
+      expect(screen.getByText(/funds/i)).toBeInTheDocument();
     });
 
     it('shows authorized state', () => {
