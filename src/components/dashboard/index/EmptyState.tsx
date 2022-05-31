@@ -27,7 +27,9 @@ export default function EmptyState() {
 
   return (
     <div className="mt-12 rounded-lg bg-white p-8 text-center shadow-lg">
-      <h1 className="text-2xl font-semibold text-slate-900">Welcome to Tin</h1>
+      <h1 className="text-2xl font-semibold text-slate-900">
+        Welcome to funds
+      </h1>
 
       <p className="mt-4 mb-8">
         You currently don&apos;t have a budget started for this month.
