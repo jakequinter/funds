@@ -51,9 +51,34 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
     });
   }, [category, open, reset]);
 
-  const onSubmit = async (values: FormData) => {
-    if (!instance) return;
+  const handleEditCategory = async (values: FormData) => {
+    try {
+      const res = await fetch('/api/category', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...values,
+          id: category?.id,
+          color: values.color.name,
+          target: Number(values.target),
+        }),
+      });
 
+      if (res.status === 200) {
+        mutate(`/api/category/${instance?.id}`);
+        setOpen(false);
+        toast.success('Category updated successfully.');
+      } else {
+        toast.error('There was an issue udpating your category.');
+      }
+    } catch (error) {
+      toast.error('There was an issue updating your category.');
+    }
+  };
+
+  const handleAddCategory = async (values: FormData) => {
     try {
       const res = await fetch('/api/category', {
         method: 'POST',
@@ -77,6 +102,16 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       }
     } catch (error) {
       toast.error('There was an issue adding your category.');
+    }
+  };
+
+  const onSubmit = async (values: FormData) => {
+    if (!instance) return;
+
+    if (category) {
+      handleEditCategory(values);
+    } else {
+      handleAddCategory(values);
     }
   };
 

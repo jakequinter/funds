@@ -10,7 +10,7 @@ export default async function handle(
 ) {
   const session = await getSession({ req });
   
-  // POST /api/expense
+  // POST /api/category
   // Required fields in body: name, color, target, instanceId
   if (req.method === 'POST') {
     const { name, color, target, instanceId } = req.body;
@@ -31,6 +31,31 @@ export default async function handle(
     }
   }
 
+  // PUT /api/category
+  // Required fields in body: id, name, color, target
+  if (req.method === 'PUT') {
+    const { id, name, color, target } = req.body;
+
+    if (session && session.user) {
+      const result = await prisma.category.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          color,
+          target,
+        },
+      });
+
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).send({ message: 'Unauthorized' });
+    }
+  }
+
+  // DELETE /api/category
+  // Required fields in body: id
   if (req.method === 'DELETE') {
     const { id } = req.body;
 

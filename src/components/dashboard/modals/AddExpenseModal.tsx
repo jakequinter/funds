@@ -126,7 +126,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
                     htmlFor="categoryId"
                     className="block text-sm font-medium"
                   >
-                    Color
+                    Category
                   </label>
                   <div className="mt-1">
                     <select
