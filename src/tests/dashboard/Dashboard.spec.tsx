@@ -23,7 +23,7 @@ describe('Dashboard', () => {
       expect(screen.getByText(/welcome, jake!/i)).toBeInTheDocument();
     });
 
-    it('allows you to add an expense', async () => {
+    it('allows you to open expense modal', async () => {
       expect(screen.getByText(/add expense/i)).toBeInTheDocument();
     });
   });

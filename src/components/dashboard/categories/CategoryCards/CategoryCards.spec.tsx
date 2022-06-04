@@ -1,5 +1,10 @@
-import { screen, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { SessionProvider } from 'next-auth/react';
+import userEvent from '@testing-library/user-event';
 
 import { authenticatedSession } from '@/test-utils/session';
 import customRender from '@/test-utils/customRender';
@@ -11,8 +16,8 @@ describe('Categories', () => {
       customRender(
         <SessionProvider session={authenticatedSession}>
           <CategoryCards
-            setModalOpen={() => null}
-            setSelectedEditCategory={() => null}
+            setModalOpen={jest.fn()}
+            setSelectedEditCategory={jest.fn()}
           />
         </SessionProvider>
       );
@@ -26,6 +31,15 @@ describe('Categories', () => {
       expect(screen.getByText(/groceries/i)).toBeInTheDocument();
       expect(screen.getByText(/miscellaneous/i)).toBeInTheDocument();
       expect(screen.getByText(/restaurants/i)).toBeInTheDocument();
+    });
+
+    it('renders Categorycards and their current total spend', () => {
+      expect(screen.getByText(/groceries/i)).toBeInTheDocument();
+      expect(screen.getByText(/181.36/i)).toBeInTheDocument();
+      expect(screen.getByText(/miscellaneou/i)).toBeInTheDocument();
+      expect(screen.getByText(/324.72/i)).toBeInTheDocument();
+      expect(screen.getByText(/restaurants/i)).toBeInTheDocument();
+      expect(screen.getByText(/1,599.99/i)).toBeInTheDocument();
     });
   });
 });

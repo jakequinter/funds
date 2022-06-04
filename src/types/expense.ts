@@ -3,6 +3,6 @@ export type Expense = {
   categoryId: string;
   name: string;
   amount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
