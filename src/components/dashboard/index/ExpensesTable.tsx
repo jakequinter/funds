@@ -5,14 +5,25 @@ import { Expense } from '@/types/expense';
 import ExpenseDropdown from './ExpenseDropdown';
 import handleCategoryColors from '@/utils/handleCategoryColors';
 
-type Props = {
+interface AllowExpensesDropdownType {
   categories: Category[];
+  showExpenseDropdown: true;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
-};
+}
+
+interface DisallowExpensesDropdownType {
+  categories: Category[];
+  showExpenseDropdown: false;
+  setSelectedExpense?: (expense: Expense) => void;
+  setShowExpenseModal?: (open: boolean) => void;
+}
+
+type Props = AllowExpensesDropdownType | DisallowExpensesDropdownType;
 
 export default function ExpensesTable({
   categories,
+  showExpenseDropdown,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
@@ -50,7 +61,9 @@ export default function ExpensesTable({
                 >
                   Type
                 </th>
-                <th scope="col" className="relative py-3.5" />
+                {showExpenseDropdown ? (
+                  <th scope="col" className="relative py-3.5" />
+                ) : null}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -76,13 +89,15 @@ export default function ExpensesTable({
                           {category.name}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
-                        <ExpenseDropdown
-                          expense={expense}
-                          setShowExpenseModal={setShowExpenseModal}
-                          setSelectedExpense={setSelectedExpense}
-                        />
-                      </td>
+                      {showExpenseDropdown ? (
+                        <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
+                          <ExpenseDropdown
+                            expense={expense}
+                            setShowExpenseModal={setShowExpenseModal}
+                            setSelectedExpense={setSelectedExpense}
+                          />
+                        </td>
+                      ) : null}
                     </tr>
                   ));
                 })}

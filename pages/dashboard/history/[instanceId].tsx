@@ -53,7 +53,7 @@ const HistoryInstance: NextPage = () => {
 
       <Stats categories={categoryData} />
 
-      <ExpensesTable categories={categoryData} />
+      <ExpensesTable categories={categoryData} showExpenseDropdown={false} />
     </DashboardShell>
   );
 };

@@ -75,6 +75,7 @@ const Dashboard: NextPage = () => {
 
       <ExpensesTable
         categories={data}
+        showExpenseDropdown
         setSelectedExpense={setExpense}
         setShowExpenseModal={setExpenseModalOpen}
       />

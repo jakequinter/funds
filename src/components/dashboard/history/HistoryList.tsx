@@ -10,7 +10,7 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 export default function HistoryList() {
   const { data, error } = useSWR<Instance[]>('/api/history', fetcher);
 
-  if (!data) return <LoadingState label="Retrieving your past histroy" />;
+  if (!data) return <LoadingState label="Retrieving your past history" />;
   if (error) return <p>Error</p>;
 
   return (
