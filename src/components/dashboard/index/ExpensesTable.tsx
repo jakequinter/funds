@@ -1,16 +1,19 @@
 import { format } from 'date-fns';
 
 import { Category } from '@/types/category';
+import { Expense } from '@/types/expense';
 import ExpenseDropdown from './ExpenseDropdown';
 import handleCategoryColors from '@/utils/handleCategoryColors';
 
 type Props = {
   categories: Category[];
+  setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 };
 
 export default function ExpensesTable({
   categories,
+  setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
   const expenses = categories.map(c => c.expenses).flat();
@@ -75,8 +78,9 @@ export default function ExpensesTable({
                       </td>
                       <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
                         <ExpenseDropdown
-                          expenseId={expense.id}
+                          expense={expense}
                           setShowExpenseModal={setShowExpenseModal}
+                          setSelectedExpense={setSelectedExpense}
                         />
                       </td>
                     </tr>

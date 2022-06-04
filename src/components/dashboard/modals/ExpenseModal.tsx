@@ -1,13 +1,16 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useEffect, useContext } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
 import { Category } from '@/types/category';
+import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
 
 type Props = {
+  expense: Expense | null;
+  setExpense: (expense: Expense | null) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
@@ -18,16 +21,72 @@ type FormData = {
   categoryId: string;
 };
 
-export default function AddExpenseModal({ open, setOpen }: Props) {
+export default function ExpenseModal({
+  expense,
+  setExpense,
+  open,
+  setOpen,
+}: Props) {
   const { instance } = useContext(InstanceContext);
   const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      name: expense?.name || '',
+      amount: expense?.amount || 0,
+      categoryId: expense?.categoryId || '',
+    },
+  });
+
+  useEffect(() => {
+    reset({
+      name: expense?.name || '',
+      amount: expense?.amount || 0,
+      categoryId: expense?.categoryId || '',
+    });
+  }, [expense, open, reset]);
 
   const onSubmit = async (values: FormData) => {
+    if (!instance) return;
+
+    if (expense) {
+      handleEditExpense(values);
+    } else {
+      handleAddExpense(values);
+    }
+  };
+
+  const handleEditExpense = async (values: FormData) => {
+    try {
+      const res = await fetch('/api/expense', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...values,
+          id: expense?.id,
+          amount: Number(values.amount),
+        }),
+      });
+
+      if (res.status === 200) {
+        mutate(`/api/category/${instance?.id}`);
+        setOpen(false);
+        toast.success('Expense updated successfully.');
+      } else {
+        toast.error('There was an issue udpating your expense.');
+      }
+    } catch (error) {
+      toast.error('There was an issue updating your expenes.');
+    }
+  };
+
+  const handleAddExpense = async (values: FormData) => {
     try {
       const res = await fetch('/api/expense', {
         method: 'POST',
@@ -52,12 +111,17 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
     }
   };
 
+  const handleCloseModal = () => {
+    setOpen(false);
+    setExpense(null);
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
-        onClose={setOpen}
+        onClose={handleCloseModal}
       >
         <div className="flex min-h-screen items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -90,7 +154,7 @@ export default function AddExpenseModal({ open, setOpen }: Props) {
           >
             <div className="relative inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
               <h1 className="mb-8 text-center text-2xl font-semibold text-slate-900">
-                Add Expense
+                {expense ? `Edit ${expense.name}` : 'Add Expense'}
               </h1>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">

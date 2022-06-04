@@ -30,6 +30,30 @@ export default async function handle(
     }
   }
 
+  // PUT /api/expense
+  // Required fields in body: id, name, amount, categoryId
+  if (req.method === 'PUT') {
+    const { id, name, amount, categoryId } = req.body;
+
+    if (session && session.user) {
+      const result = await prisma.expense.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          amount,
+          categoryId,
+        },
+      });
+
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).send({ message: 'Unauthorized' });
+    }
+  }
+
+
   // DELETE /api/expense
   // Required fields in body: id
   if (req.method === 'DELETE') {

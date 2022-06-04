@@ -11,9 +11,9 @@ import Color from '../categories/types/color';
 import CategoryColorSelect from '../categories/CategoryColorSelect';
 
 type Props = {
+  category: Category | null;
   open: boolean;
   setOpen: (open: boolean) => void;
-  category: Category | null;
 };
 
 type FormData = {
@@ -50,6 +50,16 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       target: category ? category.target : 0,
     });
   }, [category, open, reset]);
+
+  const onSubmit = async (values: FormData) => {
+    if (!instance) return;
+
+    if (category) {
+      handleEditCategory(values);
+    } else {
+      handleAddCategory(values);
+    }
+  };
 
   const handleEditCategory = async (values: FormData) => {
     try {
@@ -102,16 +112,6 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       }
     } catch (error) {
       toast.error('There was an issue adding your category.');
-    }
-  };
-
-  const onSubmit = async (values: FormData) => {
-    if (!instance) return;
-
-    if (category) {
-      handleEditCategory(values);
-    } else {
-      handleAddCategory(values);
     }
   };
 

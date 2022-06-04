@@ -4,20 +4,28 @@ import { MoreVert } from 'iconoir-react';
 import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
+import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import classNames from '@/utils/classNames';
 
 type Props = {
-  expenseId: string;
+  expense: Expense;
+  setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 };
 
 export default function ExpenseDropdown({
-  expenseId,
+  expense,
+  setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
   const { instance } = useContext(InstanceContext);
   const { mutate } = useSWRConfig();
+
+  const handleEditExpense = (expense: Expense) => {
+    setSelectedExpense(expense);
+    setShowExpenseModal(true);
+  };
 
   const handleDeleteExpense = async () => {
     try {
@@ -26,7 +34,7 @@ export default function ExpenseDropdown({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: expenseId }),
+        body: JSON.stringify({ id: expense.id }),
       });
 
       if (res.status === 200) {
@@ -61,7 +69,7 @@ export default function ExpenseDropdown({
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={() => setShowExpenseModal(true)}
+                  onClick={() => handleEditExpense(expense)}
                   className={classNames(
                     active ? 'bg-slate-100 text-slate-900' : '',
                     'block w-full px-4 py-2 text-left text-sm'
