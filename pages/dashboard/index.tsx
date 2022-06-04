@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
@@ -6,13 +6,13 @@ import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
-import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import AddExpenseModal from '@/components/dashboard/modals/AddExpenseModal';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import fetcher from '@/lib/fetcher';
+import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
@@ -25,7 +25,12 @@ const Dashboard: NextPage = () => {
     fetcher
   );
 
-  if (!data) return <p>Loading...</p>;
+  if (!data)
+    return (
+      <DashboardShell>
+        <LoadingState label="Gathering your budget" />
+      </DashboardShell>
+    );
   if (error) return <div>failed to load</div>;
 
   const hasCategories = data.length > 0;
@@ -33,6 +38,9 @@ const Dashboard: NextPage = () => {
   if (!instance || !hasCategories) {
     return (
       <DashboardShell>
+        <h1 className="text-2xl font-semibold text-slate-900">
+          Welcome, {session?.user?.name?.split(' ')[0]}!
+        </h1>
         <EmptyState
           hasInstance={instance != null}
           hasCategories={hasCategories}

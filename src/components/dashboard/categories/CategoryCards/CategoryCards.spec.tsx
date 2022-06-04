@@ -26,7 +26,9 @@ describe('Categories', () => {
         </SessionProvider>
       );
 
-      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(() =>
+        screen.getByText(/gathering your budget/i)
+      );
     });
 
     it('renders the list of categories', () => {
