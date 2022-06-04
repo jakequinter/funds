@@ -11,7 +11,7 @@ type Props = {
 export const InstanceContext = createContext<any>(null);
 
 export const InstanceContextProvider = ({ children }: Props) => {
-  const { data, error } = useSWR<Instance[]>('/api/instance', fetcher);
+  const { data } = useSWR<Instance[]>('/api/instance', fetcher);
   const [instance, setInstance] = useState<Instance | null>(null);
 
   useEffect(() => {

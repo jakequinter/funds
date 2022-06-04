@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 
 import { Instance } from '@/types/instance';
 import fetcher from '@/lib/fetcher';
-import LoadingState from '../shared/LoadingState';
+import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 export default function HistoryList() {
   const { data, error } = useSWR<Instance[]>('/api/history', fetcher);

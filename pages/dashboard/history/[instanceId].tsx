@@ -10,6 +10,7 @@ import DashboardShell from '@/components/dashboard/DashboardShell';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import fetcher from '@/lib/fetcher';
 import Stats from '@/components/dashboard/index/Stats';
+import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 const HistoryInstance: NextPage = () => {
   const { query } = useRouter();
@@ -27,7 +28,7 @@ const HistoryInstance: NextPage = () => {
   if (!data || !categoryData) {
     return (
       <DashboardShell>
-        <p>Loading...</p>
+        <LoadingState label="Loading your budget" />
       </DashboardShell>
     );
   }

@@ -1,28 +1,19 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { SessionProvider } from 'next-auth/react';
 
 import { authenticatedSession } from '@/test-utils/session';
-import { InstanceContextProvider } from '@/hooks/InstanceContext';
-import { MySwrConfig } from '@/lib/SWRConfig';
+import customRender from '@/test-utils/customRender';
 import CategoryCards from './CategoryCards';
 
 describe('Categories', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
-      render(
+      customRender(
         <SessionProvider session={authenticatedSession}>
-          <MySwrConfig>
-            <InstanceContextProvider>
-              <CategoryCards
-                setModalOpen={() => null}
-                setSelectedEditCategory={() => null}
-              />
-            </InstanceContextProvider>
-          </MySwrConfig>
+          <CategoryCards
+            setModalOpen={() => null}
+            setSelectedEditCategory={() => null}
+          />
         </SessionProvider>
       );
 

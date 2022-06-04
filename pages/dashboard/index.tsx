@@ -25,7 +25,7 @@ const Dashboard: NextPage = () => {
     fetcher
   );
 
-  if (!data)
+  if (!data || !instance)
     return (
       <DashboardShell>
         <LoadingState label="Gathering your budget" />
@@ -38,9 +38,6 @@ const Dashboard: NextPage = () => {
   if (!instance || !hasCategories) {
     return (
       <DashboardShell>
-        <h1 className="text-2xl font-semibold text-slate-900">
-          Welcome, {session?.user?.name?.split(' ')[0]}!
-        </h1>
         <EmptyState
           hasInstance={instance != null}
           hasCategories={hasCategories}

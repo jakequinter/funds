@@ -4,6 +4,7 @@ export const handlers = [
   // GET /api/instance
   rest.get('/api/instance', (req, res, ctx) => {
     return res(
+      ctx.delay(100),
       ctx.json([
         {
           id: 'cl3kpyexq00269u2en0b49djt',
@@ -44,8 +45,8 @@ export const handlers = [
         },
         {
           id: 'cl3kpyexq00269u2en0btiam5',
-          month: 5,
-          year: 2022,
+          month: new Date().getMonth() + 1,
+          year: new Date().getFullYear(),
           createdAt: '2022-05-24T22:18:32.606Z',
           updatedAt: '2022-05-24T22:18:32.606Z',
           userId: 'cl3koke3w00454i2eckfn7y9u',
@@ -85,6 +86,7 @@ export const handlers = [
   // GET /api/instance/:id
   rest.get('/api/instance/:instanceId', (req, res, ctx) => {
     return res(
+      ctx.delay(100),
       ctx.json({
         id: 'cl3kpyexq00269u2en0btiam5',
         month: 5,
@@ -128,6 +130,7 @@ export const handlers = [
   // GET /api/category/:instanceId
   rest.get('/api/category/:instanceId', (req, res, ctx) => {
     return res(
+      ctx.delay(100),
       ctx.json([
         {
           id: 'cl3kpyexq00269u2en0btiam1',

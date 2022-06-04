@@ -1,25 +1,16 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { SessionProvider } from 'next-auth/react';
 
 import { authenticatedSession } from '@/test-utils/session';
-import { InstanceContextProvider } from '@/hooks/InstanceContext';
-import { MySwrConfig } from '@/lib/SWRConfig';
+import customRender from '@/test-utils/customRender';
 import Home from 'pages/index';
 
 describe('Home', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
-      render(
+      customRender(
         <SessionProvider session={authenticatedSession}>
-          <MySwrConfig>
-            <InstanceContextProvider>
-              <Home />
-            </InstanceContextProvider>
-          </MySwrConfig>
+          <Home />
         </SessionProvider>
       );
     });
@@ -35,13 +26,9 @@ describe('Home', () => {
 
   describe('when user is unauthenticated', () => {
     beforeEach(async () => {
-      render(
+      customRender(
         <SessionProvider session={null}>
-          <MySwrConfig>
-            <InstanceContextProvider>
-              <Home />
-            </InstanceContextProvider>
-          </MySwrConfig>
+          <Home />
         </SessionProvider>
       );
     });

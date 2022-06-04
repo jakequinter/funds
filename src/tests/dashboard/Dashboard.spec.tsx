@@ -1,25 +1,16 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
-import { SessionProvider } from 'next-auth/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 
-import { authenticatedSession } from '@/test-utils/session';
-import { InstanceContextProvider } from '@/hooks/InstanceContext';
-import { MySwrConfig } from '@/lib/SWRConfig';
+import customRender from '@/test-utils/customRender';
 import Dashboard from 'pages/dashboard/';
+import { authenticatedSession } from '@/test-utils/session';
+import { SessionProvider } from 'next-auth/react';
 
 describe('Dashboard', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
-      render(
+      customRender(
         <SessionProvider session={authenticatedSession}>
-          <MySwrConfig>
-            <InstanceContextProvider>
-              <Dashboard />
-            </InstanceContextProvider>
-          </MySwrConfig>
+          <Dashboard />
         </SessionProvider>
       );
 
@@ -28,10 +19,12 @@ describe('Dashboard', () => {
       );
     });
 
-    describe('with an instance that has categories', () => {
-      it('renders Dashboard page with user name', () => {
-        expect(screen.getByText(/welcome, jake!/i)).toBeInTheDocument();
-      });
+    it('renders Dashboard page with user name', async () => {
+      expect(screen.getByText(/welcome, jake!/i)).toBeInTheDocument();
+    });
+
+    it('allows you to add an expense', async () => {
+      expect(screen.getByText(/add expense/i)).toBeInTheDocument();
     });
   });
 });
