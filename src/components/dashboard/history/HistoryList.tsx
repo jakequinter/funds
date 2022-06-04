@@ -5,11 +5,12 @@ import { format } from 'date-fns';
 
 import { Instance } from '@/types/instance';
 import fetcher from '@/lib/fetcher';
+import LoadingState from '../shared/LoadingState';
 
 export default function HistoryList() {
   const { data, error } = useSWR<Instance[]>('/api/history', fetcher);
 
-  if (!data) return <p>Loading...</p>;
+  if (!data) return <LoadingState label="Retrieving your past histroy" />;
   if (error) return <p>Error</p>;
 
   return (

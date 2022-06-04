@@ -23,7 +23,9 @@ describe('Categories', () => {
         </MySwrConfig>
       );
 
-      await waitForElementToBeRemoved(screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(
+        screen.getByText(/gathering your budget/i)
+      );
     });
 
     it('renders categories page', () => {

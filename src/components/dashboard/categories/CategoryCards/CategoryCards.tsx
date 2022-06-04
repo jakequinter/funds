@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import { Edit } from 'iconoir-react';
-import { toast } from 'react-hot-toast';
 
 import { Category } from '@/types/category';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import fetcher from '@/lib/fetcher';
 import formatMoney from '@/utils/formatMoney';
 import handleCategoryColors from '@/utils/handleCategoryColors';
+import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 type Props = {
   setModalOpen: (open: boolean) => void;
@@ -25,7 +25,7 @@ export default function CategoryList({
     fetcher
   );
 
-  if (!data) return <p>Loading...</p>;
+  if (!data) return <LoadingState label="Gathering your budget" />;
   if (error) return <div>failed to load</div>;
 
   const handleCategoryTotalSpend = (category: Category) => {

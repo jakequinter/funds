@@ -23,16 +23,14 @@ describe('Dashboard', () => {
         </SessionProvider>
       );
 
-      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
+      await waitForElementToBeRemoved(() =>
+        screen.getByText(/gathering your budget/i)
+      );
     });
 
     describe('with an instance that has categories', () => {
       it('renders Dashboard page with user name', () => {
         expect(screen.getByText(/welcome, jake!/i)).toBeInTheDocument();
-      });
-
-      it('shows add expense button', () => {
-        expect(screen.getByText(/add expense/i)).toBeInTheDocument();
       });
     });
   });
