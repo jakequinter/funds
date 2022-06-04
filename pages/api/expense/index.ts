@@ -9,7 +9,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-  
+
   // POST /api/expense
   // Required fields in body: name, amount, categoryId
   if (req.method === 'POST') {
@@ -21,6 +21,24 @@ export default async function handle(
           name,
           amount,
           categoryId,
+        },
+      });
+
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).send({ message: 'Unauthorized' });
+    }
+  }
+
+  // DELETE /api/expense
+  // Required fields in body: id
+  if (req.method === 'DELETE') {
+    const { id } = req.body;
+
+    if (session && session.user) {
+      const result = await prisma.expense.delete({
+        where: {
+          id: id as string,
         },
       });
 

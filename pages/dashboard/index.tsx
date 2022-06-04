@@ -66,7 +66,10 @@ const Dashboard: NextPage = () => {
 
       <Stats categories={data} />
 
-      <ExpensesTable categories={data} />
+      <ExpensesTable
+        categories={data}
+        setShowExpenseModal={setExpenseModalOpen}
+      />
     </DashboardShell>
   );
 };
