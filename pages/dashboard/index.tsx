@@ -6,8 +6,9 @@ import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
+import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import AddExpenseModal from '@/components/dashboard/modals/AddExpenseModal';
+import ExpenseModal from '@/components/dashboard/modals/ExpenseModal';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
@@ -17,6 +18,7 @@ import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
+  const [expense, setExpense] = useState<Expense | null>(null);
   const { data: session } = useSession();
   const { instance } = useContext(InstanceContext);
 
@@ -48,7 +50,12 @@ const Dashboard: NextPage = () => {
 
   return (
     <DashboardShell>
-      <AddExpenseModal open={expenseModalOpen} setOpen={setExpenseModalOpen} />
+      <ExpenseModal
+        expense={expense}
+        setExpense={setExpense}
+        open={expenseModalOpen}
+        setOpen={setExpenseModalOpen}
+      />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">
           Welcome, {session?.user?.name?.split(' ')[0]}!
@@ -66,7 +73,12 @@ const Dashboard: NextPage = () => {
 
       <Stats categories={data} />
 
-      <ExpensesTable categories={data} />
+      <ExpensesTable
+        categories={data}
+        showExpenseDropdown
+        setSelectedExpense={setExpense}
+        setShowExpenseModal={setExpenseModalOpen}
+      />
     </DashboardShell>
   );
 };
