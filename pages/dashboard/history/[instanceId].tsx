@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import { Instance } from '@/types/instance';
-import DashboardShell from '@/components/dashboard/DashboardShell';
+import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import fetcher from '@/lib/fetcher';
 import Stats from '@/components/dashboard/index/Stats';

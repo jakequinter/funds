@@ -3,12 +3,11 @@ import Link from 'next/link';
 import {
   BookmarkEmpty,
   Calendar,
-  Cancel,
   Home,
   LogOut,
   Menu as MenuIcon,
 } from 'iconoir-react';
-import { Dialog, Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react';
 import { Toaster } from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 

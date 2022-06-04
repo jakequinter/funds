@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import DashboardShell from '@/components/dashboard/DashboardShell';
+import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import HistoryList from '@/components/dashboard/history/HistoryList';
 
 const History: NextPage = () => {

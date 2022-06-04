@@ -160,30 +160,26 @@ export default function ExpenseModal({
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium">
                     Name
-                  </label>
-                  <div className="mt-1">
                     <input
                       type="text"
-                      id="text"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      id="name"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="Amazon"
                       {...register('name', { required: true })}
                     />
-                  </div>
+                  </label>
                 </div>
                 <div className="mb-4">
                   <label htmlFor="amount" className="block text-sm font-medium">
                     Amount
-                  </label>
-                  <div className="mt-1">
                     <input
                       type="text"
-                      id="text"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      id="amount"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="24.50"
                       {...register('amount', { required: true })}
                     />
-                  </div>
+                  </label>
                 </div>
                 <div>
                   <label
@@ -191,12 +187,9 @@ export default function ExpenseModal({
                     className="block text-sm font-medium"
                   >
                     Category
-                  </label>
-                  <div className="mt-1">
                     <select
-                      id="text"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
-                      placeholder="Please choose a section"
+                      id="categoryId"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       {...register('categoryId', { required: true })}
                     >
                       <option value="">Select a category</option>
@@ -206,14 +199,14 @@ export default function ExpenseModal({
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </label>
                 </div>
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="submit"
                     className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
                   >
-                    Add
+                    {expense ? 'Save' : 'Add'}
                   </button>
                 </div>
               </form>
