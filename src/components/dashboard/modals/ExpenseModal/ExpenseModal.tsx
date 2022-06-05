@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { ToastContext } from '@/hooks/ToastContext';
+import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
 
 type Props = {
   expense: Expense | null;
@@ -29,7 +29,9 @@ export default function ExpenseModal({
   setOpen,
 }: Props) {
   const { instance } = useContext(InstanceContext);
-  const { setShowToast, setToastMessage } = useContext(ToastContext);
+  const { setShowToast, setToastMessage, setToastSuccess } = useContext(
+    ToastContext
+  ) as ToastContextType;
   const { mutate } = useSWRConfig();
   const {
     register,
@@ -79,6 +81,7 @@ export default function ExpenseModal({
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
+        setToastSuccess(true);
         setToastMessage('Expense updated successfully.');
         setShowToast(true);
       } else {
@@ -102,10 +105,12 @@ export default function ExpenseModal({
         }),
       });
 
-      if (res.ok) {
-        setOpen(false);
+      if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
-        toast.success('Expense added successfully.');
+        setOpen(false);
+        setToastSuccess(true);
+        setToastMessage('Expense added successfully.');
+        setShowToast(true);
       } else {
         toast.error('There was an issue adding your expense.');
       }
@@ -210,6 +215,7 @@ export default function ExpenseModal({
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="submit"
+                    data-testid="expense-modal-submit-button"
                     className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
                   >
                     {expense ? 'Save' : 'Add'}

@@ -6,7 +6,7 @@ import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { ToastContext } from '@/hooks/ToastContext';
+import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
 import classNames from '@/utils/classNames';
 
 type Props = {
@@ -21,7 +21,9 @@ export default function ExpenseDropdown({
   setShowExpenseModal,
 }: Props) {
   const { instance } = useContext(InstanceContext);
-  const { setShowToast, setToastMessage } = useContext(ToastContext);
+  const { setShowToast, setToastMessage, setToastSuccess } = useContext(
+    ToastContext
+  ) as ToastContextType;
   const { mutate } = useSWRConfig();
 
   const handleEditExpense = (expense: Expense) => {
@@ -41,6 +43,7 @@ export default function ExpenseDropdown({
 
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
+        setToastSuccess(true);
         setToastMessage('Expense deleted successfully.');
         setShowToast(true);
       } else {

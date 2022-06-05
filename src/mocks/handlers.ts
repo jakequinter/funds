@@ -249,4 +249,20 @@ export const handlers = [
       })
     );
   }),
+
+  // POST /api/expense
+  rest.post('/api/expense', (req, res, ctx) => {
+    return res(
+      ctx.delay(100),
+      ctx.status(200),
+      ctx.json({
+        id: 'cl3m3d7kd193291o4clrxxcuh',
+        name: 'Amazon',
+        amount: 78.24,
+        createdAt: '2022-05-25T21:21:44.077Z',
+        updatedAt: '2022-05-25T21:21:44.077Z',
+        categoryId: 'cl3kpyexq00269u2en0btiam1',
+      })
+    );
+  }),
 ];

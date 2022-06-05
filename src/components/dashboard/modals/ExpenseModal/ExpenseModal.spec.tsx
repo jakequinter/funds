@@ -35,15 +35,6 @@ describe('ExpenseModal', () => {
     it('shows add button', async () => {
       expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     });
-
-    it('allows you to submit an expense', () => {
-      userEvent.type(screen.getByLabelText(/name/i), 'New Expense');
-      userEvent.type(screen.getByLabelText(/amount/i), '500');
-      userEvent.selectOptions(screen.getByLabelText(/category/i), [
-        'Restaurants',
-      ]);
-      userEvent.click(screen.getByRole('button', { name: /add/i }));
-    });
   });
 
   describe('editing an expense', () => {

@@ -8,7 +8,7 @@ import {
   Menu as MenuIcon,
 } from 'iconoir-react';
 
-import { ToastContext } from '@/hooks/ToastContext';
+import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut } from 'next-auth/react';
 import classNames from '@/utils/classNames';
@@ -87,12 +87,18 @@ type Props = {
 };
 
 export default function DashboardShell({ children }: Props) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { showToast, setShowToast, toastMessage } = useContext(ToastContext);
+  const { showToast, setShowToast, toastMessage, toastSuccess } = useContext(
+    ToastContext
+  ) as ToastContextType;
 
   return (
     <>
-      <Toast open={showToast} setOpen={setShowToast} message={toastMessage} />
+      <Toast
+        open={showToast}
+        setOpen={setShowToast}
+        message={toastMessage}
+        success={toastSuccess}
+      />
       <div className="flex min-h-screen">
         <div className="hidden lg:flex lg:flex-shrink-0">
           <div className="flex w-64 flex-col">

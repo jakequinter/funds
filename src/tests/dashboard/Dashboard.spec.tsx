@@ -76,7 +76,7 @@ describe('Dashboard', () => {
     });
   });
 
-  describe('renders table of expense', () => {
+  describe('renders table of expenses', () => {
     beforeEach(async () => {
       customRender(
         <SessionProvider session={authenticatedSession}>
