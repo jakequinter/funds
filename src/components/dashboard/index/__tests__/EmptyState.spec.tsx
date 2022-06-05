@@ -1,5 +1,4 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { authenticatedSession } from '@/test-utils/session';
 import { SessionProvider } from 'next-auth/react';

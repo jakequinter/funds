@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useContext } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
+import { ToastContext } from '@/hooks/ToastContext';
 
 type Props = {
   expense: Expense | null;
@@ -28,6 +29,7 @@ export default function ExpenseModal({
   setOpen,
 }: Props) {
   const { instance } = useContext(InstanceContext);
+  const { setShowToast, setToastMessage } = useContext(ToastContext);
   const { mutate } = useSWRConfig();
   const {
     register,
@@ -77,7 +79,8 @@ export default function ExpenseModal({
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        toast.success('Expense updated successfully.');
+        setToastMessage('Expense updated successfully.');
+        setShowToast(true);
       } else {
         toast.error('There was an issue udpating your expense.');
       }
@@ -152,7 +155,10 @@ export default function ExpenseModal({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+            <div
+              data-testid="expense-modal"
+              className="relative inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+            >
               <h1 className="mb-8 text-center text-2xl font-semibold text-slate-900">
                 {expense ? `Edit ${expense.name}` : 'Add Expense'}
               </h1>

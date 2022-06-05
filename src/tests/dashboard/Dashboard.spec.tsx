@@ -75,4 +75,92 @@ describe('Dashboard', () => {
       expect(screen.getByText(/failed to load/i)).toBeInTheDocument();
     });
   });
+
+  describe('renders table of expense', () => {
+    beforeEach(async () => {
+      customRender(
+        <SessionProvider session={authenticatedSession}>
+          <Dashboard />
+        </SessionProvider>
+      );
+
+      await waitForElementToBeRemoved(() =>
+        screen.getByText(/gathering your budget/i)
+      );
+    });
+
+    it('renders dropdown', () => {
+      expect(screen.getAllByTestId('expense-dropdown-button')).toHaveLength(6);
+    });
+
+    it('shows all options', async () => {
+      const buttons = screen.getAllByTestId('expense-dropdown-button');
+      userEvent.click(buttons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText(/edit/i)).toBeInTheDocument();
+        expect(screen.getByText(/delete/i)).toBeInTheDocument();
+      });
+    });
+
+    it('shows correct expense title when editing', async () => {
+      const buttons = screen.getAllByTestId('expense-dropdown-button');
+      userEvent.click(buttons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText(/edit/i)).toBeInTheDocument();
+        expect(screen.getByText(/delete/i)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByText(/edit/i));
+
+      await waitFor(() =>
+        expect(screen.getByText(/edit amazon/i)).toBeInTheDocument()
+      );
+    });
+
+    it('allows you to edit expense', async () => {
+      const buttons = screen.getAllByTestId('expense-dropdown-button');
+      userEvent.click(buttons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText(/edit/i)).toBeInTheDocument();
+        expect(screen.getByText(/delete/i)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByText(/edit/i));
+
+      await waitFor(() => {
+        expect(screen.getByText(/edit amazon/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+      });
+
+      userEvent.type(screen.getByLabelText(/name/i), 'new name');
+      userEvent.click(screen.getByText(/save/i));
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(/expense updated successfully./i)
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('allows you to delete expense', async () => {
+      const buttons = screen.getAllByTestId('expense-dropdown-button');
+      userEvent.click(buttons[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText(/edit/i)).toBeInTheDocument();
+        expect(screen.getByText(/delete/i)).toBeInTheDocument();
+      });
+
+      userEvent.click(screen.getByText(/delete/i));
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(/expense deleted successfully./i)
+        ).toBeInTheDocument();
+      });
+    });
+  });
 });

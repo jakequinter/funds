@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
+import { ToastContextProvider } from '@/hooks/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
 import '../styles/globals.css';
 
@@ -35,11 +36,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Head>
       </Head>
       <SessionProvider session={pageProps.session}>
-        <MySwrConfig>
-          <InstanceContextProvider>
-            <Component {...pageProps} />
-          </InstanceContextProvider>
-        </MySwrConfig>
+        <ToastContextProvider>
+          <MySwrConfig>
+            <InstanceContextProvider>
+              <Component {...pageProps} />
+            </InstanceContextProvider>
+          </MySwrConfig>
+        </ToastContextProvider>
       </SessionProvider>
     </>
   );

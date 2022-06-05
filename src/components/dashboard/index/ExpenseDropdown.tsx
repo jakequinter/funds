@@ -6,6 +6,7 @@ import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
+import { ToastContext } from '@/hooks/ToastContext';
 import classNames from '@/utils/classNames';
 
 type Props = {
@@ -20,6 +21,7 @@ export default function ExpenseDropdown({
   setShowExpenseModal,
 }: Props) {
   const { instance } = useContext(InstanceContext);
+  const { setShowToast, setToastMessage } = useContext(ToastContext);
   const { mutate } = useSWRConfig();
 
   const handleEditExpense = (expense: Expense) => {
@@ -39,7 +41,8 @@ export default function ExpenseDropdown({
 
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
-        toast.success('Expense deleted successfully.');
+        setToastMessage('Expense deleted successfully.');
+        setShowToast(true);
       } else {
         toast.error('There was an issue deleting your expense.');
       }
@@ -50,7 +53,10 @@ export default function ExpenseDropdown({
   return (
     <Menu as="div" className="inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full justify-center  bg-white px-4 py-2 text-slate-700 hover:text-slate-900 focus:outline-none focus:ring-0">
+        <Menu.Button
+          data-testid="expense-dropdown-button"
+          className="inline-flex w-full justify-center  bg-white px-4 py-2 text-slate-700 hover:text-slate-900 focus:outline-none focus:ring-0"
+        >
           <MoreVert />
         </Menu.Button>
       </div>
