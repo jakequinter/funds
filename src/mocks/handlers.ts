@@ -83,6 +83,7 @@ export const handlers = [
       ])
     );
   }),
+
   // GET /api/instance/:id
   rest.get('/api/instance/:instanceId', (req, res, ctx) => {
     return res(
@@ -215,24 +216,5 @@ export const handlers = [
         },
       ])
     );
-  }),
-
-  // POST /api/expense
-  rest.post('/api/expense', (req, res, ctx) => {
-    return res(
-      ctx.status(200)
-    )
-  }),
-
-  // 
-  rest.post('/api/auth/signout', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        ok: true,
-        status: 200,
-        url: "http://localhost:3000",
-      })
-    )
   }),
 ];

@@ -27,23 +27,20 @@ const Dashboard: NextPage = () => {
     fetcher
   );
 
+  if (error) return <div>failed to load</div>;
   if (!data || !instance)
     return (
       <DashboardShell>
         <LoadingState label="Gathering your budget" />
       </DashboardShell>
     );
-  if (error) return <div>failed to load</div>;
 
   const hasCategories = data.length > 0;
 
   if (!instance || !hasCategories) {
     return (
       <DashboardShell>
-        <EmptyState
-          hasInstance={instance != null}
-          hasCategories={hasCategories}
-        />
+        <EmptyState hasInstance={instance != null} />
       </DashboardShell>
     );
   }
