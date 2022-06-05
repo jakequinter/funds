@@ -32,7 +32,7 @@ export default function CategoryColorSelect({
       {({ open }) => (
         <>
           <Listbox.Label className="block text-sm font-medium text-gray-700">
-            Assigned to
+            Color
           </Listbox.Label>
           <div className="relative mt-1 mb-4">
             <Listbox.Button className="relative mb-1 w-full cursor-default rounded-md border border-slate-300 bg-white py-2.5 pl-3 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-0">
@@ -40,7 +40,10 @@ export default function CategoryColorSelect({
                 <span
                   className={`${selectedColor?.bgColor} inline-block h-2 w-2 flex-shrink-0 rounded-full`}
                 />
-                <span className="ml-3 block truncate">
+                <span
+                  className="ml-3 block truncate"
+                  data-testid="selected-color"
+                >
                   {selectedColor?.name}
                 </span>
               </span>

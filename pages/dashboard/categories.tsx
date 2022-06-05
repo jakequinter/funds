@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Plus } from 'iconoir-react';
 
 import { Category } from '@/types/category';
-import CategoryModal from '@/components/dashboard/modals/CategoryModal';
+import CategoryModal from '@/components/dashboard/modals/CategoryModal/CategoryModal';
 import CategoryCards from '@/components/dashboard/categories/CategoryCards/CategoryCards';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 

@@ -26,7 +26,7 @@ export default async function handle(
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  // POST /api/instances
+  // POST /api/instance
   // Required fields in body: userId, month, year
   if (req.method === 'POST') {
     const { month, year } = req.body;

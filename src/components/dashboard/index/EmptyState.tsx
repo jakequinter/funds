@@ -4,10 +4,9 @@ import toast from 'react-hot-toast';
 
 type Props = {
   hasInstance: boolean;
-  hasCategories: boolean;
 };
 
-export default function EmptyState({ hasInstance, hasCategories }: Props) {
+export default function EmptyState({ hasInstance }: Props) {
   const { mutate } = useSWRConfig();
 
   const handleAddInstance = async () => {

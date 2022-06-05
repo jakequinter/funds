@@ -7,8 +7,8 @@ import toast from 'react-hot-toast';
 import { Category } from '@/types/category';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import categoriesSelectColors from '@/data/categoriesSelectColors';
-import Color from '../categories/types/color';
-import CategoryColorSelect from '../categories/CategoryColorSelect';
+import Color from '../../categories/types/color';
+import CategoryColorSelect from '../../categories/CategoryColorSelect';
 
 type Props = {
   category: Category | null;
@@ -181,15 +181,14 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium">
                     Name
-                  </label>
-                  <div className="mt-1">
                     <input
                       type="text"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      id="name"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="Groceries"
                       {...register('name', { required: true })}
                     />
-                  </div>
+                  </label>
                 </div>
                 <Controller
                   control={control}
@@ -207,16 +206,15 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                 <div className="mb-4">
                   <label htmlFor="target" className="block text-sm font-medium">
                     Target amount
-                  </label>
-                  <div className="mt-1">
                     <input
                       type="number"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
+                      id="target"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="500"
                       defaultValue={category?.target}
                       {...register('target', { required: true })}
                     />
-                  </div>
+                  </label>
                 </div>
                 <div className="mt-5 sm:mt-6">
                   {category && (
@@ -241,7 +239,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                       type="submit"
                       className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
                     >
-                      Save
+                      Add
                     </button>
                   )}
                 </div>
