@@ -58,7 +58,7 @@ export default function ExpenseDropdown({
       <div>
         <Menu.Button
           data-testid="expense-dropdown-button"
-          className="inline-flex w-full justify-center  bg-white px-4 py-2 text-slate-700 hover:text-slate-900 focus:outline-none focus:ring-0"
+          className="inline-flex w-full justify-center bg-inherit text-slate-700 hover:text-slate-900 focus:outline-none focus:ring-0"
         >
           <MoreVert />
         </Menu.Button>
