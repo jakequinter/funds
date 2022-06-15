@@ -2,12 +2,11 @@ import { Fragment, useContext, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
-import toast from 'react-hot-toast';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { ToastContext } from '@/hooks/ToastContext';
+import useToast from '@/hooks/useToast';
 
 type Props = {
   expense: Expense | null;
@@ -29,7 +28,7 @@ export default function ExpenseModal({
   setOpen,
 }: Props) {
   const { instance } = useContext(InstanceContext);
-  const { setShowToast, setToastMessage } = useContext(ToastContext);
+  const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
     register,
@@ -79,13 +78,12 @@ export default function ExpenseModal({
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        setToastMessage('Expense updated successfully.');
-        setShowToast(true);
+        toast('success', 'Expense updated successfully');
       } else {
-        toast.error('There was an issue udpating your expense.');
+        toast('error', 'There was an issue udpating your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue updating your expenes.');
+      toast('error', 'There was an issue updating your expenes.');
     }
   };
 
@@ -102,15 +100,15 @@ export default function ExpenseModal({
         }),
       });
 
-      if (res.ok) {
-        setOpen(false);
+      if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
-        toast.success('Expense added successfully.');
+        setOpen(false);
+        toast('success', 'Expense added successfully');
       } else {
-        toast.error('There was an issue adding your expense.');
+        toast('error', 'There was an issue adding your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue adding your expense.');
+      toast('error', 'There was an issue adding your expense.');
     }
   };
 
@@ -210,6 +208,7 @@ export default function ExpenseModal({
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="submit"
+                    data-testid="expense-modal-submit-button"
                     className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
                   >
                     {expense ? 'Save' : 'Add'}

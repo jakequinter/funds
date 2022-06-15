@@ -76,7 +76,7 @@ describe('Dashboard', () => {
     });
   });
 
-  describe('renders table of expense', () => {
+  describe('renders table of expenses', () => {
     beforeEach(async () => {
       customRender(
         <SessionProvider session={authenticatedSession}>
@@ -139,9 +139,7 @@ describe('Dashboard', () => {
       userEvent.click(screen.getByText(/save/i));
 
       await waitFor(() => {
-        expect(
-          screen.getByText(/expense updated successfully./i)
-        ).toBeInTheDocument();
+        expect(screen.getByTestId('toast')).toBeInTheDocument();
       });
     });
 
@@ -157,9 +155,7 @@ describe('Dashboard', () => {
       userEvent.click(screen.getByText(/delete/i));
 
       await waitFor(() => {
-        expect(
-          screen.getByText(/expense deleted successfully./i)
-        ).toBeInTheDocument();
+        expect(screen.getByTestId('toast')).toBeInTheDocument();
       });
     });
   });

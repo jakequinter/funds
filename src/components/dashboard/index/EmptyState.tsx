@@ -1,6 +1,7 @@
 import { useSWRConfig } from 'swr';
 import Link from 'next/link';
-import toast from 'react-hot-toast';
+
+import useToast from '@/hooks/useToast';
 
 type Props = {
   hasInstance: boolean;
@@ -8,6 +9,7 @@ type Props = {
 
 export default function EmptyState({ hasInstance }: Props) {
   const { mutate } = useSWRConfig();
+  const toast = useToast();
 
   const handleAddInstance = async () => {
     try {
@@ -24,12 +26,12 @@ export default function EmptyState({ hasInstance }: Props) {
 
       if (res.ok) {
         mutate('/api/instance');
-        toast.success('Your monthly budget has been created.');
+        toast('success', 'Your monthly budget has been created.');
       } else {
-        toast.error('There was an issue creating your monthly budget.');
+        toast('error', 'There was an issue creating your monthly budget.');
       }
     } catch (error) {
-      toast.error('There was an issue creating your monthly budget.');
+      toast('error', 'There was an issue creating your monthly budget.');
     }
   };
 

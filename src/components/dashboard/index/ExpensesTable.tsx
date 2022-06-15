@@ -33,8 +33,8 @@ export default function ExpensesTable({
   return (
     <div className="relative mt-8 flex flex-col">
       <div className="inline-block min-w-full py-2 align-middle">
-        <div className="overflow-hidden rounded-lg shadow ring-1 ring-slate-200">
-          <table className="min-w-full divide-y divide-slate-300">
+        <div className="overflow-x-auto rounded-lg shadow ring-1 ring-slate-200">
+          <table className="min-w-full divide-y divide-slate-200">
             <thead className="bg-slate-50">
               <tr>
                 <th
@@ -84,7 +84,7 @@ export default function ExpensesTable({
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
                         <span
-                          className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium shadow`}
+                          className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium`}
                         >
                           {category.name}
                         </span>
