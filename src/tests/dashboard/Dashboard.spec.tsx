@@ -87,10 +87,11 @@ describe('Dashboard', () => {
       await waitForElementToBeRemoved(() =>
         screen.getByText(/gathering your budget/i)
       );
+      await waitForElementToBeRemoved(() => screen.getByTestId('spinner'));
     });
 
     it('renders dropdown', () => {
-      expect(screen.getAllByTestId('expense-dropdown-button')).toHaveLength(6);
+      expect(screen.getAllByTestId('expense-dropdown-button')).toHaveLength(3);
     });
 
     it('shows all options', async () => {

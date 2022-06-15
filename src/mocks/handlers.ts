@@ -218,6 +218,63 @@ export const handlers = [
     );
   }),
 
+  // GET /api/expense/:instanceId
+  rest.get('/api/expense/:instanceId', (req, res, ctx) => {
+    return res(ctx.delay(100), ctx.status(200), ctx.json([
+      {
+        "id": 'cl3m3d7kd193291o4clrxxcuh',
+        "name": 'Amazon',
+        "amount": 78.24,
+        "createdAt": '2022-05-25T21:21:44.077Z',
+        "updatedAt": '2022-05-25T21:21:44.077Z',
+        "categoryId": "cl3kqt5wy0573092ejk1sjnbr",
+        "category": {
+          "id": "cl3kqt5wy0573092ejk1sjnbr",
+          "name": "Miscellaneous",
+          "color": "pink",
+          "target": 1000,
+          "createdAt": "2022-05-24T22:42:27.250Z",
+          "updatedAt": "2022-05-24T22:42:27.250Z",
+          "instanceId": "cl3kpyexq00269u2en0btiam5"
+        }
+      },
+      {
+        "id": 'cl3nhnq0r0266jgo4myg54i27',
+        "name": 'Amazon',
+        "amount": 103.12,
+        "createdAt": '2022-05-26T20:49:35.355Z',
+        "updatedAt": '2022-05-26T20:49:35.355Z',
+        "categoryId": "cl3kqt5wy0573092ejk1sjnbr",
+        "category": {
+          "id": "cl3kqt5wy0573092ejk1sjnbr",
+          "name": "Miscellaneous",
+          "color": "pink",
+          "target": 1000,
+          "createdAt": "2022-05-24T22:42:27.250Z",
+          "updatedAt": "2022-05-24T22:42:27.250Z",
+          "instanceId": "cl3kpyexq00269u2en0btiam5"
+        }
+      },
+      {
+        "id": 'cl3m3w8o8263591o4vphrc5iq',
+        "name": 'Taco Bell',
+        "amount": 24.72,
+        "createdAt": '2022-05-25T21:36:31.976Z',
+        "updatedAt": '2022-05-25T21:36:31.976Z',
+        "categoryId": 'cl3kqoaxd0316092ec6awu2nw',
+        "category": {
+          "id": "cl3kpyexq00269u2en0btiam1",
+          "name": "Groceries",
+          "color": "blue",
+          "target": 600,
+          "createdAt": "2022-05-24T22:28:43.976Z",
+          "updatedAt": "2022-05-24T22:28:43.976Z",
+          "instanceId": "cl3kpyexq00269u2en0btiam5"
+        }
+      },
+    ]))
+  }),
+
   // DELETE /api/expense
   rest.delete('/api/expense', (req, res, ctx) => {
     return res(

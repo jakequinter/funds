@@ -1,19 +1,21 @@
+import { useContext } from 'react';
 import { format } from 'date-fns';
+import useSWR from 'swr';
 
-import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
+import { InstanceContext } from '@/hooks/InstanceContext';
 import ExpenseDropdown from './ExpenseDropdown';
+import fetcher from '@/lib/fetcher';
 import handleCategoryColors from '@/utils/handleCategoryColors';
+import Spinner from '../shared/Spinner';
 
 interface AllowExpensesDropdownType {
-  categories: Category[];
   showExpenseDropdown: true;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 }
 
 interface DisallowExpensesDropdownType {
-  categories: Category[];
   showExpenseDropdown: false;
   setSelectedExpense?: (expense: Expense) => void;
   setShowExpenseModal?: (open: boolean) => void;
@@ -22,13 +24,32 @@ interface DisallowExpensesDropdownType {
 type Props = AllowExpensesDropdownType | DisallowExpensesDropdownType;
 
 export default function ExpensesTable({
-  categories,
   showExpenseDropdown,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const expenses = categories.map(c => c.expenses).flat();
-  if (!expenses.length) return null;
+  const { instance } = useContext(InstanceContext);
+
+  const { data, error } = useSWR<Expense[]>(
+    `/api/expense/${instance?.id}`,
+    fetcher
+  );
+
+  if (error) {
+    return (
+      <div className="mt-8 flex h-96 items-center justify-center rounded-lg border border-slate-200 shadow">
+        There was a problem loading your expenses
+      </div>
+    );
+  }
+
+  if (!data || !instance) {
+    return (
+      <div className="mt-8 flex h-96 items-center justify-center rounded-lg border border-slate-200 shadow">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="relative mt-8 flex flex-col">
@@ -67,11 +88,11 @@ export default function ExpensesTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
-              {categories &&
-                categories.map(category => {
+              {data &&
+                data.map(expense => {
                   const { bgColor, textColor, shadowColor } =
-                    handleCategoryColors(category.color);
-                  return category.expenses.map(expense => (
+                    handleCategoryColors(expense.category.color);
+                  return (
                     <tr key={expense.id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">
                         {expense.name}
@@ -86,7 +107,7 @@ export default function ExpensesTable({
                         <span
                           className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium`}
                         >
-                          {category.name}
+                          {expense.category.name}
                         </span>
                       </td>
                       {showExpenseDropdown ? (
@@ -99,7 +120,7 @@ export default function ExpensesTable({
                         </td>
                       ) : null}
                     </tr>
-                  ));
+                  );
                 })}
             </tbody>
           </table>

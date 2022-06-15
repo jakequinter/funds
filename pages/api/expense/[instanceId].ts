@@ -14,17 +14,18 @@ export default async function handle(
     if (session && session.user) {
       const { instanceId } = req.query;
 
-      const result = await prisma.category.findMany({
+      const result = await prisma.expense.findMany({
         where: {
-          instanceId: instanceId as string,
-        },
-        include: {
-          expenses: {
-            orderBy: {
-              createdAt: 'desc',
-            }
+          category: {
+            instanceId: instanceId as string,
           }
         },
+        include: {
+          category: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        }
       });
 
       return res.status(200).json(result);
