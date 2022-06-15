@@ -2,12 +2,11 @@ import { Fragment, useContext, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
-import toast from 'react-hot-toast';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
+import useToast from '@/hooks/useToast';
 
 type Props = {
   expense: Expense | null;
@@ -29,9 +28,7 @@ export default function ExpenseModal({
   setOpen,
 }: Props) {
   const { instance } = useContext(InstanceContext);
-  const { setShowToast, setToastMessage, setToastSuccess } = useContext(
-    ToastContext
-  ) as ToastContextType;
+  const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
     register,
@@ -81,14 +78,12 @@ export default function ExpenseModal({
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        setToastSuccess(true);
-        setToastMessage('Expense updated successfully.');
-        setShowToast(true);
+        toast('success', 'Expense updated successfully');
       } else {
-        toast.error('There was an issue udpating your expense.');
+        toast('error', 'There was an issue udpating your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue updating your expenes.');
+      toast('error', 'There was an issue updating your expenes.');
     }
   };
 
@@ -108,14 +103,12 @@ export default function ExpenseModal({
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        setToastSuccess(true);
-        setToastMessage('Expense added successfully.');
-        setShowToast(true);
+        toast('success', 'Expense added successfully');
       } else {
-        toast.error('There was an issue adding your expense.');
+        toast('error', 'There was an issue adding your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue adding your expense.');
+      toast('error', 'There was an issue adding your expense.');
     }
   };
 

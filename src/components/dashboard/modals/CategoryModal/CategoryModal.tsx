@@ -2,13 +2,13 @@ import { Fragment, useContext, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
-import toast from 'react-hot-toast';
 
 import { Category } from '@/types/category';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import categoriesSelectColors from '@/data/categoriesSelectColors';
 import Color from '../../categories/types/color';
 import CategoryColorSelect from '../../categories/CategoryColorSelect';
+import useToast from '@/hooks/useToast';
 
 type Props = {
   category: Category | null;
@@ -24,6 +24,7 @@ type FormData = {
 
 export default function AddCategoryModal({ open, setOpen, category }: Props) {
   const { instance } = useContext(InstanceContext);
+  const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
     register,
@@ -79,12 +80,12 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        toast.success('Category updated successfully.');
+        toast('success', 'Category updated successfully.');
       } else {
-        toast.error('There was an issue udpating your category.');
+        toast('error', 'There was an issue udpating your category.');
       }
     } catch (error) {
-      toast.error('There was an issue updating your category.');
+      toast('error', 'There was an issue updating your category.');
     }
   };
 
@@ -106,12 +107,12 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        toast.success('Category added successfully.');
+        toast('success', 'Category added successfully.');
       } else {
-        toast.error('There was an issue adding your category.');
+        toast('error', 'There was an issue adding your category.');
       }
     } catch (error) {
-      toast.error('There was an issue adding your category.');
+      toast('error', 'There was an issue adding your category.');
     }
   };
 
@@ -128,12 +129,12 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
         setOpen(false);
-        toast.success('Category deleted successfully.');
+        toast('success', 'Category deleted successfully.');
       } else {
-        toast.error('There was an issue deleting your category.');
+        toast('error', 'There was an issue deleting your category.');
       }
     } catch (error) {
-      toast.error('There was an issue deleting your category.');
+      toast('error', 'There was an issue deleting your category.');
     }
   };
 

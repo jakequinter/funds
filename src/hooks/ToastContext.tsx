@@ -9,8 +9,8 @@ export type ToastContextType = {
   setShowToast: (showToast: boolean) => void;
   toastMessage: string;
   setToastMessage: (toastMessage: string) => void;
-  toastSuccess: boolean;
-  setToastSuccess: (toastSuccess: boolean) => void;
+  toastType: string;
+  setToastType: (toastSuccess: string) => void;
 };
 
 export const ToastContext = createContext<ToastContextType | null>(null);
@@ -18,7 +18,7 @@ export const ToastContext = createContext<ToastContextType | null>(null);
 export const ToastContextProvider = ({ children }: Props) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastType, setToastType] = useState('');
 
   return (
     <ToastContext.Provider
@@ -27,8 +27,8 @@ export const ToastContextProvider = ({ children }: Props) => {
         setShowToast,
         toastMessage,
         setToastMessage,
-        toastSuccess,
-        setToastSuccess,
+        toastType,
+        setToastType,
       }}
     >
       {children}

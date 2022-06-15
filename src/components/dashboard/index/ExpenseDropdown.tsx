@@ -1,13 +1,12 @@
 import { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MoreVert } from 'iconoir-react';
-import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
 import classNames from '@/utils/classNames';
+import useToast from '@/hooks/useToast';
 
 type Props = {
   expense: Expense;
@@ -21,9 +20,7 @@ export default function ExpenseDropdown({
   setShowExpenseModal,
 }: Props) {
   const { instance } = useContext(InstanceContext);
-  const { setShowToast, setToastMessage, setToastSuccess } = useContext(
-    ToastContext
-  ) as ToastContextType;
+  const toast = useToast();
   const { mutate } = useSWRConfig();
 
   const handleEditExpense = (expense: Expense) => {
@@ -43,14 +40,12 @@ export default function ExpenseDropdown({
 
       if (res.status === 200) {
         mutate(`/api/category/${instance?.id}`);
-        setToastSuccess(true);
-        setToastMessage('Expense deleted successfully.');
-        setShowToast(true);
+        toast('success', 'Expense deleted successfully.');
       } else {
-        toast.error('There was an issue deleting your expense.');
+        toast('error', 'There was an issue deleting your expense.');
       }
     } catch (error) {
-      toast.error('There was an issue deleting your expense.');
+      toast('error', 'There was an issue deleting your expense.');
     }
   };
   return (

@@ -87,7 +87,7 @@ type Props = {
 };
 
 export default function DashboardShell({ children }: Props) {
-  const { showToast, setShowToast, toastMessage, toastSuccess } = useContext(
+  const { showToast, setShowToast, toastMessage, toastType } = useContext(
     ToastContext
   ) as ToastContextType;
 
@@ -97,7 +97,7 @@ export default function DashboardShell({ children }: Props) {
         open={showToast}
         setOpen={setShowToast}
         message={toastMessage}
-        success={toastSuccess}
+        type={toastType}
       />
       <div className="flex min-h-screen">
         <div className="hidden lg:flex lg:flex-shrink-0">

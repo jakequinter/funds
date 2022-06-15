@@ -5,23 +5,26 @@ type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   message: string;
-  success: boolean;
+  type: string;
 };
 
-export default function Toast({ open, setOpen, message, success }: Props) {
+export default function Toast({ open, setOpen, message, type }: Props) {
   return (
     <RadixToast.Provider>
       <RadixToast.Root open={open} onOpenChange={setOpen} duration={3000}>
-        <div className="w-80 rounded-lg bg-white p-4 shadow-xl">
+        <div
+          data-testid="toast"
+          className="w-80 rounded-lg bg-white p-4 shadow-xl"
+        >
           <div className="flex">
-            {success ? (
+            {type === 'success' ? (
               <CheckCircledOutline className="mt-0.5 h-4 w-4 rounded-full text-emerald-500" />
             ) : (
               <DeleteCircledOutline className="mt-0.5 h-4 w-4 rounded-full text-red-500" />
             )}
             <div className="ml-4">
               <RadixToast.Title className="text-sm font-medium">
-                {success ? 'Success' : 'Error'}
+                {type === 'success' ? 'Success' : 'Error'}
               </RadixToast.Title>
 
               <RadixToast.Description className="mt-1 text-sm">
