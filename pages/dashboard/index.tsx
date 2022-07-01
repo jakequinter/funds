@@ -28,7 +28,7 @@ const Dashboard: NextPage = () => {
   );
 
   if (error) return <div>failed to load</div>;
-  if (!data || !instance)
+  if (!data)
     return (
       <DashboardShell>
         <LoadingState label="Gathering your budget" />
