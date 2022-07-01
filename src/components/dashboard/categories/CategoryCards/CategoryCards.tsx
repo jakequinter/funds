@@ -25,7 +25,7 @@ export default function CategoryList({
     fetcher
   );
 
-  if (!data || !instance) return <LoadingState label="Gathering your budget" />;
+  if (!data) return <LoadingState label="Gathering your budget" />;
   if (error) return <div>failed to load</div>;
 
   const handleCategoryTotalSpend = (category: Category) => {
