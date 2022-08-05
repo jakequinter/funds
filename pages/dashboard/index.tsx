@@ -2,12 +2,12 @@ import { useContext, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
-import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
+import { useAuth } from '@/hooks/useAuth';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
@@ -17,10 +17,10 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
+  const { user, signOut } = useAuth();
+  const { instance } = useContext(InstanceContext);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [expense, setExpense] = useState<Expense | null>(null);
-  const { data: session } = useSession();
-  const { instance } = useContext(InstanceContext);
 
   const { data, error } = useSWR<Category[]>(
     `/api/category/${instance?.id}`,
@@ -55,7 +55,7 @@ const Dashboard: NextPage = () => {
       />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">
-          Welcome, {session?.user?.name?.split(' ')[0]}!
+          Welcome, {user?.displayName}!
         </h1>
         {hasCategories ? (
           <button

@@ -10,9 +10,10 @@ import {
 
 import { ToastContext, ToastContextType } from '@/hooks/ToastContext';
 import { Menu, Transition } from '@headlessui/react';
-import { signOut } from 'next-auth/react';
 import classNames from '@/utils/classNames';
 import Toast from '@/components/dashboard/shared/Toast';
+
+import { useAuth } from '@/hooks/useAuth';
 
 type SidebarNavItemProps = {
   href: string;
@@ -87,6 +88,7 @@ type Props = {
 };
 
 export default function DashboardShell({ children }: Props) {
+  const { signOut } = useAuth();
   const { showToast, setShowToast, toastMessage, toastType } = useContext(
     ToastContext
   ) as ToastContextType;
@@ -130,7 +132,7 @@ export default function DashboardShell({ children }: Props) {
               <div className="flex flex-shrink-0 p-4">
                 <button
                   className="flex items-center text-sm hover:text-slate-500"
-                  onClick={() => signOut({ callbackUrl: '/' })}
+                  onClick={() => signOut()}
                 >
                   <LogOut className="mr-4 h-5 w-5" /> Sign out
                 </button>

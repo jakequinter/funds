@@ -7,7 +7,7 @@ import {
   User,
 } from 'firebase/auth';
 
-import initFirebase from '@/lib/auth/initFirebase';
+import initFirebase from '@/lib/firebase/initFirebase';
 import { removeTokenCookie, setTokenCookie } from '@/lib/auth/tokenCookies';
 
 initFirebase();
