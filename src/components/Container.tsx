@@ -48,25 +48,17 @@ export default function Container({ children }: Props) {
           )}
 
           {authenticated && (
-            <>
-              <Link href="/dashboard" passHref>
-                <motion.a
-                  whileHover="hover"
-                  className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
-                >
-                  Dashboard
-                  <motion.span variants={iconVariants}>
-                    <ArrowRight className="ml-1" />
-                  </motion.span>
-                </motion.a>
-              </Link>
-              <button
-                className="font-medium text-slate-700"
-                onClick={() => signOut()}
+            <Link href="/dashboard" passHref>
+              <motion.a
+                whileHover="hover"
+                className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
               >
-                Sign out
-              </button>
-            </>
+                Dashboard
+                <motion.span variants={iconVariants}>
+                  <ArrowRight className="ml-1" />
+                </motion.span>
+              </motion.a>
+            </Link>
           )}
         </div>
       </nav>

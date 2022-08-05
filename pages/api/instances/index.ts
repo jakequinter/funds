@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { DocumentData } from 'firebase/firestore'
+import { DocumentData, documentId } from 'firebase/firestore'
 
 import db from '@/lib/firebase/firebaseAdmin';
 
@@ -17,7 +17,7 @@ export default async function handle(
    }
 
    snapshot.forEach(doc => {
-      instances.push(doc.data());
+      instances.push({ id: doc.id, ...doc.data() });
    });
 
     return res.status(200).json(instances);

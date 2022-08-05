@@ -23,7 +23,7 @@ const Dashboard: NextPage = () => {
   const [expense, setExpense] = useState<Expense | null>(null);
 
   const { data, error } = useSWR<Category[]>(
-    `/api/category/${instance?.id}`,
+    `/api/categories/${instance?.id}`,
     fetcher
   );
 
@@ -37,13 +37,19 @@ const Dashboard: NextPage = () => {
 
   const hasCategories = data.length > 0;
 
-  if (!instance || !hasCategories) {
+  if (!instance /*|| !hasCategories*/) {
     return (
       <DashboardShell>
         <EmptyState hasInstance={instance != null} />
       </DashboardShell>
     );
   }
+
+  const handleCategories = () => {
+    if (!data) return [];
+
+    return data.map(category => category.id + '/');
+  };
 
   return (
     <DashboardShell>
@@ -69,9 +75,8 @@ const Dashboard: NextPage = () => {
       </div>
 
       <Stats categories={data} />
-
       <ExpensesTable
-        categories={data}
+        categories={handleCategories()}
         showExpenseDropdown
         setSelectedExpense={setExpense}
         setShowExpenseModal={setExpenseModalOpen}

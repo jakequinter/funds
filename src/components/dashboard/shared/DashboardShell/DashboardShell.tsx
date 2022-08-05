@@ -88,7 +88,7 @@ type Props = {
 };
 
 export default function DashboardShell({ children }: Props) {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { showToast, setShowToast, toastMessage, toastType } = useContext(
     ToastContext
   ) as ToastContextType;
