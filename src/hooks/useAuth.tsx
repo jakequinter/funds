@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
+} from 'firebase/auth';
 
 import initFirebase from '@/lib/auth/initFirebase';
 import { removeTokenCookie, setTokenCookie } from '@/lib/auth/tokenCookies';
@@ -8,7 +13,7 @@ import { removeTokenCookie, setTokenCookie } from '@/lib/auth/tokenCookies';
 initFirebase();
 
 type AuthContextType = {
-  user: any;
+  user: User | null;
   authenticated: boolean;
   signInWithGoogle: () => void;
   signOut: () => void;
@@ -28,10 +33,10 @@ type AuthProviderType = {
 export const AuthProvider = ({ children }: AuthProviderType) => {
   const auth = getAuth();
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onIdTokenChanged(async user => {
+    const unsubscribe = auth.onAuthStateChanged(async user => {
       if (user) {
         const token = await user.getIdToken();
 
@@ -56,11 +61,14 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   };
 
   const signOut = () => {
-    // removeTokenCookie();
+    removeTokenCookie();
+
     auth
       .signOut()
       .then(() => {
         router.push('/');
+
+        setUser(null);
       })
       .catch(error => console.log(error));
   };
@@ -74,6 +82,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   );
 };
 
-export function useAuth() {
+export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
