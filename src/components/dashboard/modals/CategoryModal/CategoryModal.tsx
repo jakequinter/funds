@@ -91,7 +91,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
 
   const handleAddCategory = async (values: FormData) => {
     try {
-      const res = await fetch('/api/category', {
+      const res = await fetch('/api/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category added successfully.');
       } else {
