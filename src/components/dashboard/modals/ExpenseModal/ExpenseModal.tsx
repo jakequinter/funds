@@ -9,6 +9,8 @@ import { InstanceContext } from '@/hooks/InstanceContext';
 import useToast from '@/hooks/useToast';
 
 type Props = {
+  categories: Category[];
+  categoryIds: String[];
   expense: Expense | null;
   setExpense: (expense: Expense | null) => void;
   open: boolean;
@@ -17,11 +19,13 @@ type Props = {
 
 type FormData = {
   name: string;
-  amount: number;
+  spend: number;
   categoryId: string;
 };
 
 export default function ExpenseModal({
+  categories,
+  categoryIds,
   expense,
   setExpense,
   open,
@@ -38,7 +42,7 @@ export default function ExpenseModal({
   } = useForm<FormData>({
     defaultValues: {
       name: expense?.name || '',
-      amount: expense?.amount || 0,
+      spend: expense?.spend || 0,
       categoryId: expense?.categoryId || '',
     },
   });
@@ -46,7 +50,7 @@ export default function ExpenseModal({
   useEffect(() => {
     reset({
       name: expense?.name || '',
-      amount: expense?.amount || 0,
+      spend: expense?.spend || 0,
       categoryId: expense?.categoryId || '',
     });
   }, [expense, open, reset]);
@@ -71,12 +75,12 @@ export default function ExpenseModal({
         body: JSON.stringify({
           ...values,
           id: expense?.id,
-          amount: Number(values.amount),
+          spend: Number(values.spend),
         }),
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/expenses/${categoryIds.join('')}`);
         setOpen(false);
         toast('success', 'Expense updated successfully');
       } else {
@@ -89,19 +93,23 @@ export default function ExpenseModal({
 
   const handleAddExpense = async (values: FormData) => {
     try {
-      const res = await fetch('/api/expense', {
+      const res = await fetch('/api/expenses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...values,
-          amount: Number(values.amount),
+          spend: Number(values.spend),
+          type: categories.find(category => category.id === values.categoryId)
+            ?.name,
+          color: categories.find(category => category.id === values.categoryId)
+            ?.color,
         }),
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/expenses/${categoryIds.join('')}`);
         setOpen(false);
         toast('success', 'Expense added successfully');
       } else {
@@ -181,7 +189,7 @@ export default function ExpenseModal({
                       id="amount"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-slate-400 focus:ring-0 sm:text-sm"
                       placeholder="24.50"
-                      {...register('amount', { required: true })}
+                      {...register('spend', { required: true })}
                     />
                   </label>
                 </div>
@@ -197,7 +205,7 @@ export default function ExpenseModal({
                       {...register('categoryId', { required: true })}
                     >
                       <option value="">Select a category</option>
-                      {instance?.categories?.map((category: Category) => (
+                      {categories?.map((category: Category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}
                         </option>

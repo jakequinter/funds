@@ -85,7 +85,7 @@ export default function ExpensesTable({
                     </td>
                     <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-slate-500 sm:block">
                       {format(
-                        fromUnixTime(expense.createdAt._seconds),
+                        fromUnixTime(expense?.createdAt?._seconds),
                         'MMM dd, yyyy'
                       )}
                     </td>

@@ -58,6 +58,8 @@ const Dashboard: NextPage = () => {
         setExpense={setExpense}
         open={expenseModalOpen}
         setOpen={setExpenseModalOpen}
+        categories={data}
+        categoryIds={handleCategories()}
       />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">

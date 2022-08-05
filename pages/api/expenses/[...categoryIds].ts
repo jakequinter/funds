@@ -9,13 +9,13 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { categoryIds } = req.query;
-console.log('categoryIds', categoryIds);
    let expenses: DocumentData = [];
+   
    const expensesRef = db.collection('expenses');
    const snapshot = await expensesRef.where('categoryId', 'in', categoryIds).get();
 
    if (snapshot.empty) {
-     return res.status(404).json({ error: 'No categories found' });
+     return res.status(200).json([]);
    }
 
    snapshot.forEach(doc => {

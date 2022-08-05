@@ -14,7 +14,7 @@ export default function Stats({ categories }: Props) {
     );
 
     return (
-      category?.expenses.reduce((acc, expense) => acc + expense.amount, 0) || 0
+      category?.expenses.reduce((acc, expense) => acc + expense.spend, 0) || 0
     );
   };
 
