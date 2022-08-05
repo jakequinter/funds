@@ -2,6 +2,7 @@ import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 
+import { AuthProvider } from '@/hooks/useAuth';
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
 import { ToastContextProvider } from '@/hooks/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
@@ -35,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="theme-color" content="#ffffff" />
         </Head>
       </Head>
-      <SessionProvider session={pageProps.session}>
+      <AuthProvider>
         <ToastContextProvider>
           <MySwrConfig>
             <InstanceContextProvider>
@@ -43,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </InstanceContextProvider>
           </MySwrConfig>
         </ToastContextProvider>
-      </SessionProvider>
+      </AuthProvider>
     </>
   );
 }
