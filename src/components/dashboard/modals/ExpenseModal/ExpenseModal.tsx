@@ -67,7 +67,7 @@ export default function ExpenseModal({
 
   const handleEditExpense = async (values: FormData) => {
     try {
-      const res = await fetch('/api/expense', {
+      const res = await fetch('/api/expenses', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -76,6 +76,10 @@ export default function ExpenseModal({
           ...values,
           id: expense?.id,
           spend: Number(values.spend),
+          type: categories.find(category => category.id === values.categoryId)
+            ?.name,
+          color: categories.find(category => category.id === values.categoryId)
+            ?.color,
         }),
       });
 

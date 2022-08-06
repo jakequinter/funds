@@ -12,7 +12,7 @@ export default async function handle(
    let expenses: DocumentData = [];
    
    const expensesRef = db.collection('expenses');
-   const snapshot = await expensesRef.where('categoryId', 'in', categoryIds).get();
+   const snapshot = await expensesRef.where('categoryId', 'in', categoryIds).orderBy('updatedAt', 'desc').get();
 
    if (snapshot.empty) {
      return res.status(200).json([]);
