@@ -40,4 +40,14 @@ export default async function handle(
 
     return res.status(200).json(result);
   }
+
+  // DELETE /api/expenses
+  // Required fields in body: id
+  if (req.method === 'DELETE') {
+    const { id } = req.body;
+
+    const result = await db.collection('expenses').doc(id).delete();
+
+    return res.status(200).json(result);
+  }
 }

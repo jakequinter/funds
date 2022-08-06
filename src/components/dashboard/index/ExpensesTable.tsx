@@ -8,14 +8,14 @@ import handleCategoryColors from '@/utils/handleCategoryColors';
 import fetcher from '@/lib/fetcher';
 
 interface AllowExpensesDropdownType {
-  categories: String[];
+  categoryIds: string[];
   showExpenseDropdown: true;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 }
 
 interface DisallowExpensesDropdownType {
-  categories: String[];
+  categoryIds: string[];
   showExpenseDropdown: false;
   setSelectedExpense?: (expense: Expense) => void;
   setShowExpenseModal?: (open: boolean) => void;
@@ -24,13 +24,13 @@ interface DisallowExpensesDropdownType {
 type Props = AllowExpensesDropdownType | DisallowExpensesDropdownType;
 
 export default function ExpensesTable({
-  categories,
+  categoryIds,
   showExpenseDropdown,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
   const { data, error } = useSWR<Expense[]>(
-    `/api/expenses/${categories.join('')}`,
+    `/api/expenses/${categoryIds.join('')}`,
     fetcher
   );
 
@@ -99,6 +99,7 @@ export default function ExpensesTable({
                     {showExpenseDropdown ? (
                       <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
                         <ExpenseDropdown
+                          categoryIds={categoryIds}
                           expense={expense}
                           setShowExpenseModal={setShowExpenseModal}
                           setSelectedExpense={setSelectedExpense}
