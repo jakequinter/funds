@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then(result => {
+        console.log('result user: ', result.user);
         setUser(result.user);
       })
       .catch(error => {

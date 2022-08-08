@@ -1,18 +1,19 @@
 import { screen } from '@testing-library/react';
 import { SessionProvider } from 'next-auth/react';
 
-import { authenticatedSession } from '@/test-utils/session';
 import customRender from '@/test-utils/customRender';
 import Home from 'pages/index';
+
+jest.mock('firebase/app', () => {
+  return {
+    auth: jest.fn(),
+  };
+});
 
 describe('Home', () => {
   describe('when user is authenticated', () => {
     beforeEach(async () => {
-      customRender(
-        <SessionProvider session={authenticatedSession}>
-          <Home />
-        </SessionProvider>
-      );
+      customRender(<Home />);
     });
 
     it('renders home page', () => {
@@ -26,11 +27,7 @@ describe('Home', () => {
 
   describe('when user is unauthenticated', () => {
     beforeEach(async () => {
-      customRender(
-        <SessionProvider session={null}>
-          <Home />
-        </SessionProvider>
-      );
+      customRender(<Home />);
     });
 
     it('renders home page', () => {

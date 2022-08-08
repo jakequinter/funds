@@ -1,14 +1,20 @@
+import { useContext } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'iconoir-react';
 import useSWR from 'swr';
 import { format } from 'date-fns';
 
 import { Instance } from '@/types/instance';
+import { InstanceContext } from '@/hooks/InstanceContext';
 import fetcher from '@/lib/fetcher';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 export default function HistoryList() {
-  const { data, error } = useSWR<Instance[]>('/api/history', fetcher);
+  const { instance } = useContext(InstanceContext);
+  const { data, error } = useSWR<Instance[]>(
+    `/api/history/${instance.userId}`,
+    fetcher
+  );
 
   if (!data) return <LoadingState label="Retrieving your past history" />;
   if (error) return <p>Error</p>;

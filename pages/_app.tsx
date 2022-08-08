@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react';
 
 import { AuthProvider } from '@/hooks/useAuth';
 import { InstanceContextProvider } from '@/hooks/InstanceContext';
