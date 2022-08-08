@@ -17,7 +17,7 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { instance } = useContext(InstanceContext);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [expense, setExpense] = useState<Expense | null>(null);

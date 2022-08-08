@@ -8,21 +8,11 @@ type Props = {
 };
 
 export default function Stats({ categories }: Props) {
-  const handleCalculateExpensesByCategory = (categoryName: string) => {
-    const category = categories.find(
-      category => category.name === categoryName
-    );
-
-    return (
-      category?.expenses.reduce((acc, expense) => acc + expense.spend, 0) || 0
-    );
-  };
-
   const handleCalculatePercentageSpentByCategory = (
     categoryName: string,
     categoryTarget: number
   ) => {
-    const amountSpent = handleCalculateExpensesByCategory(categoryName);
+    const amountSpent = 0;
 
     if (amountSpent <= categoryTarget) {
       return (
