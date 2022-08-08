@@ -64,7 +64,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
 
   const handleEditCategory = async (values: FormData) => {
     try {
-      const res = await fetch('/api/category', {
+      const res = await fetch('/api/categories', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category updated successfully.');
       } else {
@@ -91,7 +91,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
 
   const handleAddCategory = async (values: FormData) => {
     try {
-      const res = await fetch('/api/category', {
+      const res = await fetch('/api/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category added successfully.');
       } else {
@@ -118,7 +118,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
 
   const handleDeleteCategory = async (id: string) => {
     try {
-      const res = await fetch('/api/category/', {
+      const res = await fetch('/api/categories/', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category deleted successfully.');
       } else {

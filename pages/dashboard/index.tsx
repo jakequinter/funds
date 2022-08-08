@@ -2,12 +2,12 @@ import { useContext, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
-import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { InstanceContext } from '@/hooks/InstanceContext';
+import { useAuth } from '@/hooks/useAuth';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
@@ -17,13 +17,13 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
+  const { user } = useAuth();
+  const { instance } = useContext(InstanceContext);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [expense, setExpense] = useState<Expense | null>(null);
-  const { data: session } = useSession();
-  const { instance } = useContext(InstanceContext);
 
   const { data, error } = useSWR<Category[]>(
-    `/api/category/${instance?.id}`,
+    `/api/categories/${instance?.id}`,
     fetcher
   );
 
@@ -37,13 +37,19 @@ const Dashboard: NextPage = () => {
 
   const hasCategories = data.length > 0;
 
-  if (!instance || !hasCategories) {
+  if (!instance /*|| !hasCategories*/) {
     return (
       <DashboardShell>
         <EmptyState hasInstance={instance != null} />
       </DashboardShell>
     );
   }
+
+  const handleCategories = () => {
+    if (!data) return [];
+
+    return data.map(category => category.id + '/');
+  };
 
   return (
     <DashboardShell>
@@ -52,10 +58,12 @@ const Dashboard: NextPage = () => {
         setExpense={setExpense}
         open={expenseModalOpen}
         setOpen={setExpenseModalOpen}
+        categories={data}
+        categoryIds={handleCategories()}
       />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-slate-900">
-          Welcome, {session?.user?.name?.split(' ')[0]}!
+          Welcome, {user?.displayName}!
         </h1>
         {hasCategories ? (
           <button
@@ -69,9 +77,8 @@ const Dashboard: NextPage = () => {
       </div>
 
       <Stats categories={data} />
-
       <ExpensesTable
-        categories={data}
+        categoryIds={handleCategories()}
         showExpenseDropdown
         setSelectedExpense={setExpense}
         setShowExpenseModal={setExpenseModalOpen}

@@ -7,5 +7,4 @@ export type Instance = {
   year: number;
   createdAt: Date;
   updatedAt: Date;
-  categories: Category[];
 };

@@ -9,12 +9,14 @@ import classNames from '@/utils/classNames';
 import useToast from '@/hooks/useToast';
 
 type Props = {
+  categoryIds: string[];
   expense: Expense;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 };
 
 export default function ExpenseDropdown({
+  categoryIds,
   expense,
   setSelectedExpense,
   setShowExpenseModal,
@@ -30,7 +32,7 @@ export default function ExpenseDropdown({
 
   const handleDeleteExpense = async () => {
     try {
-      const res = await fetch('/api/expense/', {
+      const res = await fetch('/api/expenses/', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ export default function ExpenseDropdown({
       });
 
       if (res.status === 200) {
-        mutate(`/api/category/${instance?.id}`);
+        mutate(`/api/expenses/${categoryIds.join('')}`);
         toast('success', 'Expense deleted successfully.');
       } else {
         toast('error', 'There was an issue deleting your expense.');

@@ -5,6 +5,7 @@ import { format, getDaysInMonth } from 'date-fns';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
+import { Expense } from '@/types/expense';
 import { Instance } from '@/types/instance';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
@@ -16,15 +17,20 @@ const HistoryInstance: NextPage = () => {
   const { query } = useRouter();
 
   const { data, error } = useSWR<Instance>(
-    `/api/instance/${query.instanceId}`,
+    `/api/instances/${query.instanceId}`,
     fetcher
   );
 
   const { data: categoryData, error: categoryError } = useSWR<Category[]>(
-    `/api/category/${query.instanceId}`,
+    `/api/categories/${query.instanceId}`,
     fetcher
   );
 
+  const handleCategories = () => {
+    if (!categoryData) return [];
+
+    return categoryData.map(category => category.id + '/');
+  };
   if (!data || !categoryData) {
     return (
       <DashboardShell>
@@ -53,7 +59,10 @@ const HistoryInstance: NextPage = () => {
 
       <Stats categories={categoryData} />
 
-      <ExpensesTable categories={categoryData} showExpenseDropdown={false} />
+      <ExpensesTable
+        categoryIds={handleCategories()}
+        showExpenseDropdown={false}
+      />
     </DashboardShell>
   );
 };

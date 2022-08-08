@@ -21,20 +21,20 @@ export default function CategoryList({
   const { instance } = useContext(InstanceContext);
 
   const { data, error } = useSWR<Category[]>(
-    `/api/category/${instance?.id}`,
+    `/api/categories/${instance?.id}`,
     fetcher
   );
 
-  if (!data) return <LoadingState label="Gathering your budget" />;
+  if (!data || !instance) return <LoadingState label="Gathering your budget" />;
   if (error) return <div>failed to load</div>;
 
-  const handleCategoryTotalSpend = (category: Category) => {
-    if (category.expenses?.length === 0) return 0;
+  // const handleCategoryTotalSpend = (category: Category) => {
+  //   if (category.expenses?.length === 0) return 0;
 
-    return category.expenses.reduce((acc, expense) => {
-      return acc + expense.amount;
-    }, 0);
-  };
+  //   return category.expenses.reduce((acc, expense) => {
+  //     return acc + expense.spend;
+  //   }, 0);
+  // };
 
   const handleEditCategory = (category: Category) => {
     setModalOpen(true);
@@ -51,24 +51,20 @@ export default function CategoryList({
         return (
           <div
             key={category.id}
-            className={`${bgColor} ${shadowColor} relative rounded-[40px] p-8 shadow-lg`}
+            className={`${bgColor} ${shadowColor} rounded-[40px] p-8 shadow-lg`}
           >
-            <div className="absolute top-4 right-4">
-              <Edit
-                onClick={() => handleEditCategory(category)}
-                fontSize="10"
-                className={`${textColor} cursor-pointer hover:opacity-70`}
-              />
-            </div>
-
             <h2 className={`${textColor} text-center text-2xl font-semibold`}>
               {category.name}
             </h2>
 
-            <p className={`${textColor} mt-4 text-2xl`}>
-              ${formatMoney(handleCategoryTotalSpend(category), 2)} /{' '}
-              <span className="text-sm">{formatMoney(category.target, 2)}</span>
-            </p>
+            <button
+              type="button"
+              className={`${bgColor} ${shadowColor} ${textColor} mt-8 inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium focus:outline-none focus:ring-0`}
+              onClick={() => handleEditCategory(category)}
+            >
+              <span className="mr-4">Edit</span>
+              <Edit fontSize="10" />
+            </button>
           </div>
         );
       })}

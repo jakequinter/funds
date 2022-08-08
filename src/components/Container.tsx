@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight } from 'iconoir-react';
 import { motion } from 'framer-motion';
-import { useSession, signIn, signOut } from 'next-auth/react';
+
+import { useAuth } from '@/hooks/useAuth';
 
 type Props = {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ const iconVariants = {
 };
 
 export default function Container({ children }: Props) {
-  const { data: session } = useSession();
+  const { authenticated, signInWithGoogle, signOut } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -24,30 +25,29 @@ export default function Container({ children }: Props) {
         </Link>
 
         <div className="flex items-center space-x-8">
-          {!session && (
-            <button
-              className="font-medium text-slate-700"
-              onClick={() => signIn('google')}
-            >
-              Sign in
-            </button>
+          {!authenticated && (
+            <>
+              <button
+                className="font-medium text-slate-700"
+                onClick={() => signInWithGoogle()}
+              >
+                Sign in
+              </button>
+              <motion.button
+                whileHover="hover"
+                type="button"
+                className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
+                onClick={() => signOut()}
+              >
+                Sign up
+                <motion.span variants={iconVariants}>
+                  <ArrowRight className="ml-1" />
+                </motion.span>
+              </motion.button>
+            </>
           )}
 
-          {!session && (
-            <motion.button
-              whileHover="hover"
-              type="button"
-              className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
-              onClick={() => signOut()}
-            >
-              Sign up
-              <motion.span variants={iconVariants}>
-                <ArrowRight className="ml-1" />
-              </motion.span>
-            </motion.button>
-          )}
-
-          {session && (
+          {authenticated && (
             <Link href="/dashboard" passHref>
               <motion.a
                 whileHover="hover"

@@ -1,19 +1,21 @@
-import { format } from 'date-fns';
+import { format, fromUnixTime } from 'date-fns';
+import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import ExpenseDropdown from './ExpenseDropdown';
 import handleCategoryColors from '@/utils/handleCategoryColors';
+import fetcher from '@/lib/fetcher';
 
 interface AllowExpensesDropdownType {
-  categories: Category[];
+  categoryIds: string[];
   showExpenseDropdown: true;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 }
 
 interface DisallowExpensesDropdownType {
-  categories: Category[];
+  categoryIds: string[];
   showExpenseDropdown: false;
   setSelectedExpense?: (expense: Expense) => void;
   setShowExpenseModal?: (open: boolean) => void;
@@ -22,13 +24,15 @@ interface DisallowExpensesDropdownType {
 type Props = AllowExpensesDropdownType | DisallowExpensesDropdownType;
 
 export default function ExpensesTable({
-  categories,
+  categoryIds,
   showExpenseDropdown,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const expenses = categories.map(c => c.expenses).flat();
-  if (!expenses.length) return null;
+  const { data, error } = useSWR<Expense[]>(
+    `/api/expenses/${categoryIds.join('')}`,
+    fetcher
+  );
 
   return (
     <div className="relative mt-8 flex flex-col">
@@ -67,40 +71,44 @@ export default function ExpensesTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
-              {categories &&
-                categories.map(category => {
-                  const { bgColor, textColor, shadowColor } =
-                    handleCategoryColors(category.color);
-                  return category.expenses.map(expense => (
-                    <tr key={expense.id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">
-                        {expense.name}
+              {data?.map(expense => {
+                const { bgColor, shadowColor, textColor } =
+                  handleCategoryColors(expense.color);
+
+                return (
+                  <tr key={expense.id}>
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">
+                      {expense.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                      ${expense.spend.toFixed(2)}
+                    </td>
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-slate-500 sm:block">
+                      {format(
+                        fromUnixTime(expense?.updatedAt?._seconds),
+                        'MMM dd, yyyy'
+                      )}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium`}
+                      >
+                        {expense.type}
+                      </span>
+                    </td>
+                    {showExpenseDropdown ? (
+                      <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
+                        <ExpenseDropdown
+                          categoryIds={categoryIds}
+                          expense={expense}
+                          setShowExpenseModal={setShowExpenseModal}
+                          setSelectedExpense={setSelectedExpense}
+                        />
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                        ${expense.amount.toFixed(2)}
-                      </td>
-                      <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-slate-500 sm:block">
-                        {format(new Date(expense.createdAt), 'PP')}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                        <span
-                          className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium`}
-                        >
-                          {category.name}
-                        </span>
-                      </td>
-                      {showExpenseDropdown ? (
-                        <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
-                          <ExpenseDropdown
-                            expense={expense}
-                            setShowExpenseModal={setShowExpenseModal}
-                            setSelectedExpense={setSelectedExpense}
-                          />
-                        </td>
-                      ) : null}
-                    </tr>
-                  ));
-                })}
+                    ) : null}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

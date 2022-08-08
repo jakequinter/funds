@@ -8,21 +8,11 @@ type Props = {
 };
 
 export default function Stats({ categories }: Props) {
-  const handleCalculateExpensesByCategory = (categoryName: string) => {
-    const category = categories.find(
-      category => category.name === categoryName
-    );
-
-    return (
-      category?.expenses.reduce((acc, expense) => acc + expense.amount, 0) || 0
-    );
-  };
-
   const handleCalculatePercentageSpentByCategory = (
     categoryName: string,
     categoryTarget: number
   ) => {
-    const amountSpent = handleCalculateExpensesByCategory(categoryName);
+    const amountSpent = 0;
 
     if (amountSpent <= categoryTarget) {
       return (
@@ -52,28 +42,14 @@ export default function Stats({ categories }: Props) {
             <dt>{category.name}</dt>
             <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
               <div className="flex items-baseline text-2xl font-semibold text-slate-900">
-                $
-                {handleCalculateExpensesByCategory(
-                  category.name
-                ).toLocaleString()}
+                $300
                 <span className="ml-2 text-sm font-medium text-slate-500">
                   / ${category.target.toLocaleString()}
                 </span>
               </div>
 
-              <div
-                className={classNames(
-                  handleCalculateExpensesByCategory(category.name) <=
-                    category.target
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800',
-                  'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0 '
-                )}
-              >
-                {handleCalculatePercentageSpentByCategory(
-                  category.name,
-                  category.target
-                )}
+              <div className="inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0">
+                2
               </div>
             </dd>
           </div>
