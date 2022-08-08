@@ -9,8 +9,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   try {
-    // const { instanceId } = req.query;
-    const instanceId = "aZdlTmziQI86o7zNBmxq"
+    const { instanceId } = req.query;
 
     let categories: DocumentData = [];
      const categoriesRef = db.collection('categories');
