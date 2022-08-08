@@ -6,13 +6,15 @@ import { format } from 'date-fns';
 
 import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
+import { useAuth } from '@/hooks/useAuth';
 import fetcher from '@/lib/fetcher';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 export default function HistoryList() {
+  const { user } = useAuth();
   const { instance } = useContext(InstanceContext);
   const { data, error } = useSWR<Instance[]>(
-    `/api/history/${instance.userId}`,
+    `/api/history/${user?.uid}`,
     fetcher
   );
 
