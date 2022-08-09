@@ -10,7 +10,6 @@ import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
-import { useAuth } from '@/hooks/useAuth';
 import { db } from '@/lib/firebase/firebaseAdmin';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
@@ -21,11 +20,7 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
 const Dashboard: NextPage = () => {
-  const { user } = useAuth();
-  const { data, error } = useSWR<[Instance]>(
-    user ? ['/api/instances', getTokenCookie()] : null,
-    fetcher
-  );
+  const { data, error } = useSWR<[Instance]>('/api/instances', fetcher);
 
   if (error) return <div>Error</div>;
 
@@ -62,6 +57,7 @@ const Dashboard: NextPage = () => {
   //   return data.map(category => category.id + '/');
   // };
 
+  console.log(getTokenCookie());
   if (!data) return <LoadingState label="Gathering your budget" />;
 
   return (

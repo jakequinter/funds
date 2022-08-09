@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
 
     return () => unsubscribe();
   }, [auth]);
-  console.log('token', getTokenCookie());
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
