@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
+import { useAuth } from '@/hooks/useAuth';
 import { Instance } from '@/types/instance';
 import fetcher from '@/lib/fetcher';
 
@@ -11,7 +12,9 @@ type Props = {
 export const InstanceContext = createContext<any>(null);
 
 export const InstanceContextProvider = ({ children }: Props) => {
-  const { data } = useSWR<Instance[]>('/api/instances', fetcher);
+  const { user } = useAuth();
+
+  const { data } = useSWR<Instance[]>('/api/instances/', fetcher);
   const [instance, setInstance] = useState<Instance | null>(null);
 
   useEffect(() => {
@@ -19,12 +22,13 @@ export const InstanceContextProvider = ({ children }: Props) => {
       const currentInstance = data?.find(
         instance =>
           instance.month === new Date().getMonth() + 1 &&
-          instance.year === new Date().getFullYear()
+          instance.year === new Date().getFullYear() &&
+          instance.userId === user?.uid
       );
 
       setInstance(currentInstance || null);
     }
-  }, [data]);
+  }, [data, user]);
 
   return (
     <InstanceContext.Provider value={{ instance }}>
