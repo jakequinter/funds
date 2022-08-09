@@ -9,7 +9,6 @@ export default async function handle(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.cookies)
     const { uid } = await auth.verifyIdToken(req.cookies.token);
     
     let instances: DocumentData = [];

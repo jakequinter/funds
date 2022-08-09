@@ -1,5 +1,6 @@
-import { getApps, initializeApp } from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -8,7 +9,7 @@ const config = {
 }
 
 export default function initFirebase() {
-  if (!getApps().length) {
-    initializeApp(config);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
   }
 }
