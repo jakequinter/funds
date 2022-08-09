@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DocumentData } from 'firebase/firestore'
 
-import db from '@/lib/firebase/firebaseAdmin';
+import { db } from '@/lib/firebase/firebaseAdmin';
 
 // GET /api/categories/:instanceId
 export default async function handle(

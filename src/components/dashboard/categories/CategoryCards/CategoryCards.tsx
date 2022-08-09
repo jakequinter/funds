@@ -18,15 +18,15 @@ export default function CategoryList({
   setModalOpen,
   setSelectedEditCategory,
 }: Props) {
-  const { instance } = useContext(InstanceContext);
+  // const { instance } = useContext(InstanceContext);
 
-  const { data, error } = useSWR<Category[]>(
-    `/api/categories/${instance?.id}`,
-    fetcher
-  );
+  // const { data, error } = useSWR<Category[]>(
+  //   `/api/categories/${instance?.id}`,
+  //   fetcher
+  // );
 
-  if (!data || !instance) return <LoadingState label="Gathering your budget" />;
-  if (error) return <div>failed to load</div>;
+  // if (!data || !instance) return <LoadingState label="Gathering your budget" />;
+  // if (error) return <div>failed to load</div>;
 
   // const handleCategoryTotalSpend = (category: Category) => {
   //   if (category.expenses?.length === 0) return 0;
@@ -43,7 +43,7 @@ export default function CategoryList({
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-      {data.map(category => {
+      {/* {data.map(category => {
         const { bgColor, textColor, shadowColor } = handleCategoryColors(
           category.color
         );
@@ -67,7 +67,7 @@ export default function CategoryList({
             </button>
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 }

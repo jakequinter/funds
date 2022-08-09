@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { getTokenCookie } from '@/lib/auth/tokenCookies';
+
 import {
   getAuth,
   GoogleAuthProvider,
@@ -7,8 +9,8 @@ import {
   User,
 } from 'firebase/auth';
 
-import initFirebase from '@/lib/firebase/initFirebase';
 import { removeTokenCookie, setTokenCookie } from '@/lib/auth/tokenCookies';
+import initFirebase from '@/lib/firebase/initFirebase';
 
 initFirebase();
 
@@ -49,12 +51,14 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
 
     return () => unsubscribe();
   }, [auth]);
+  console.log('token', getTokenCookie());
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
       .then(result => {
         console.log('result user: ', result.user);
         setUser(result.user);
+        return user;
       })
       .catch(error => {
         console.log('ERROR', error);

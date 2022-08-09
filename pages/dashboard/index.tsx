@@ -5,12 +5,13 @@ import { DocumentData } from 'firebase/firestore';
 import { Plus } from 'iconoir-react';
 import useSWR from 'swr';
 
+import { getTokenCookie } from '@/lib/auth/tokenCookies';
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import { useAuth } from '@/hooks/useAuth';
-import db from '@/lib/firebase/firebaseAdmin';
+import { db } from '@/lib/firebase/firebaseAdmin';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
@@ -19,12 +20,15 @@ import fetcher from '@/lib/fetcher';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
-type Props = {
-  instances: [Instance];
-};
+const Dashboard: NextPage = () => {
+  const { user } = useAuth();
+  const { data, error } = useSWR<[Instance]>(
+    user ? ['/api/instances', getTokenCookie()] : null,
+    fetcher
+  );
 
-const Dashboard: NextPage<Props> = ({ instances }) => {
-  // const { user } = useAuth();
+  if (error) return <div>Error</div>;
+
   // const { instance } = useContext(InstanceContext);
   // const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   // const [expense, setExpense] = useState<Expense | null>(null);
@@ -58,9 +62,11 @@ const Dashboard: NextPage<Props> = ({ instances }) => {
   //   return data.map(category => category.id + '/');
   // };
 
+  if (!data) return <LoadingState label="Gathering your budget" />;
+
   return (
     <DashboardShell>
-      {instances.map(instance => (
+      {data.map(instance => (
         <h1 key={instance.id}>{instance.month}</h1>
       ))}
     </DashboardShell>
@@ -68,24 +74,3 @@ const Dashboard: NextPage<Props> = ({ instances }) => {
 };
 
 export default Dashboard;
-
-export async function getServerSideProps() {
-  let instances: DocumentData = [];
-
-  const instancesRef = db.collection('instances');
-  const snapshot = await instancesRef.get();
-
-  if (snapshot.empty) {
-    instances = [];
-  } else {
-    snapshot.forEach(doc => {
-      instances.push({ id: doc.id, ...doc.data() });
-    });
-  }
-
-  return {
-    props: {
-      instances,
-    },
-  };
-}
