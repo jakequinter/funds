@@ -35,10 +35,10 @@ const Categories: NextPage = () => {
           <Plus className="mr-2" /> Add category
         </button>
       </div>
-      <CategoryCards
+      {/* <CategoryCards
         setModalOpen={setAddCategoryModalOpen}
         setSelectedEditCategory={setCategory}
-      />
+      /> */}
     </DashboardShell>
   );
 };

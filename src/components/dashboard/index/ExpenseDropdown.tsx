@@ -1,10 +1,9 @@
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { MoreVert } from 'iconoir-react';
 import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
-import { InstanceContext } from '@/hooks/InstanceContext';
 import classNames from '@/utils/classNames';
 import useToast from '@/hooks/useToast';
 
@@ -21,7 +20,6 @@ export default function ExpenseDropdown({
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const { instance } = useContext(InstanceContext);
   const toast = useToast();
   const { mutate } = useSWRConfig();
 

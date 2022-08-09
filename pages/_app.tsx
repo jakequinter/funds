@@ -38,9 +38,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <ToastContextProvider>
           <MySwrConfig>
-            <InstanceContextProvider>
-              <Component {...pageProps} />
-            </InstanceContextProvider>
+            {/* <InstanceContextProvider> */}
+            <Component {...pageProps} />
+            {/* </InstanceContextProvider> */}
           </MySwrConfig>
         </ToastContextProvider>
       </AuthProvider>

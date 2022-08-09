@@ -31,7 +31,7 @@ export default function ExpenseModal({
   open,
   setOpen,
 }: Props) {
-  const { instance } = useContext(InstanceContext);
+  // const { instance } = useContext(InstanceContext);
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
@@ -56,7 +56,7 @@ export default function ExpenseModal({
   }, [expense, open, reset]);
 
   const onSubmit = async (values: FormData) => {
-    if (!instance) return;
+    // if (!instance) return;
 
     if (expense) {
       handleEditExpense(values);

@@ -1,7 +1,6 @@
 import { ArrowDown, ArrowUp } from 'iconoir-react';
 
 import { Category } from '@/types/category';
-import classNames from '@/utils/classNames';
 
 type Props = {
   categories: Category[];
