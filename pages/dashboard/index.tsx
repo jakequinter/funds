@@ -24,39 +24,39 @@ type Props = {
 };
 
 const Dashboard: NextPage<Props> = ({ instances }) => {
-  const { user } = useAuth();
-  const { instance } = useContext(InstanceContext);
-  const [expenseModalOpen, setExpenseModalOpen] = useState(false);
-  const [expense, setExpense] = useState<Expense | null>(null);
+  // const { user } = useAuth();
+  // const { instance } = useContext(InstanceContext);
+  // const [expenseModalOpen, setExpenseModalOpen] = useState(false);
+  // const [expense, setExpense] = useState<Expense | null>(null);
 
-  const { data, error } = useSWR<Category[]>(
-    `/api/categories/${instance?.id}`,
-    fetcher
-  );
+  // const { data, error } = useSWR<Category[]>(
+  //   `/api/categories/${instance?.id}`,
+  //   fetcher
+  // );
 
-  if (error) return <div>failed to load</div>;
-  if (!data)
-    return (
-      <DashboardShell>
-        <LoadingState label="Gathering your budget" />
-      </DashboardShell>
-    );
+  // if (error) return <div>failed to load</div>;
+  // if (!data)
+  //   return (
+  //     <DashboardShell>
+  //       <LoadingState label="Gathering your budget" />
+  //     </DashboardShell>
+  //   );
 
-  const hasCategories = data.length > 0;
+  // const hasCategories = data.length > 0;
 
-  if (!instance /*|| !hasCategories*/) {
-    return (
-      <DashboardShell>
-        <EmptyState hasInstance={instance != null} />
-      </DashboardShell>
-    );
-  }
+  // if (!instance /*|| !hasCategories*/) {
+  //   return (
+  //     <DashboardShell>
+  //       <EmptyState hasInstance={instance != null} />
+  //     </DashboardShell>
+  //   );
+  // }
 
-  const handleCategories = () => {
-    if (!data) return [];
+  // const handleCategories = () => {
+  //   if (!data) return [];
 
-    return data.map(category => category.id + '/');
-  };
+  //   return data.map(category => category.id + '/');
+  // };
 
   return (
     <DashboardShell>
