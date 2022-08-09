@@ -1,13 +1,16 @@
 import { useContext, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { DocumentData } from 'firebase/firestore';
 import { Plus } from 'iconoir-react';
 import useSWR from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
+import { Instance } from '@/types/instance';
 import { InstanceContext } from '@/hooks/InstanceContext';
 import { useAuth } from '@/hooks/useAuth';
+import db from '@/lib/firebase/firebaseAdmin';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
@@ -16,7 +19,11 @@ import fetcher from '@/lib/fetcher';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 
-const Dashboard: NextPage = () => {
+type Props = {
+  instances: [Instance];
+};
+
+const Dashboard: NextPage<Props> = ({ instances }) => {
   const { user } = useAuth();
   const { instance } = useContext(InstanceContext);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
@@ -53,38 +60,32 @@ const Dashboard: NextPage = () => {
 
   return (
     <DashboardShell>
-      <ExpenseModal
-        expense={expense}
-        setExpense={setExpense}
-        open={expenseModalOpen}
-        setOpen={setExpenseModalOpen}
-        categories={data}
-        categoryIds={handleCategories()}
-      />
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-slate-900">
-          Welcome, {user?.displayName}!
-        </h1>
-        {hasCategories ? (
-          <button
-            type="button"
-            className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
-            onClick={() => setExpenseModalOpen(true)}
-          >
-            <Plus className="mr-2" /> Add expense
-          </button>
-        ) : null}
-      </div>
-
-      <Stats categories={data} />
-      <ExpensesTable
-        categoryIds={handleCategories()}
-        showExpenseDropdown
-        setSelectedExpense={setExpense}
-        setShowExpenseModal={setExpenseModalOpen}
-      />
+      {instances.map(instance => (
+        <h1 key={instance.id}>{instance.month}</h1>
+      ))}
     </DashboardShell>
   );
 };
 
 export default Dashboard;
+
+export async function getServerSideProps() {
+  let instances: DocumentData = [];
+
+  const instancesRef = db.collection('instances');
+  const snapshot = await instancesRef.get();
+
+  if (snapshot.empty) {
+    instances = [];
+  } else {
+    snapshot.forEach(doc => {
+      instances.push({ id: doc.id, ...doc.data() });
+    });
+  }
+
+  return {
+    props: {
+      instances,
+    },
+  };
+}

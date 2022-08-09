@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { DocumentData, documentId } from 'firebase/firestore'
+import { DocumentData } from 'firebase/firestore'
 
 import db from '@/lib/firebase/firebaseAdmin';
 
