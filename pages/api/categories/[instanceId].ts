@@ -13,7 +13,7 @@ export default async function handle(
 
     let categories: DocumentData = [];
      const categoriesRef = db.collection('categories');
-     const snapshot = await categoriesRef.where('instanceId', '==', instanceId).orderBy('name', 'asc').get();
+     const snapshot = await categoriesRef.where('instanceId', '==', instanceId).get();
   
      if (snapshot.empty) {
        return res.status(404).json({ error: 'No instances found' });
