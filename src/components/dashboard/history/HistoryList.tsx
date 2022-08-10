@@ -6,7 +6,6 @@ import { format } from 'date-fns';
 import { Instance } from '@/types/instance';
 import { useAuth } from '@/hooks/useAuth';
 import fetcher from '@/lib/fetcher';
-import LoadingState from '@/components/dashboard/shared/LoadingState';
 
 export default function HistoryList() {
   const { user } = useAuth();
@@ -15,7 +14,7 @@ export default function HistoryList() {
     fetcher
   );
 
-  if (!data) return <LoadingState label="Retrieving your past history" />;
+  if (!data) return <div>No history</div>;
   if (error) return <p>Error</p>;
 
   return (

@@ -17,7 +17,6 @@ describe('ExpenseDropdown', () => {
             expense={mockExpense}
             setSelectedExpense={jest.fn()}
             setShowExpenseModal={jest.fn()}
-            categoryIds={[]}
           />
         </SessionProvider>
       );

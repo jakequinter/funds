@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 
-import { InstanceContextProvider } from '@/hooks/InstanceContext';
+import { InstanceContextProvider } from 'src/context/InstanceContext';
 import { ToastContextProvider } from '@/hooks/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
 

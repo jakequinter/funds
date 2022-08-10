@@ -41,10 +41,20 @@ export default async function handle(
   // DELETE /api/categories
   // Required fields in body: id
   if (req.method === 'DELETE') {
-    const { id } = req.body;
+    try {
+      const { id } = req.body;
 
-    const result = await db.collection('categories').doc(id).delete();
-
-    return res.status(200).json(result);
+      const result = await db.collection('categories').doc(id).delete();
+      
+      const categoryExpenses = await db.collection('expenses').where('categoryId', '==', id).get();
+      
+      categoryExpenses.forEach(async (doc) => {
+        await doc.ref.delete();
+      });
+  
+      return res.status(200).json(result); 
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   }
 }

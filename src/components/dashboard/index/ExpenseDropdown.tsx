@@ -5,21 +5,21 @@ import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
 import classNames from '@/utils/classNames';
+import useCategories from '@/hooks/useCategories';
 import useToast from '@/hooks/useToast';
 
 type Props = {
-  categoryIds: string[];
   expense: Expense;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 };
 
 export default function ExpenseDropdown({
-  categoryIds,
   expense,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
+  const { categoryIds } = useCategories();
   const toast = useToast();
   const { mutate } = useSWRConfig();
 
@@ -39,7 +39,7 @@ export default function ExpenseDropdown({
       });
 
       if (res.status === 200) {
-        mutate(`/api/expenses/${categoryIds.join('')}`);
+        mutate(`/api/expenses/${categoryIds}`);
         toast('success', 'Expense deleted successfully.');
       } else {
         toast('error', 'There was an issue deleting your expense.');

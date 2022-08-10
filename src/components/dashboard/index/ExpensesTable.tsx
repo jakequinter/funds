@@ -1,21 +1,16 @@
 import { format, fromUnixTime } from 'date-fns';
-import useSWR from 'swr';
-
-import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
 import ExpenseDropdown from './ExpenseDropdown';
 import handleCategoryColors from '@/utils/handleCategoryColors';
-import fetcher from '@/lib/fetcher';
+import useExpenses from '@/hooks/useExpenses';
 
 interface AllowExpensesDropdownType {
-  categoryIds: string[];
   showExpenseDropdown: true;
   setSelectedExpense: (expense: Expense) => void;
   setShowExpenseModal: (open: boolean) => void;
 }
 
 interface DisallowExpensesDropdownType {
-  categoryIds: string[];
   showExpenseDropdown: false;
   setSelectedExpense?: (expense: Expense) => void;
   setShowExpenseModal?: (open: boolean) => void;
@@ -24,15 +19,11 @@ interface DisallowExpensesDropdownType {
 type Props = AllowExpensesDropdownType | DisallowExpensesDropdownType;
 
 export default function ExpensesTable({
-  categoryIds,
   showExpenseDropdown,
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const { data, error } = useSWR<Expense[]>(
-    `/api/expenses/${categoryIds.join('')}`,
-    fetcher
-  );
+  const { expenses } = useExpenses();
 
   return (
     <div className="relative mt-8 flex flex-col">
@@ -71,7 +62,7 @@ export default function ExpensesTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
-              {data?.map(expense => {
+              {expenses?.map(expense => {
                 const { bgColor, shadowColor, textColor } =
                   handleCategoryColors(expense.color);
 
@@ -99,7 +90,6 @@ export default function ExpensesTable({
                     {showExpenseDropdown ? (
                       <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
                         <ExpenseDropdown
-                          categoryIds={categoryIds}
                           expense={expense}
                           setShowExpenseModal={setShowExpenseModal}
                           setSelectedExpense={setSelectedExpense}

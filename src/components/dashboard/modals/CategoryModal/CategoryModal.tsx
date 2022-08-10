@@ -4,11 +4,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSWRConfig } from 'swr';
 
 import { Category } from '@/types/category';
-import { InstanceContext } from '@/hooks/InstanceContext';
 import categoriesSelectColors from '@/data/categoriesSelectColors';
 import Color from '../../categories/types/color';
 import CategoryColorSelect from '../../categories/CategoryColorSelect';
 import useToast from '@/hooks/useToast';
+import useInstance from '@/hooks/useInstance';
 
 type Props = {
   category: Category | null;
@@ -23,7 +23,7 @@ type FormData = {
 };
 
 export default function AddCategoryModal({ open, setOpen, category }: Props) {
-  // const { instance } = useContext(InstanceContext);
+  const { instance } = useInstance();
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
@@ -53,7 +53,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
   }, [category, open, reset]);
 
   const onSubmit = async (values: FormData) => {
-    // if (!instance) return;
+    if (!instance) return;
 
     if (category) {
       handleEditCategory(values);
@@ -78,7 +78,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        // mutate(`/api/categories/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category updated successfully.');
       } else {
@@ -100,12 +100,12 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
           ...values,
           color: values.color.name,
           target: Number(values.target),
-          // instanceId: instance.id,
+          instanceId: instance.id,
         }),
       });
 
       if (res.status === 200) {
-        // mutate(`/api/categories/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category added successfully.');
       } else {
@@ -127,7 +127,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
       });
 
       if (res.status === 200) {
-        // mutate(`/api/categories/${instance?.id}`);
+        mutate(`/api/categories/${instance?.id}`);
         setOpen(false);
         toast('success', 'Category deleted successfully.');
       } else {
@@ -178,7 +178,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
               <h1 className="mb-8 text-center text-2xl font-semibold text-slate-900">
                 {category ? `Edit ${category.name}` : 'Add Category'}
               </h1>
-              {/* <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium">
                     Name
@@ -244,7 +244,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                     </button>
                   )}
                 </div>
-              </form> */}
+              </form>
             </div>
           </Transition.Child>
         </div>

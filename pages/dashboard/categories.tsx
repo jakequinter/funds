@@ -7,8 +7,11 @@ import { Category } from '@/types/category';
 import CategoryModal from '@/components/dashboard/modals/CategoryModal/CategoryModal';
 import CategoryCards from '@/components/dashboard/categories/CategoryCards/CategoryCards';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
+import LoadingState from '@/components/dashboard/shared/LoadingState';
+import useCategories from '@/hooks/useCategories';
 
 const Categories: NextPage = () => {
+  const { loading } = useCategories();
   const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
   const [category, setCategory] = useState<Category | null>(null);
 
@@ -17,6 +20,14 @@ const Categories: NextPage = () => {
       setCategory(null);
     }
   }, [addCategoryModalOpen]);
+
+  if (loading) {
+    return (
+      <DashboardShell>
+        <LoadingState label="Collecting your categories" />
+      </DashboardShell>
+    );
+  }
 
   return (
     <DashboardShell>
@@ -35,10 +46,10 @@ const Categories: NextPage = () => {
           <Plus className="mr-2" /> Add category
         </button>
       </div>
-      {/* <CategoryCards
+      <CategoryCards
         setModalOpen={setAddCategoryModalOpen}
         setSelectedEditCategory={setCategory}
-      /> */}
+      />
     </DashboardShell>
   );
 };

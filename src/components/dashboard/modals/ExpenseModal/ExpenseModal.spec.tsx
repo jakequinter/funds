@@ -17,8 +17,6 @@ describe('ExpenseModal', () => {
             setExpense={jest.fn()}
             setOpen={jest.fn()}
             open={true}
-            categories={[]}
-            categoryIds={[]}
           />
         </SessionProvider>
       );
@@ -48,8 +46,6 @@ describe('ExpenseModal', () => {
             setExpense={jest.fn()}
             setOpen={jest.fn()}
             open={true}
-            categories={[]}
-            categoryIds={[]}
           />
         </SessionProvider>
       );

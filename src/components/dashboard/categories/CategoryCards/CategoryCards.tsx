@@ -1,13 +1,9 @@
-import { useContext } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
 import { Edit } from 'iconoir-react';
 
 import { Category } from '@/types/category';
-import { InstanceContext } from '@/hooks/InstanceContext';
-import fetcher from '@/lib/fetcher';
 import formatMoney from '@/utils/formatMoney';
 import handleCategoryColors from '@/utils/handleCategoryColors';
-import LoadingState from '@/components/dashboard/shared/LoadingState';
+import useCategories from '@/hooks/useCategories';
 
 type Props = {
   setModalOpen: (open: boolean) => void;
@@ -18,15 +14,7 @@ export default function CategoryList({
   setModalOpen,
   setSelectedEditCategory,
 }: Props) {
-  // const { instance } = useContext(InstanceContext);
-
-  // const { data, error } = useSWR<Category[]>(
-  //   `/api/categories/${instance?.id}`,
-  //   fetcher
-  // );
-
-  // if (!data || !instance) return <LoadingState label="Gathering your budget" />;
-  // if (error) return <div>failed to load</div>;
+  const { categories } = useCategories();
 
   // const handleCategoryTotalSpend = (category: Category) => {
   //   if (category.expenses?.length === 0) return 0;
@@ -43,7 +31,7 @@ export default function CategoryList({
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-      {/* {data.map(category => {
+      {categories?.map(category => {
         const { bgColor, textColor, shadowColor } = handleCategoryColors(
           category.color
         );
@@ -67,7 +55,7 @@ export default function CategoryList({
             </button>
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 }

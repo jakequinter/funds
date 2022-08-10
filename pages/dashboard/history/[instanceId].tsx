@@ -26,11 +26,6 @@ const HistoryInstance: NextPage = () => {
     fetcher
   );
 
-  const handleCategories = () => {
-    if (!categoryData) return [];
-
-    return categoryData.map(category => category.id + '/');
-  };
   if (!data || !categoryData) {
     return (
       <DashboardShell>
@@ -57,12 +52,9 @@ const HistoryInstance: NextPage = () => {
         </h1>
       </div>
 
-      <Stats categories={categoryData} />
+      <Stats />
 
-      <ExpensesTable
-        categoryIds={handleCategories()}
-        showExpenseDropdown={false}
-      />
+      <ExpensesTable showExpenseDropdown={false} />
     </DashboardShell>
   );
 };

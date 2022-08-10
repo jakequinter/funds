@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider())

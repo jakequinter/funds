@@ -2,7 +2,9 @@ import Head from 'next/head';
 import type { AppProps } from 'next/app';
 
 import { AuthProvider } from '@/hooks/useAuth';
-import { InstanceContextProvider } from '@/hooks/InstanceContext';
+import { CategoriesProvider } from 'src/context/CategoriesContext';
+import { ExpensesProvider } from 'src/context/ExpensesContext';
+import { InstanceContextProvider } from 'src/context/InstanceContext';
 import { ToastContextProvider } from '@/hooks/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
 import '../styles/globals.css';
@@ -39,7 +41,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ToastContextProvider>
           <MySwrConfig>
             <InstanceContextProvider>
-              <Component {...pageProps} />
+              <CategoriesProvider>
+                <ExpensesProvider>
+                  <Component {...pageProps} />
+                </ExpensesProvider>
+              </CategoriesProvider>
             </InstanceContextProvider>
           </MySwrConfig>
         </ToastContextProvider>

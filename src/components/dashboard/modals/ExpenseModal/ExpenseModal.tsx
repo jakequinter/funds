@@ -5,12 +5,11 @@ import { useSWRConfig } from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
-import { InstanceContext } from '@/hooks/InstanceContext';
+import useCategories from '@/hooks/useCategories';
 import useToast from '@/hooks/useToast';
+import useInstance from '@/hooks/useInstance';
 
 type Props = {
-  categories: Category[];
-  categoryIds: String[];
   expense: Expense | null;
   setExpense: (expense: Expense | null) => void;
   open: boolean;
@@ -24,14 +23,13 @@ type FormData = {
 };
 
 export default function ExpenseModal({
-  categories,
-  categoryIds,
   expense,
   setExpense,
   open,
   setOpen,
 }: Props) {
-  // const { instance } = useContext(InstanceContext);
+  const { instance } = useInstance();
+  const { categories, categoryIds } = useCategories();
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const {
@@ -56,7 +54,7 @@ export default function ExpenseModal({
   }, [expense, open, reset]);
 
   const onSubmit = async (values: FormData) => {
-    // if (!instance) return;
+    if (!instance) return;
 
     if (expense) {
       handleEditExpense(values);
@@ -76,15 +74,15 @@ export default function ExpenseModal({
           ...values,
           id: expense?.id,
           spend: Number(values.spend),
-          type: categories.find(category => category.id === values.categoryId)
+          type: categories?.find(category => category.id === values.categoryId)
             ?.name,
-          color: categories.find(category => category.id === values.categoryId)
+          color: categories?.find(category => category.id === values.categoryId)
             ?.color,
         }),
       });
 
       if (res.status === 200) {
-        mutate(`/api/expenses/${categoryIds.join('')}`);
+        mutate(`/api/expenses/${categoryIds}`);
         setOpen(false);
         toast('success', 'Expense updated successfully');
       } else {
@@ -105,15 +103,15 @@ export default function ExpenseModal({
         body: JSON.stringify({
           ...values,
           spend: Number(values.spend),
-          type: categories.find(category => category.id === values.categoryId)
+          type: categories?.find(category => category.id === values.categoryId)
             ?.name,
-          color: categories.find(category => category.id === values.categoryId)
+          color: categories?.find(category => category.id === values.categoryId)
             ?.color,
         }),
       });
 
       if (res.status === 200) {
-        mutate(`/api/expenses/${categoryIds.join('')}`);
+        mutate(`/api/expenses/${categoryIds}`);
         setOpen(false);
         toast('success', 'Expense added successfully');
       } else {
