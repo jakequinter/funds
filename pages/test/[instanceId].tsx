@@ -31,7 +31,7 @@ export default function SSRPage({ instanceId, instance }: Props) {
 export const getServerSideProps: GetServerSideProps = async context => {
   const instanceId = context.params?.instanceId as string;
 
-  const instance = await getInstance('aZdlTmziQI86o7zNBmxq');
+  const instance = await getInstance(instanceId);
   if (!instance) {
     return { notFound: true };
   }
