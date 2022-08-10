@@ -7,7 +7,7 @@ if (!admin.apps.length) {
       privateKey: process.env.FIREBASE_PRIVATE_KEY,
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
     }),
-    databaseURL: `https://${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.firebaseio.com`
+    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL
   });
 }
 

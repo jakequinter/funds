@@ -9,11 +9,11 @@ export default async function handle(
   res: NextApiResponse
 ) {
   try {
-    const { uid } = await auth.verifyIdToken(req.cookies.token);
+    // const { uid } = await auth.verifyIdToken(req.cookies.token);
     
     let instances: DocumentData = [];
     const instancesRef = db.collection('instances');
-    const snapshot = await instancesRef.where("userId", "==", uid).get();
+    const snapshot = await instancesRef.get();
  
     if (snapshot.empty) {
       return res.status(404).json({ error: 'No instances found' });

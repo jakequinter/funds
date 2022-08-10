@@ -1,18 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getTokenCookie } from '@/lib/auth/tokenCookies';
-
 import {
   getAuth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithPopup,
   User,
 } from 'firebase/auth';
 
-import { removeTokenCookie, setTokenCookie } from '@/lib/auth/tokenCookies';
 import initFirebase from '@/lib/firebase/initFirebase';
-
-initFirebase();
 
 type AuthContextType = {
   user: User | null;
@@ -33,24 +29,26 @@ type AuthProviderType = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderType) => {
-  const auth = getAuth();
+  const app = initFirebase();
+  const auth = getAuth(app);
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async user => {
-      if (user) {
-        const token = await user.getIdToken();
-
-        setTokenCookie(token);
-        setUser(user);
-      } else {
-        removeTokenCookie();
+    const unsubscribe = onAuthStateChanged(auth, async user => {
+      try {
+        if (user) {
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.log('error', error);
       }
     });
 
     return () => unsubscribe();
-  }, [auth]);
+  }, []);
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider())
@@ -65,7 +63,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   };
 
   const signOut = () => {
-    removeTokenCookie();
+    // removeTokenCookie();
 
     auth
       .signOut()
