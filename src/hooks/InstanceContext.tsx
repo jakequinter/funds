@@ -22,7 +22,8 @@ export const InstanceContextProvider = ({ children }: Props) => {
       const currentInstance = data?.find(
         instance =>
           instance.month === new Date().getMonth() + 1 &&
-          instance.year === new Date().getFullYear()
+          instance.year === new Date().getFullYear() &&
+          instance.userId === user?.uid
       );
 
       setInstance(currentInstance || null);

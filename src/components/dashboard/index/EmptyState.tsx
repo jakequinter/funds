@@ -13,7 +13,7 @@ export default function EmptyState({ hasInstance }: Props) {
 
   const handleAddInstance = async () => {
     try {
-      const res = await fetch('/api/instance', {
+      const res = await fetch('/api/instances', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
