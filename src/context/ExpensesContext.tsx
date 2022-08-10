@@ -26,17 +26,18 @@ export const ExpensesProvider = ({ children }: ExpensesProviderType) => {
   const [expenses, setExpenses] = useState<Expense[] | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // @TODO: category ids are null here
   const { data, error } = useSWR<Expense[]>(
     `/api/expenses/${categoryIds}`,
     fetcher
   );
 
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (data && categoryIds && categoryIds.length > 0 && data.length > 0) {
       setExpenses(data);
       setLoading(false);
     }
-  }, [data, error, user]);
+  }, [data, error, user, categoryIds]);
 
   return (
     <ExpensesContext.Provider value={{ expenses, loading }}>
