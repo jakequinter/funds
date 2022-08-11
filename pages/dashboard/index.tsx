@@ -13,20 +13,23 @@ import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
 import useCategories from '@/hooks/useCategories';
 import useInstance from '@/hooks/useInstance';
+import useLoading from '@/hooks/useLoading';
 
 const Dashboard: NextPage = () => {
   const { user } = useAuth();
   const { instance } = useInstance();
-  const { categories, loading } = useCategories();
+  const { categories } = useCategories();
+  const loading = useLoading();
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
   const [expense, setExpense] = useState<Expense | null>(null);
 
-  if (loading)
+  if (loading || !instance) {
     return (
       <DashboardShell>
         <LoadingState label="Gathering your budget" />
       </DashboardShell>
     );
+  }
 
   if (!instance || categories?.length === 0) {
     return (

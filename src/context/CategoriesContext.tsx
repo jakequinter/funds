@@ -8,7 +8,7 @@ import useInstance from '@/hooks/useInstance';
 
 type CategoriesContextType = {
   categories: Category[] | null;
-  categoryIds: string[] | null;
+  categoryIds: string | null;
   loading: boolean;
 };
 
@@ -26,7 +26,7 @@ export const CategoriesProvider = ({ children }: ContextProviderType) => {
   const { user } = useAuth();
   const { instance } = useInstance();
   const [categories, setCategories] = useState<Category[] | null>(null);
-  const [categoryIds, setCategoryIds] = useState<string[] | null>(null);
+  const [categoryIds, setCategoryIds] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const { data, error } = useSWR<Category[]>(
@@ -35,7 +35,8 @@ export const CategoriesProvider = ({ children }: ContextProviderType) => {
   );
 
   const handleCategoryIds = (categories: Category[]) => {
-    const categoryIds = categories.map(category => category.id);
+    const categoryIds = categories.map(category => category.id + '/').join('');
+
     setCategoryIds(categoryIds);
   };
 
