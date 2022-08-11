@@ -90,6 +90,8 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
   };
 
   const handleAddCategory = async (values: FormData) => {
+    if (!instance) return;
+
     try {
       const res = await fetch('/api/categories', {
         method: 'POST',
