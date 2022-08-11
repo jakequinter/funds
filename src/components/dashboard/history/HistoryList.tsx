@@ -9,18 +9,19 @@ import fetcher from '@/lib/fetcher';
 
 export default function HistoryList() {
   const { user } = useAuth();
+
   const { data, error } = useSWR<Instance[]>(
-    `/api/history/${user?.uid}`,
+    user ? `/api/history/${user?.uid}` : null,
     fetcher
   );
 
-  if (!data) return <div>No history</div>;
+  if (!data?.length) return <div>No history</div>;
   if (error) return <p>Error</p>;
 
   return (
     <div className="mt-8 overflow-hidden bg-white shadow sm:rounded-md">
       <ul role="list" className="divide-y divide-slate-200">
-        {data.map(instance => (
+        {data?.map(instance => (
           <li key={instance.id}>
             <Link href={`/dashboard/history/${instance.id}`} passHref>
               <a className="block hover:bg-slate-100">

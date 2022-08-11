@@ -5,7 +5,7 @@ import { useSWRConfig } from 'swr';
 
 import { Expense } from '@/types/expense';
 import classNames from '@/utils/classNames';
-import useCategories from '@/hooks/useCategories';
+import useCategoryIds from '@/hooks/useCategoryIds';
 import useToast from '@/hooks/useToast';
 
 type Props = {
@@ -19,7 +19,8 @@ export default function ExpenseDropdown({
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const { categoryIds } = useCategories();
+  const { categoryIds } = useCategoryIds();
+
   const toast = useToast();
   const { mutate } = useSWRConfig();
 

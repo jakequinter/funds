@@ -2,7 +2,7 @@ import { format, fromUnixTime } from 'date-fns';
 import { Expense } from '@/types/expense';
 import ExpenseDropdown from './ExpenseDropdown';
 import handleCategoryColors from '@/utils/handleCategoryColors';
-import useExpenses from '@/hooks/useExpenses';
+import useInstance from '@/hooks/useInstance';
 
 interface AllowExpensesDropdownType {
   showExpenseDropdown: true;
@@ -23,7 +23,7 @@ export default function ExpensesTable({
   setSelectedExpense,
   setShowExpenseModal,
 }: Props) {
-  const { expenses } = useExpenses();
+  const { expenses } = useInstance();
 
   return (
     <div className="relative mt-8 flex flex-col">

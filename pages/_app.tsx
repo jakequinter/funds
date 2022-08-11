@@ -5,7 +5,7 @@ import { AuthProvider } from '@/hooks/useAuth';
 import { CategoriesProvider } from 'src/context/CategoriesContext';
 import { ExpensesProvider } from 'src/context/ExpensesContext';
 import { InstanceContextProvider } from 'src/context/InstanceContext';
-import { ToastContextProvider } from '@/hooks/ToastContext';
+import { ToastContextProvider } from 'src/context/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
 import '../styles/globals.css';
 

@@ -1,12 +1,10 @@
 import { ArrowDown, ArrowUp } from 'iconoir-react';
 
 import classNames from '@/utils/classNames';
-import useCategories from '@/hooks/useCategories';
-import useExpenses from '@/hooks/useExpenses';
+import useInstance from '@/hooks/useInstance';
 
 export default function Stats() {
-  const { categories } = useCategories();
-  const { expenses } = useExpenses();
+  const { categories, expenses } = useInstance();
 
   const handleCalculateExpensesByCategory = (categoryId: string) => {
     return (

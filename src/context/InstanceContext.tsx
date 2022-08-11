@@ -1,24 +1,33 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 import { useAuth } from '@/hooks/useAuth';
 import { Instance } from '@/types/instance';
 import fetcher from '@/lib/fetcher';
 
-type Props = {
+type InstancesContextType = {
+  instance: Instance | null;
+  loading: boolean;
+};
+
+export const InstanceContext = createContext<InstancesContextType>({
+  instance: null,
+  loading: true,
+});
+
+type InstanceProviderType = {
   children: React.ReactNode;
 };
 
-export const InstanceContext = createContext<any>(null);
-
-export const InstanceContextProvider = ({ children }: Props) => {
+export const InstanceContextProvider = ({ children }: InstanceProviderType) => {
   const { user } = useAuth();
+  const [instance, setInstance] = useState<Instance | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const { data } = useSWR<Instance[]>('/api/instances/', fetcher);
-  const [instance, setInstance] = useState<Instance | null>(null);
 
   useEffect(() => {
-    if (!data?.hasOwnProperty('message')) {
+    if (data) {
       const currentInstance = data?.find(
         instance =>
           instance.month === new Date().getMonth() + 1 &&
@@ -28,10 +37,12 @@ export const InstanceContextProvider = ({ children }: Props) => {
 
       setInstance(currentInstance || null);
     }
+
+    setLoading(false);
   }, [data, user]);
 
   return (
-    <InstanceContext.Provider value={{ instance }}>
+    <InstanceContext.Provider value={{ instance, loading }}>
       {children}
     </InstanceContext.Provider>
   );

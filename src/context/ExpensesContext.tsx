@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { useAuth } from '@/hooks/useAuth';
 import { Expense } from '@/types/expense';
 import fetcher from '@/lib/fetcher';
-import useCategories from '@/hooks/useCategories';
+import useCategoryIds from '@/hooks/useCategoryIds';
 
 type ExpensesContextType = {
   expenses: Expense[] | null;
@@ -22,7 +22,7 @@ type ExpensesProviderType = {
 
 export const ExpensesProvider = ({ children }: ExpensesProviderType) => {
   const { user } = useAuth();
-  const { categoryIds } = useCategories();
+  const { categoryIds } = useCategoryIds();
   const [expenses, setExpenses] = useState<Expense[] | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,8 +35,9 @@ export const ExpensesProvider = ({ children }: ExpensesProviderType) => {
   useEffect(() => {
     if (data && categoryIds && categoryIds.length > 0 && data.length > 0) {
       setExpenses(data);
-      setLoading(false);
     }
+
+    setLoading(false);
   }, [data, error, user, categoryIds]);
 
   return (

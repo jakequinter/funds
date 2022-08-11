@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { ToastContext, ToastContextType } from './ToastContext';
+import { ToastContext, ToastContextType } from '../context/ToastContext';
 
 type Type = 'success' | 'error';
 

@@ -5,9 +5,9 @@ import { useSWRConfig } from 'swr';
 
 import { Category } from '@/types/category';
 import { Expense } from '@/types/expense';
-import useCategories from '@/hooks/useCategories';
-import useToast from '@/hooks/useToast';
+import useCategoryIds from '@/hooks/useCategoryIds';
 import useInstance from '@/hooks/useInstance';
+import useToast from '@/hooks/useToast';
 
 type Props = {
   expense: Expense | null;
@@ -28,8 +28,8 @@ export default function ExpenseModal({
   open,
   setOpen,
 }: Props) {
-  const { instance } = useInstance();
-  const { categories, categoryIds } = useCategories();
+  const { instance, categories } = useInstance();
+  const { categoryIds } = useCategoryIds();
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const {

@@ -3,7 +3,7 @@ import { Edit } from 'iconoir-react';
 import { Category } from '@/types/category';
 import formatMoney from '@/utils/formatMoney';
 import handleCategoryColors from '@/utils/handleCategoryColors';
-import useCategories from '@/hooks/useCategories';
+import useInstance from '@/hooks/useInstance';
 
 type Props = {
   setModalOpen: (open: boolean) => void;
@@ -14,7 +14,7 @@ export default function CategoryList({
   setModalOpen,
   setSelectedEditCategory,
 }: Props) {
-  const { categories } = useCategories();
+  const { categories } = useInstance();
 
   // const handleCategoryTotalSpend = (category: Category) => {
   //   if (category.expenses?.length === 0) return 0;

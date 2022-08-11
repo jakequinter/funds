@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 
 import { InstanceContextProvider } from 'src/context/InstanceContext';
-import { ToastContextProvider } from '@/hooks/ToastContext';
+import { ToastContextProvider } from 'src/context/ToastContext';
 import { MySwrConfig } from '@/lib/SWRConfig';
 
 const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {

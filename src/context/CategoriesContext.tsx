@@ -8,13 +8,11 @@ import useInstance from '@/hooks/useInstance';
 
 type CategoriesContextType = {
   categories: Category[] | null;
-  categoryIds: string | null;
   loading: boolean;
 };
 
 export const CategoriesContext = createContext<CategoriesContextType>({
   categories: null,
-  categoryIds: null,
   loading: true,
 });
 
@@ -34,25 +32,18 @@ export const CategoriesProvider = ({ children }: ContextProviderType) => {
     fetcher
   );
 
-  const handleCategoryIds = (categories: Category[]) => {
-    const categoryIds = categories.map(category => category.id + '/').join('');
-
-    setCategoryIds(categoryIds);
-  };
-
   useEffect(() => {
     if (data && data.length > 0) {
       setCategories(data);
-      handleCategoryIds(data);
-      setLoading(false);
     } else {
       setCategories([]);
-      setLoading(false);
     }
+
+    setLoading(false);
   }, [data, error, user]);
 
   return (
-    <CategoriesContext.Provider value={{ categories, categoryIds, loading }}>
+    <CategoriesContext.Provider value={{ categories, loading }}>
       {children}
     </CategoriesContext.Provider>
   );

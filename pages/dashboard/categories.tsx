@@ -8,10 +8,10 @@ import CategoryModal from '@/components/dashboard/modals/CategoryModal/CategoryM
 import CategoryCards from '@/components/dashboard/categories/CategoryCards/CategoryCards';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
-import useCategories from '@/hooks/useCategories';
+import useInstance from '@/hooks/useInstance';
 
 const Categories: NextPage = () => {
-  const { loading } = useCategories();
+  const { loading } = useInstance();
   const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
   const [category, setCategory] = useState<Category | null>(null);
 
