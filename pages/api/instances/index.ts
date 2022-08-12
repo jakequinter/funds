@@ -8,6 +8,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   // GET /api/instances
+  // Required: access token
   if (req.method === 'GET') {
     try {
       const { uid } = await auth.verifyIdToken(req.cookies.token);
@@ -34,12 +35,12 @@ export default async function handle(
   // Required fields in body: userId, month, year
   if (req.method === 'POST') {
     try {
-      // const { uid } = await auth.verifyIdToken(req.cookies.token);
-      const { userId, month, year } = req.body;
+      const { uid } = await auth.verifyIdToken(req.cookies.token);
+      const { month, year } = req.body;
 
      
       const result = await db.collection('instances').add({
-        userId,
+        userId: uid,
         month,
         year,
       });
