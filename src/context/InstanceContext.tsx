@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import { useAuth } from '@/hooks/useAuth';
 import { Instance } from '@/types/instance';
 import fetcher from '@/lib/fetcher';
+import useAuth from '@/hooks/useAuth';
 
 type InstancesContextType = {
   instance: Instance | null;
@@ -24,10 +24,10 @@ export const InstanceContextProvider = ({ children }: InstanceProviderType) => {
   const [instance, setInstance] = useState<Instance | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { data } = useSWR<Instance[]>('/api/instances/', fetcher);
+  const { data } = useSWR<Instance[]>(user ? '/api/instances/' : null, fetcher);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.length > 0) {
       const currentInstance = data?.find(
         instance =>
           instance.month === new Date().getMonth() + 1 &&

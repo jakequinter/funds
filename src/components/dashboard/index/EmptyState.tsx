@@ -1,7 +1,7 @@
 import { useSWRConfig } from 'swr';
 import Link from 'next/link';
 
-import { useAuth } from '@/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 
 type Props = {

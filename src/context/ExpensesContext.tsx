@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import { useAuth } from '@/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 import { Expense } from '@/types/expense';
 import fetcher from '@/lib/fetcher';
 import useCategoryIds from '@/hooks/useCategoryIds';

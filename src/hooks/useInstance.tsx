@@ -12,13 +12,7 @@ const useInstance = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (
-      instanceLoading ||
-      categoriesLoading ||
-      expensesLoading ||
-      categories === null ||
-      expenses === null
-    ) {
+    if (instanceLoading || categoriesLoading || expensesLoading) {
       setLoading(true);
     } else {
       setLoading(false);

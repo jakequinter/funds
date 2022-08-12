@@ -4,8 +4,8 @@ import useSWR from 'swr';
 import { format } from 'date-fns';
 
 import { Instance } from '@/types/instance';
-import { useAuth } from '@/hooks/useAuth';
 import fetcher from '@/lib/fetcher';
+import useAuth from '@/hooks/useAuth';
 
 export default function HistoryList() {
   const { user } = useAuth();

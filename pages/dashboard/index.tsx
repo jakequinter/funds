@@ -4,13 +4,13 @@ import Head from 'next/head';
 import { Plus } from 'iconoir-react';
 
 import { Expense } from '@/types/expense';
-import { useAuth } from '@/hooks/useAuth';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
+import useAuth from '@/hooks/useAuth';
 import useInstance from '@/hooks/useInstance';
 
 const Dashboard: NextPage = () => {

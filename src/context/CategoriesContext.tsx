@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import { useAuth } from '@/hooks/useAuth';
 import { Category } from '@/types/category';
 import fetcher from '@/lib/fetcher';
+import useAuth from '@/hooks/useAuth';
 import useInstance from '@/hooks/useInstance';
 
 type CategoriesContextType = {

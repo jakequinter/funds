@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'iconoir-react';
 import { motion } from 'framer-motion';
 
-import { useAuth } from '@/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 type Props = {
   children: React.ReactNode;

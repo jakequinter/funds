@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DocumentData } from 'firebase/firestore';
 
-import { db } from '@/lib/firebase/firebaseAdmin';
+import { auth, db } from '@/lib/firebase/firebaseAdmin';
 
 export default async function handle(
   req: NextApiRequest,
@@ -10,14 +10,14 @@ export default async function handle(
   // GET /api/instances
   if (req.method === 'GET') {
     try {
-      // const { uid } = await auth.verifyIdToken(req.cookies.token);
-
+      const { uid } = await auth.verifyIdToken(req.cookies.token);
+      
       let instances: DocumentData = [];
       const instancesRef = db.collection('instances');
-      const snapshot = await instancesRef.get();
+      const snapshot = await instancesRef.where('userId', '==', uid).get();
 
       if (snapshot.empty) {
-        return res.status(404).json({ error: 'No instances found' });
+        return res.status(200).json([]);
       }
 
       snapshot.forEach(doc => {
