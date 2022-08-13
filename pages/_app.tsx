@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 
-import { AuthProvider } from '@/hooks/useAuth';
+import { AuthProvider } from 'src/context/AuthContext';
 import { CategoriesProvider } from 'src/context/CategoriesContext';
 import { ExpensesProvider } from 'src/context/ExpensesContext';
 import { InstanceContextProvider } from 'src/context/InstanceContext';

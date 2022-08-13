@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import type { NextPage } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Plus } from 'iconoir-react';
 
 import { Expense } from '@/types/expense';
-import { useAuth } from '@/hooks/useAuth';
 import ExpenseModal from '@/components/dashboard/modals/ExpenseModal/ExpenseModal';
 import DashboardShell from '@/components/dashboard/shared/DashboardShell/DashboardShell';
 import EmptyState from '@/components/dashboard/index/EmptyState';
 import ExpensesTable from '@/components/dashboard/index/ExpensesTable';
 import LoadingState from '@/components/dashboard/shared/LoadingState';
 import Stats from '@/components/dashboard/index/Stats';
+import useAuth from '@/hooks/useAuth';
 import useInstance from '@/hooks/useInstance';
 
 const Dashboard: NextPage = () => {
@@ -22,6 +22,9 @@ const Dashboard: NextPage = () => {
   if (loading) {
     return (
       <DashboardShell>
+        <Head>
+          <title>Dashboard</title>
+        </Head>
         <LoadingState label="Gathering your budget" />
       </DashboardShell>
     );
@@ -30,13 +33,20 @@ const Dashboard: NextPage = () => {
   if (!instance || categories?.length === 0) {
     return (
       <DashboardShell>
+        <Head>
+          <title>Dashboard</title>
+        </Head>
         <EmptyState hasInstance={instance != null} />
       </DashboardShell>
     );
   }
+  console.log('instance', instance);
 
   return (
     <DashboardShell>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
       <ExpenseModal
         expense={expense}
         setExpense={setExpense}
@@ -47,15 +57,15 @@ const Dashboard: NextPage = () => {
         <h1 className="text-2xl font-semibold text-slate-900">
           Welcome, {user?.displayName}!
         </h1>
-        {/* {hasCategories ? ( */}
-        <button
-          type="button"
-          className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
-          onClick={() => setExpenseModalOpen(true)}
-        >
-          <Plus className="mr-2" /> Add expense
-        </button>
-        {/* ) : null} */}
+        {categories && categories.length > 0 ? (
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
+            onClick={() => setExpenseModalOpen(true)}
+          >
+            <Plus className="mr-2" /> Add expense
+          </button>
+        ) : null}
       </div>
 
       <Stats />
@@ -69,3 +79,19 @@ const Dashboard: NextPage = () => {
 };
 
 export default Dashboard;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  if (!context.req.cookies.token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {},
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

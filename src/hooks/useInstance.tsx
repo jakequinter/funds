@@ -5,20 +5,18 @@ import { ExpensesContext } from 'src/context/ExpensesContext';
 import { InstanceContext } from 'src/context/InstanceContext';
 
 const useInstance = () => {
-  const { instance, loading: instanceLoading } = useContext(InstanceContext);
+  const {
+    instance,
+    loading: instanceLoading,
+    refetchInstance,
+  } = useContext(InstanceContext);
   const { categories, loading: categoriesLoading } =
     useContext(CategoriesContext);
   const { expenses, loading: expensesLoading } = useContext(ExpensesContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (
-      instanceLoading ||
-      categoriesLoading ||
-      expensesLoading ||
-      categories === null ||
-      expenses === null
-    ) {
+    if (instanceLoading || categoriesLoading || expensesLoading) {
       setLoading(true);
     } else {
       setLoading(false);
@@ -36,6 +34,7 @@ const useInstance = () => {
     categories,
     expenses,
     loading,
+    refetchInstance,
   };
 };
 

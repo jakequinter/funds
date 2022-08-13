@@ -1,7 +1,6 @@
-import { useSWRConfig } from 'swr';
 import Link from 'next/link';
 
-import { useAuth } from '@/hooks/useAuth';
+import useInstance from '@/hooks/useInstance';
 import useToast from '@/hooks/useToast';
 
 type Props = {
@@ -9,15 +8,10 @@ type Props = {
 };
 
 export default function EmptyState({ hasInstance }: Props) {
-  const { user } = useAuth();
-  const { mutate } = useSWRConfig();
+  const { refetchInstance } = useInstance();
   const toast = useToast();
 
   const handleAddInstance = async () => {
-    if (!user) {
-      return;
-    }
-
     try {
       const res = await fetch('/api/instances', {
         method: 'POST',
@@ -25,14 +19,14 @@ export default function EmptyState({ hasInstance }: Props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: user.uid,
           month: new Date().getMonth() + 1,
           year: new Date().getFullYear(),
         }),
       });
 
-      if (res.ok) {
-        mutate('/api/instances');
+      console.log('res', res);
+      if (res.status === 200) {
+        refetchInstance();
         toast('success', 'Your monthly budget has been created.');
       } else {
         toast('error', 'There was an issue creating your monthly budget.');

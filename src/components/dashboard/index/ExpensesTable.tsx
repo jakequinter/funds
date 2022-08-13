@@ -25,6 +25,8 @@ export default function ExpensesTable({
 }: Props) {
   const { expenses } = useInstance();
 
+  if (!expenses) return null;
+
   return (
     <div className="relative mt-8 flex flex-col">
       <div className="inline-block min-w-full py-2 align-middle">
@@ -62,7 +64,7 @@ export default function ExpensesTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
-              {expenses?.map(expense => {
+              {expenses.map(expense => {
                 const { bgColor, shadowColor, textColor } =
                   handleCategoryColors(expense.color);
 

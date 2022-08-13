@@ -12,8 +12,7 @@ import { ToastContext, ToastContextType } from 'src/context/ToastContext';
 import { Menu, Transition } from '@headlessui/react';
 import classNames from '@/utils/classNames';
 import Toast from '@/components/dashboard/shared/Toast';
-
-import { useAuth } from '@/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 type SidebarNavItemProps = {
   href: string;
