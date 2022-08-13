@@ -56,7 +56,7 @@ export default function Container({ children }: Props) {
         </div>
       </nav>
 
-      <main className="my-32 mx-auto max-w-screen-xl p-4 2xl:p-0">
+      <main className="my-16 mx-auto max-w-screen-lg p-4 lg:my-32 2xl:p-0">
         {children}
       </main>
     </div>

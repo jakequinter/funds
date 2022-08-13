@@ -26,15 +26,15 @@ export default function VideoPlayer({ open, setOpen }: Props) {
       >
         <div className="rounded-3xl">
           <div
-            className="relative h-0 cursor-pointer pb-[56.25%] brightness-95 hover:brightness-90"
+            className="relative h-0 cursor-pointer pb-[61.25%] brightness-95 hover:brightness-90"
             onClick={() => console.log('hi')}
           >
             <Image
               className="rounded-3xl"
               src="/images/funds-howitworks-overlay.png"
               alt="funds how it works video"
-              width="632"
-              height="355"
+              width="990"
+              height="606"
             />
 
             <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full bg-slate-200 p-6 shadow-xl">
@@ -50,7 +50,7 @@ export default function VideoPlayer({ open, setOpen }: Props) {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-zinc-600 bg-opacity-50">
           <Dialog.Content className="fixed  top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white md:w-4/5">
-            <div className="relative h-0 pb-[56.25%]">
+            <div className="relative h-0 pb-[61.25%]">
               <iframe
                 src="/videos/funds-howitworks.mp4"
                 frameBorder="0"
