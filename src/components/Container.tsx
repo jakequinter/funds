@@ -33,7 +33,7 @@ export default function Container({ children }: Props) {
           </Link>
           {!authenticated && (
             <button
-              className="inline-flex items-center rounded-full bg-emerald-500 px-4 py-1.5 text-sm font-medium text-white shadow-lg shadow-emerald-400/40 hover:bg-emerald-600 focus:outline-none focus:ring-0"
+              className="inline-flex items-center rounded-full bg-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-emerald-400/40 hover:bg-emerald-600 focus:outline-none focus:ring-0"
               onClick={() => signInWithGoogle()}
             >
               Sign in
@@ -56,7 +56,9 @@ export default function Container({ children }: Props) {
         </div>
       </nav>
 
-      <main className="my-32 mx-auto max-w-screen-lg">{children}</main>
+      <main className="my-32 mx-auto max-w-screen-xl p-4 2xl:p-0">
+        {children}
+      </main>
     </div>
   );
 }

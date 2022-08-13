@@ -40,7 +40,6 @@ const Dashboard: NextPage = () => {
       </DashboardShell>
     );
   }
-  console.log('instance', instance);
 
   return (
     <DashboardShell>
@@ -60,7 +59,7 @@ const Dashboard: NextPage = () => {
         {categories && categories.length > 0 ? (
           <button
             type="button"
-            className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
+            className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
             onClick={() => setExpenseModalOpen(true)}
           >
             <Plus className="mr-2" /> Add expense
