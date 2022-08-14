@@ -5,10 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   AppleLogo,
-  GlobeHemisphereWest,
   Browsers,
   CaretRight,
   GlobeHemisphereEast,
+  Hash,
+  Sparkle,
 } from 'phosphor-react';
 import { motion } from 'framer-motion';
 
@@ -62,10 +63,10 @@ const Home: NextPage = () => {
         </div>
 
         <div className="space-y-8 rounded-3xl bg-slate-200 p-16">
-          <h3 className="text-2xl">
+          <h3 className="text-lg md:text-2xl">
             Tired of complicated budget-tracking software?
           </h3>
-          <h2 className="line text-5xl font-semibold leading-tight text-slate-900">
+          <h2 className="line text-3xl font-semibold leading-tight text-slate-900 md:text-5xl">
             funds provides the easiest budgeting software making it the ultimate
             budgeting tool.
           </h2>
@@ -96,8 +97,58 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 items-center gap-10">
-          <div>
+        <div className="flex flex-col items-center gap-10 lg:flex-row">
+          <div className="order-last max-w-md lg:order-first lg:max-w-sm">
+            <h2 className="mb-4 text-3xl font-semibold text-slate-900">
+              Track what you want
+            </h2>
+            <p className="text-lg">
+              Want to track groceries? Don&apos;t want to track groceries?
+              It&apos;s totally up to you. Create the categories you want to
+              keep track of in your monthly budget, and start budgeting.
+            </p>
+
+            <div className="mt-8 space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="rounded-lg bg-slate-200 p-2">
+                  <Sparkle className="text-slate-900" size="20" />
+                </div>
+                <p className="text-sm font-semibold text-slate-900">
+                  Create a personalized budget for you
+                </p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="rounded-lg bg-slate-200 p-2">
+                  <Hash className="text-slate-900" size="20" />
+                </div>
+                <p className="text-sm font-semibold text-slate-900">
+                  Unlimited categories
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-first lg:order-last">
+            <Image
+              src="/images/categories.png"
+              alt="Categories displaying groceries, restaurants, miscellaneous, and recurring."
+              width="970"
+              height="778"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center gap-10 lg:flex-row">
+          <div className="mr-0 lg:mr-8">
+            <Image
+              src="/images/iPhoneMac.png"
+              alt="Expenses table"
+              width="648"
+              height="425"
+            />
+          </div>
+
+          <div className="max-w-lg lg:max-w-sm">
             <h2 className="mb-4 text-3xl font-semibold text-slate-900">
               On the go
             </h2>
@@ -133,9 +184,6 @@ const Home: NextPage = () => {
                 </p>
               </div>
             </div>
-          </div>
-          <div className="rounded-lg shadow">
-            <img src="/images/expensesTable2.png" alt="Expenses table" />
           </div>
         </div>
       </div>
