@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
-import {
-  AppleLogo,
-  Browsers,
-  CaretRight,
-  GlobeHemisphereEast,
-  Hash,
-  Sparkle,
-} from 'phosphor-react';
+import { CaretRight } from 'phosphor-react';
 import { motion } from 'framer-motion';
 
+import { onTheGo, trackWhatYouWant, viewYourHistory } from '@/data/infoIcons';
 import Container from '@/components/Container';
+import InfoSection from '@/components/InfoSection';
 import VideoPlayer from '@/components/VideoPlayer';
 
 const iconVariants = {
@@ -61,7 +55,6 @@ const Home: NextPage = () => {
 
           <VideoPlayer open={open} setOpen={setOpen} />
         </div>
-
         <div className="space-y-8 rounded-3xl bg-slate-200 p-16">
           <h3 className="text-lg md:text-2xl">
             Tired of complicated budget-tracking software?
@@ -96,96 +89,39 @@ const Home: NextPage = () => {
             </Link>
           </div>
         </div>
-
-        <div className="flex flex-col items-center gap-10 lg:flex-row">
-          <div className="order-last max-w-md lg:order-first lg:max-w-sm">
-            <h2 className="mb-4 text-3xl font-semibold text-slate-900">
-              Track what you want
-            </h2>
-            <p className="text-lg">
-              Want to track groceries? Don&apos;t want to track groceries?
-              It&apos;s totally up to you. Create the categories you want to
-              keep track of in your monthly budget, and start budgeting.
-            </p>
-
-            <div className="mt-8 space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="rounded-lg bg-slate-200 p-2">
-                  <Sparkle className="text-slate-900" size="20" />
-                </div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Create a personalized budget for you
-                </p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="rounded-lg bg-slate-200 p-2">
-                  <Hash className="text-slate-900" size="20" />
-                </div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Unlimited categories
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="order-first lg:order-last">
-            <Image
-              src="/images/categories.png"
-              alt="Categories displaying groceries, restaurants, miscellaneous, and recurring."
-              width="970"
-              height="778"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center gap-10 lg:flex-row">
-          <div className="mr-0 lg:mr-8">
-            <Image
-              src="/images/iPhoneMac.png"
-              alt="Expenses table"
-              width="648"
-              height="425"
-            />
-          </div>
-
-          <div className="max-w-lg lg:max-w-sm">
-            <h2 className="mb-4 text-3xl font-semibold text-slate-900">
-              On the go
-            </h2>
-            <p className="text-lg">
-              Our web and iOS apps make instantly adding your expenses seamless.
-              Wherever you are, whatever you&apos;re buying, track it in a
-              matter of seconds.
-            </p>
-
-            <div className="mt-8 space-y-4">
-              <div className="flex items-center space-x-4">
-                <div className="rounded-lg bg-slate-200 p-2">
-                  <Browsers className="text-slate-900" size="20" />
-                </div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Budget on any browser
-                </p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="rounded-lg bg-slate-200 p-2">
-                  <AppleLogo className="text-slate-900" size="20" />
-                </div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Budget on iOS
-                </p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="rounded-lg bg-slate-200 p-2">
-                  <GlobeHemisphereEast className="text-slate-900" size="20" />
-                </div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Budget...anywhere
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <InfoSection
+          order="first"
+          heading="Track what you want"
+          description="Want to track groceries? Don't want to track groceries? It's totally up to you. Create the budget you want and track it with funds."
+          imageSrc="/images/categories.png"
+          imageAlt="Categories displaying groceries, restaurants, miscellaneous, and recurring."
+          imageWidth="970"
+          imageHeight="778"
+          // @ts-ignore
+          items={trackWhatYouWant}
+        />
+        <InfoSection
+          order="second"
+          heading="On the go"
+          description="Our web and iOS apps make instantly adding your expenses seamless. Wherever you are, whatever you're buying, track it in a matter of seconds."
+          imageSrc="/images/iPhoneMac.png"
+          imageAlt="funds application on an iPhone overlayed on a Mac."
+          imageWidth="648"
+          imageHeight="435"
+          // @ts-ignore
+          items={onTheGo}
+        />
+        <InfoSection
+          order="first"
+          heading="View your history"
+          description="Need to revisit your past expenses? Maybe you want to calculate your yearly spending or see how many months you were over budget? We got you covered."
+          imageSrc="/images/history.png"
+          imageAlt="Categories displaying groceries, restaurants, miscellaneous, and recurring."
+          imageWidth="984"
+          imageHeight="822"
+          // @ts-ignore
+          items={viewYourHistory}
+        />
       </div>
     </Container>
   );
