@@ -36,25 +36,25 @@ export default function ExpensesTable({
               <tr>
                 <th
                   scope="col"
-                  className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6"
+                  className="py-3.5 pl-4 pr-3 text-left text-xs font-semibold text-slate-900 sm:pl-6"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900"
+                  className="px-3 py-3.5 text-left text-xs font-semibold text-slate-900"
                 >
                   Amount
                 </th>
                 <th
                   scope="col"
-                  className="hidden px-3 py-3.5 text-left text-sm font-semibold text-slate-900 sm:block"
+                  className="hidden px-3 py-3.5 text-left text-xs font-semibold text-slate-900 sm:block"
                 >
                   Date
                 </th>
                 <th
                   scope="col"
-                  className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900"
+                  className="px-3 py-3.5 text-left text-xs font-semibold text-slate-900"
                 >
                   Type
                 </th>
@@ -70,27 +70,27 @@ export default function ExpensesTable({
 
                 return (
                   <tr key={expense.id}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-slate-900 sm:pl-6">
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-slate-900 sm:pl-6">
                       {expense.name}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-xs text-slate-500">
                       ${expense.spend.toFixed(2)}
                     </td>
-                    <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-slate-500 sm:block">
+                    <td className="hidden whitespace-nowrap px-3 py-4 text-xs text-slate-500 sm:block">
                       {format(
                         fromUnixTime(expense?.updatedAt?._seconds),
                         'MMM dd, yyyy'
                       )}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-xs text-slate-500">
                       <span
-                        className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-sm font-medium`}
+                        className={`inline-flex items-center justify-center rounded-full ${bgColor} ${shadowColor} ${textColor} px-3 py-0.5 text-xs font-medium`}
                       >
                         {expense.type}
                       </span>
                     </td>
                     {showExpenseDropdown ? (
-                      <td className="whitespace-nowrap py-4 pr-2 text-right text-sm font-medium">
+                      <td className="whitespace-nowrap py-4 pr-2 text-right text-xs font-medium">
                         <ExpenseDropdown
                           expense={expense}
                           setShowExpenseModal={setShowExpenseModal}

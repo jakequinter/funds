@@ -182,7 +182,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
               </h1>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
-                  <label htmlFor="name" className="block text-sm font-medium">
+                  <label htmlFor="name" className="block text-xs font-medium">
                     Name
                     <input
                       type="text"
@@ -207,7 +207,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                   )}
                 />
                 <div className="mb-4">
-                  <label htmlFor="target" className="block text-sm font-medium">
+                  <label htmlFor="target" className="block text-xs font-medium">
                     Target amount
                     <input
                       type="number"
@@ -224,14 +224,14 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                     <div className="flex space-x-4">
                       <button
                         type="submit"
-                        className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
+                        className="inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-xs text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none focus:ring-0"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDeleteCategory(category.id)}
-                        className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none"
+                        className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-xs text-base font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-0"
                       >
                         Delete
                       </button>
@@ -240,7 +240,7 @@ export default function AddCategoryModal({ open, setOpen, category }: Props) {
                   {!category && (
                     <button
                       type="submit"
-                      className="focus:ring-0sm:text-sm inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-xs text-base font-medium text-white shadow-sm hover:bg-emerald-600 focus:outline-none focus:ring-0"
                     >
                       Add
                     </button>

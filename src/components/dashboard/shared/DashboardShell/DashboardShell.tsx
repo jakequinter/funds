@@ -38,7 +38,7 @@ const SidebarNavItem = ({ href, icon, text }: SidebarNavItemProps) => {
           isActive
             ? 'bg-emerald-200 text-emerald-900'
             : 'hover:bg-emerald-200 hover:text-emerald-900'
-        }     group flex items-center rounded-md px-2 py-2 text-sm font-medium`}
+        }     group flex items-center rounded-md px-2 py-2 text-xs font-medium`}
       >
         <span className="mr-4">{icon}</span>
         <span>{text}</span>
@@ -71,7 +71,7 @@ const DropwdownNavItem = ({ href, icon, text }: DropwdownNavItemProps) => {
           href="#"
           className={classNames(
             isActive ? 'bg-emerald-200 text-emerald-900' : '',
-            'my-1 flex items-center rounded-md px-4 py-2.5 text-sm hover:bg-emerald-200 hover:text-emerald-900'
+            'my-1 flex items-center rounded-md px-4 py-2.5 text-xs hover:bg-emerald-200 hover:text-emerald-900'
           )}
         >
           <span className="mr-4">{icon}</span>
@@ -130,7 +130,7 @@ export default function DashboardShell({ children }: Props) {
               </div>
               <div className="flex flex-shrink-0 p-4">
                 <button
-                  className="flex items-center text-sm hover:text-slate-500"
+                  className="flex items-center text-xs hover:text-slate-500"
                   onClick={() => signOut()}
                 >
                   <LogOut className="mr-4 h-5 w-5" /> Sign out
@@ -184,7 +184,7 @@ export default function DashboardShell({ children }: Props) {
           </div>
           <div className="relative z-0 flex flex-1 overflow-hidden">
             <main className="relative z-0 flex-1 overflow-y-auto focus:outline-none xl:order-last">
-              <div className="absolute inset-0 bg-white py-6 px-4 sm:px-6 lg:px-8">
+              <div className="absolute inset-0 bg-white py-6 px-4 text-sm sm:px-6 lg:px-8">
                 {children}
               </div>
             </main>

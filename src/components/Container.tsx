@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'iconoir-react';
 import { motion } from 'framer-motion';
@@ -19,39 +20,31 @@ export default function Container({ children }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <nav className="mx-auto flex max-w-screen-lg items-center justify-between p-4">
+      <nav className="mx-auto flex max-w-screen-lg items-center justify-between px-4 pt-8 lg:px-0">
         <Link href="/" passHref>
-          <a className="text-2xl font-bold text-slate-900">funds</a>
+          <a className="cursor-pointer">
+            <Image src="/images/logo.png" alt="Logo" height="25" width="100" />
+          </a>
         </Link>
 
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-12">
+          <Link href="/faq" passHref>
+            <a className="font-medium hover:text-slate-900">FAQ</a>
+          </Link>
           {!authenticated && (
-            <>
-              <button
-                className="font-medium text-slate-700"
-                onClick={() => signInWithGoogle()}
-              >
-                Sign in
-              </button>
-              <motion.button
-                whileHover="hover"
-                type="button"
-                className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
-                onClick={() => signOut()}
-              >
-                Sign up
-                <motion.span variants={iconVariants}>
-                  <ArrowRight className="ml-1" />
-                </motion.span>
-              </motion.button>
-            </>
+            <button
+              className="inline-flex items-center rounded-full bg-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-emerald-400/40 hover:bg-emerald-600 focus:outline-none focus:ring-0"
+              onClick={() => signInWithGoogle()}
+            >
+              Sign in
+            </button>
           )}
 
           {authenticated && (
             <Link href="/dashboard" passHref>
               <motion.a
                 whileHover="hover"
-                className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm  hover:border-slate-400 focus:outline-none focus:ring-0"
+                className="inline-flex items-center rounded-full bg-emerald-500 px-4 py-2  text-sm font-medium text-white shadow-lg shadow-emerald-400/50 hover:bg-emerald-600 focus:outline-none focus:ring-0"
               >
                 Dashboard
                 <motion.span variants={iconVariants}>
@@ -63,7 +56,9 @@ export default function Container({ children }: Props) {
         </div>
       </nav>
 
-      <main>{children}</main>
+      <main className="my-16 mx-auto max-w-screen-lg p-4 lg:my-32 2xl:p-0">
+        {children}
+      </main>
     </div>
   );
 }

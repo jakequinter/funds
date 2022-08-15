@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { DocumentData } from 'firebase/firestore';
 
-import { db } from '@/lib/firebase/firebaseAdmin';
+import { auth, db } from '@/lib/firebase/firebaseAdmin';
 
 // GET /api/history/:userId
 export default async function handle(
@@ -9,12 +9,12 @@ export default async function handle(
   res: NextApiResponse
 ) {
   try {
-    const { userId } = req.query;
+    const { uid } = await auth.verifyIdToken(req.cookies.token);
 
     let instances: DocumentData = [];
     const instancesRef = db.collection('instances');
     const snapshot = await instancesRef
-      .where('userId', '==', userId)
+      .where('userId', '==', uid)
       .orderBy('year', 'desc')
       .orderBy('month', 'desc')
       .get();
@@ -27,7 +27,7 @@ export default async function handle(
       instances.push({ id: doc.id, ...doc.data() });
     });
 
-    const history = instances.slice(1);
+    const history = instances.length === 1 ? instances : instances.slice(1);
 
     return res.status(200).json(history);
   } catch (error) {
