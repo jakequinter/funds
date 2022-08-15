@@ -53,7 +53,7 @@ export default function VideoPlayer({ open, setOpen }: Props) {
                 src="/videos/funds-howitworks.mp4"
                 frameBorder="0"
                 allowFullScreen
-                className="absolute top-0 left-0 h-full w-full  rounded-3xl"
+                className="absolute top-0 left-0 h-full w-full rounded-3xl"
               />
             </div>
 

@@ -49,7 +49,7 @@ export default function EmptyState({ hasInstance }: Props) {
 
         <button
           type="button"
-          className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
+          className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0"
           onClick={handleAddInstance}
         >
           Start new month
@@ -69,7 +69,7 @@ export default function EmptyState({ hasInstance }: Props) {
       </p>
 
       <Link href="/dashboard/categories" passHref>
-        <a className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0">
+        <a className="inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-xs font-medium shadow hover:border-slate-400 focus:outline-none focus:ring-0">
           Go to categories
         </a>
       </Link>
