@@ -31,7 +31,7 @@ const Home: NextPage = () => {
               Available for iOS16 and web!
             </span>
 
-            <h1 className="line mt-8 text-4xl font-semibold leading-tight text-slate-900 lg:text-5xl">
+            <h1 className="line mt-8 text-4xl font-bold leading-tight text-slate-900 lg:text-5xl">
               Craft your budget like a professional.
             </h1>
 

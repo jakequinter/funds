@@ -33,9 +33,7 @@ export default function InfoSection({
             : 'order-last lg:order-last'
         } max-w-lg lg:max-w-sm`}
       >
-        <h2 className="mb-4 text-3xl font-semibold text-slate-900">
-          {heading}
-        </h2>
+        <h2 className="mb-4 text-3xl font-bold text-slate-900">{heading}</h2>
         <p className="text-lg">{description}</p>
 
         <InfoIcons items={items} />
