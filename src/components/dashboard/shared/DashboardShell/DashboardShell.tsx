@@ -24,10 +24,10 @@ const SidebarNavItem = ({ href, icon, text }: SidebarNavItemProps) => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (!href.includes('/settings')) {
+    if (!href.includes('/history')) {
       if (window.location.pathname === href) setIsActive(true);
     } else {
-      if (window.location.pathname.includes('/settings')) setIsActive(true);
+      if (window.location.pathname.includes('/history')) setIsActive(true);
     }
   }, [href]);
 
@@ -57,10 +57,10 @@ const DropwdownNavItem = ({ href, icon, text }: DropwdownNavItemProps) => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (!href.includes('/settings')) {
+    if (!href.includes('/history')) {
       if (window.location.pathname === href) setIsActive(true);
     } else {
-      if (window.location.pathname.includes('/settings')) setIsActive(true);
+      if (window.location.pathname.includes('/history')) setIsActive(true);
     }
   }, [href]);
 
@@ -87,7 +87,7 @@ type Props = {
 };
 
 export default function DashboardShell({ children }: Props) {
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
   const { showToast, setShowToast, toastMessage, toastType } = useContext(
     ToastContext
   ) as ToastContextType;
